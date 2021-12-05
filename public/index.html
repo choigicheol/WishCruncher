@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="icon" href="./favicon.ico" />
+    <title>WishCruncher</title>
+  </head>
+  <body>
+    <header id="header_container">
+      <nav id="header_area">
+        <div class="header_menu"><img src="./logo.png" /></div>
+        <div class="header_menu header_text_menu">
+          <span class="home_text_menu">홈</span>
+          <span class="mypage_text_menu">마이페이지</span>
+        </div>
+        <div class="header_menu login_menu">
+          <span>Login</span>
+        </div>
+      </nav>
+    </header>
+    <main class="test2"></main>
+    <footer>
+      <a href="https://github.com/choigicheol" target="_blank">
+        <div class="github_Link">
+          <img src="./github_Icon.svg" />
+          <span>Choi Gi Cheol</span>
+        </div>
+      </a>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+    <!-- 
+    <script defer src="/__/firebase/9.5.0/firebase-app-compat.js"></script>
+    <script defer src="/__/firebase/9.5.0/firebase-auth-compat.js"></script>
+    <script
+      defer
+      src="/__/firebase/9.5.0/firebase-firestore-compat.js"
+    ></script>
+    <script defer src="/__/firebase/9.5.0/firebase-storage-compat.js"></script>
+    <script
+      defer
+      src="/__/firebase/9.5.0/firebase-analytics-compat.js"
+    ></script>
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script> -->
+
+    <!-- <script>
+      const db = firebase.firestore();
+      db.collection("wish")
+      .get()
+      .then((res) => {
+        res.forEach((wish) => {
+          const wishList = document.querySelector(".test");
+          const wishDiv = document.createElement("div");
+            wishList.append(wishDiv);
+            wishDiv.textContent = `${wish.data().상품}`;
+          });
+        });
+      </script> -->
+    <script src="./firebase.js"></script>
+  </body>
+</html>

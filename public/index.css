@@ -1,0 +1,102 @@
+@font-face {
+    font-family: 'SBAggro';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroL.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SBAggro';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroM.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SBAggro';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+*{
+  font-family: "SBAggro";
+  color : #2d2d2d;
+}
+
+body{
+  margin : 0;
+  height: 100px;
+}
+
+header{
+  height : 80px;
+  display : flex;
+  justify-content : center;
+  border-bottom: 1px solid #2d2d2d;
+}
+
+#header_area{
+  width : 1260px;
+  display : flex;
+}
+
+.header_menu{
+  flex : 1;
+  font-size: 18px;
+  display : flex;
+  align-items : center;
+}
+
+.header_menu > img {
+  cursor : pointer;
+}
+
+.header_text_menu{
+  display : flex;
+  font-weight : 100;
+  justify-content : center;
+}
+
+.login_menu{
+  display : flex;
+  font-weight : 300;
+  justify-content : right;
+}
+
+.login_menu > span{
+  cursor : pointer;
+}
+
+.home_text_menu{
+  width : 100px;
+  text-align : right;
+  margin-right: 20px;
+  cursor : pointer;
+}
+
+.mypage_text_menu{
+  width : 100px;
+  text-align: left;
+  margin-left: 20px;
+  cursor : pointer;
+}
+
+footer{
+  height : 130px;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+}
+
+.github_Link{
+  height : 40px;
+  width : 170px;
+  display : flex;
+  justify-content : space-between;
+  align-items : center;
+}
+
+a{
+  text-decoration: none;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+   <input class="itemInput" placeholder="상품명을 입력해주세요"></input>
+   <input class="priceInput" placeholder="가격을 입력해주세요"></input>
+   <button class="submit">확인</button>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+   
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyCP5wY2n-asX3X5U459KAlHqmbZxqjOnwk",
+        authDomain: "wishcruncher.firebaseapp.com",
+        projectId: "wishcruncher",
+        storageBucket: "wishcruncher.appspot.com",
+        messagingSenderId: "241178895493",
+        appId: "1:241178895493:web:b7a79a3695cbc8bad535ec",
+        measurementId: "G-NHLQF4D4JS",
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <script>
+      const db = firebase.firestore();
+      const button = document.querySelector(".submit")
+      const itemInput = document.getElementsByClassName("itemInput")
+      const priceInput = document.getElementsByClassName("priceInput")
+      button.addEventListener("click", function(event){
+        db.collection("wish").get().then(res=>{
+          db.collection("wish").doc(`item${res.size+1}`).set({상품:itemInput[0].value, 가격:priceInput[0].value})
+        })
+      })
+    </script>
+  </body>
+</html>
