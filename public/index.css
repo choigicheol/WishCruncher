@@ -33,7 +33,7 @@ header{
   height : 80px;
   display : flex;
   justify-content : center;
-  border-bottom: 1px solid #2d2d2d;
+  border-bottom: 1px solid #F2F2F2;
 }
 
 #header_area{
@@ -70,9 +70,8 @@ header{
 
 .home_text_menu{
   width : 100px;
-  text-align : right;
-  margin-right: 20px;
-  cursor : pointer;
+  text-align : left;
+  margin-left: 20px;
 }
 
 .mypage_text_menu{
@@ -87,6 +86,8 @@ footer{
   display : flex;
   justify-content : center;
   align-items : center;
+  border-top: 1px solid #F2F2F2;
+
 }
 
 .github_Link{
@@ -98,5 +99,123 @@ footer{
 }
 
 a{
-  text-decoration: none;
+  text-decoration : none;
+  cursor: pointer;
+}
+
+a:checked{
+  color : #8B6ABA;
+}
+
+a:hover{
+  color : #AB86DF
+}
+
+#login_Page{
+  width : 100%;
+  min-height : 80vh;
+  display : flex;
+  justify-content : center;
+  background: #FBFBFB;
+}
+
+#login_Page_Container{
+  width: 475px;
+  height: 583px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.1);
+  border : none;
+  border-radius: 4px;
+  margin-top : 60px;
+  display : flex;
+  flex-direction : column;
+  align-items : center;
+}
+
+input{
+  display : block;
+  width: 396px;
+  height: 47px;
+  background: #FBFBFB;
+  border: 2px solid #F2F2F2;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin : 6px 0 33px 0;
+  font-weight : 300;
+}
+
+.input_Label{
+  font-weight : 100;
+}
+
+#login_Title{
+  font-size : 2rem;
+  width : 100%;
+  margin : 58px 0 40px 0;
+}
+
+#caution_Message{
+  
+}
+
+#login_Submit_Button{
+  width: 396px;
+  height: 47px;
+  background: #AB86DF;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
+  border : none;
+  border-radius: 4px;
+  color: #FFFFFF;
+  margin-bottom : 11px;
+  font-size : 16px;
+  cursor : pointer;
+}
+
+#login_Submit_Button:active{
+  background : #8B6ABA;
+}
+
+#kakao_Login_Button{
+  display : block;
+  width: 396px;
+  height: 47px;
+  line-height: 47px;
+  border: 1px solid #E0DDE1;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin-bottom : 27px;
+  background : #FFFFFF;
+  font-size : 16px;
+  cursor : pointer;
+}
+
+#kakao_Login_Button:active{
+  background : #F8F8F8;
+}
+
+
+#kakao_Login_Button_Contents{
+  width: 396px;
+  height : 43px;
+  display : flex;
+  justify-content : center;
+  align-items: center;
+}
+
+#kakao_Login_Button_Contents > img{
+  margin-right : 5px;
+}
+
+#go_To_signUp{
+  font-weight : 100;
+  font-size : 14px;
+}
+
+#warning_Message{
+  visibility : hidden;
+  width: 100%;
+  height : 68px;
+  display: flex;
+  justify-content : center;
+  align-items : center;
 }
