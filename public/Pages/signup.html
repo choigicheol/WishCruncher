@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../CSS/index.css" />
+    <link rel="icon" href="./favicon.ico" />
+    <title>WishCruncher</title>
+  </head>
+  <body>
+    <header id="header_container">
+      <nav id="header_area">
+        <div class="header_menu">
+          <a href="../index.html"><img src="../Images/logo.png" /></a>
+        </div>
+        <div class="header_menu header_text_menu">
+          <span class="home_text_menu"><a href="../index.html">홈</a></span>
+          <span class="mypage_text_menu">마이페이지</span>
+        </div>
+        <div class="header_menu login_menu">
+          <span><a href="login.html">Login</a></span>
+        </div>
+      </nav>
+    </header>
+    <main id="signup_Page">
+      <div id="signup_Page_Container">
+        <form id="signup_Form">
+          <div id="signup_Title">회원가입 🎉</div>
+          <label class="input_Label" for="email_Input">이메일</label>
+          <div id="email_Input_Area">
+            <!-- 이메일 입력 -->
+            <input id="email_Input" type="email" name="email_Input" required />
+            <div id="check_Email_Button">중복검사</div>
+          </div>
+          <div class="check_Email_Warning_Message">
+            중복되는 아이디가 있습니다.
+          </div>
+          <!-- 닉네임 입력 -->
+          <label class="input_Label" for="nickname_Input">닉네임</label>
+          <input id="nickname_input" name="nickname_Input" required />
+          <!-- 비밀번호 입력 -->
+          <label class="input_Label" for="password_Input">비밀번호</label>
+          <input
+            id="password_input"
+            type="password"
+            name="password_Input"
+            required
+          />
+          <!-- 비밀번호 확인 입력 -->
+          <label class="input_Label" for="confirm_password_Input"
+            >비밀번호 확인</label
+          >
+          <input
+            id="confirm_password_Input"
+            type="password"
+            name="confirm_password_Input"
+            required
+          />
+          <div id="warning_Message">확인해주세요</div>
+          <button class="submit_Button">확인</button>
+        </form>
+        <div id="go_To_signUp">
+          <a href="login.html">뒤로가기</a>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <a href="https://github.com/choigicheol" target="_blank">
+        <div class="github_Link">
+          <img src="../Images/github_Icon.svg" />
+          <span>Choi Gi Cheol</span>
+        </div>
+      </a>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+    <script src="../firebase.js"></script>
+  </body>
+</html>
