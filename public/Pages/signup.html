@@ -29,11 +29,25 @@
           <label class="input_Label" for="email_Input">이메일</label>
           <div id="email_Input_Area">
             <!-- 이메일 입력 -->
-            <input id="email_Input" type="email" name="email_Input" required />
+            <input
+              id="signup_Email_Input"
+              class="margin0_Input"
+              type="email"
+              name="email_Input"
+              required
+            />
             <div id="check_Email_Button">중복검사</div>
           </div>
-          <div class="check_Email_Warning_Message">
-            중복되는 아이디가 있습니다.
+          <div class="check_Warning_Message">
+            <span id="check_Email_Fail_Message"
+              >중복되는 이메일이 존재합니다.</span
+            >
+            <span id="check_Email_Success_Message"
+              >사용 가능한 이메일입니다.</span
+            >
+            <span id="check_Email_Invalid_Message"
+              >유효하지 않은 이메일입니다.</span
+            >
           </div>
           <!-- 닉네임 입력 -->
           <label class="input_Label" for="nickname_Input">닉네임</label>
@@ -41,9 +55,10 @@
           <!-- 비밀번호 입력 -->
           <label class="input_Label" for="password_Input">비밀번호</label>
           <input
-            id="password_input"
+            id="password_Input"
             type="password"
             name="password_Input"
+            placeholder="8~16자, 영문 대소문자, 특수문자를 포함해주세요."
             required
           />
           <!-- 비밀번호 확인 입력 -->
@@ -51,13 +66,25 @@
             >비밀번호 확인</label
           >
           <input
-            id="confirm_password_Input"
+            id="confirm_Password_Input"
+            class="margin0_Input"
             type="password"
             name="confirm_password_Input"
             required
           />
-          <div id="warning_Message">확인해주세요</div>
-          <button class="submit_Button">확인</button>
+          <div class="check_Warning_Message">
+            <span id="check_password_Invalid_Message"
+              >비밀번호를 다시 확인해주세요.</span
+            >
+          </div>
+          <button
+            id="signup_Submit_Button"
+            name="signup_Submit_Button"
+            class="submit_Button"
+            disabled="false"
+          >
+            확인
+          </button>
         </form>
         <div id="go_To_signUp">
           <a href="login.html">뒤로가기</a>
@@ -77,5 +104,130 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
+    <script>
+      // 유효성 검사
+      function Inspect(data, type) {
+        switch (type) {
+          // 2~10글자, 영어, 한글, 숫자만 가능
+          case "nickname":
+            const nickname = /^([a-zA-Z0-9가-힣]){2,10}$/;
+            return nickname.test(data);
+          case "email":
+            const email =
+              /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+            return email.test(data);
+          case "password":
+            const password =
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/;
+            //최소 8자 및 최대 16자, 대문자 하나 이상, 소문자 하나 이상, 숫자 하나 이상, 특수 문자 하나 이상
+            return password.test(data);
+          default:
+            return false;
+        }
+      }
+      const checkEmail = document.querySelector("#check_Email_Button");
+      const signupEmailInput = document.querySelector("#signup_Email_Input");
+      let validEmail = false;
+
+      // 이메일 중복 버튼 이벤트
+      checkEmail.addEventListener("click", (e) => {
+        e.preventDefault();
+        const emailValue = signupEmailInput.value;
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(emailValue, "dummyPassword#9195")
+          .catch((error) => {
+            console.log(error.code);
+            if (error.code === "auth/user-not-found") {
+              check_Email_Fail_Message.style.display = "none";
+              check_Email_Success_Message.style.display = "block";
+              check_Email_Invalid_Message.style.display = "none";
+              validEmail = true;
+            } else if (error.code === "auth/invalid-email") {
+              check_Email_Fail_Message.style.display = "none";
+              check_Email_Success_Message.style.display = "none";
+              check_Email_Invalid_Message.style.display = "block";
+              validEmail = false;
+            } else {
+              check_Email_Fail_Message.style.display = "block";
+              check_Email_Success_Message.style.display = "none";
+              check_Email_Invalid_Message.style.display = "none";
+              validEmail = false;
+            }
+            validButton(validEmail, validNickname, equalPasswordBoolean);
+          });
+      });
+
+      // 닉네임 확인
+      const nicknameInput = document.querySelector("#nickname_input");
+      let validNickname = false;
+      nicknameInput.addEventListener("keyup", () => {
+        if (Inspect(nicknameInput.value, "nickname")) {
+          validNickname = true;
+        } else {
+          validNickname = false;
+        }
+      });
+
+      // 비밀번호 확인 이벤트
+      const passwordInput = document.querySelector("#password_Input");
+      const confirmPasswordInput = document.querySelector(
+        "#confirm_Password_Input"
+      );
+      let equalPasswordBoolean = false;
+
+      // 비밀번호, 비밀번호확인 입력 동일한지 확인하는 함수
+      function equalPassword(password, confirmPassword) {
+        if (password === confirmPassword) {
+          check_password_Invalid_Message.style.display = "none";
+          equalPasswordBoolean = true;
+        } else {
+          check_password_Invalid_Message.style.display = "block";
+          equalPasswordBoolean = false;
+        }
+      }
+
+      // 버튼 활성화 조건 함수
+      function validButton(validEmail, validNickname, validPassword) {
+        if (validEmail && validNickname && validPassword) {
+          //TODO: 버튼 활성화
+        }
+      }
+
+      passwordInput.addEventListener("keyup", () => {
+        if (Inspect(passwordInput.value, "password")) {
+          check_password_Invalid_Message.style.display = "none";
+        } else {
+          check_password_Invalid_Message.style.display = "block";
+        }
+        equalPassword(passwordInput.value, confirmPasswordInput.value);
+        validButton(validEmail, validNickname, equalPasswordBoolean);
+      });
+
+      confirmPasswordInput.addEventListener("keyup", () => {
+        if (Inspect(confirmPasswordInput.value, "password")) {
+          check_password_Invalid_Message.style.display = "none";
+        } else {
+          check_password_Invalid_Message.style.display = "block";
+        }
+        equalPassword(passwordInput.value, confirmPasswordInput.value);
+        validButton(validEmail, validNickname, equalPasswordBoolean);
+        console.log(validEmail, "validEmail");
+        console.log(validNickname, "validNickname");
+        console.log(equalPasswordBoolean, "equalPasswordBoolean");
+      });
+
+      // 회원가입 버튼 이벤트
+      const signupForm = document.querySelector("#signup_Form");
+      const signupSubmitButton = document.querySelector(
+        "#signup_Submit_Button"
+      );
+      if (validEmail && validNickname && equalPasswordBoolean) {
+        //TODO: 안되네;;;;;;;
+        signupForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+        });
+      }
+    </script>
   </body>
 </html>

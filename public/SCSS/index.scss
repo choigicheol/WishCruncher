@@ -130,6 +130,17 @@ a {
   align-items: center;
 }
 
+.inputStyle {
+  display: block;
+  width: 100%;
+  height: 47px;
+  background: #fbfbfb;
+  border: 2px solid #f2f2f2;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin: 6px 0 33px 0;
+  font-weight: 300;
+}
 input {
   display: block;
   width: 100%;
@@ -140,6 +151,8 @@ input {
   border-radius: 4px;
   margin: 6px 0 33px 0;
   font-weight: 300;
+  padding-left: 10px;
+  color: #2d2d2d;
 }
 
 .input_Label {
@@ -233,6 +246,7 @@ input {
 
 #email_Input_Area {
   display: flex;
+  // margin-bottom: 10px;
   width: 100%;
   #check_Email_Button {
     display: flex;
@@ -246,7 +260,7 @@ input {
     color: #ffffff;
     font-size: 15px;
     font-weight: 300;
-    margin: 6px 0 33px 7px;
+    margin-left: 7px;
     box-sizing: border-box;
     cursor: pointer;
     &:active {
@@ -255,11 +269,35 @@ input {
   }
 }
 
-#check_Email_Warning_Message {
-  visibility: hidden;
+.check_Warning_Message {
   width: 100%;
-  height: 28px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 35px;
+  font-size: 14px;
+  font-weight: 100;
+  margin-top: 15px;
+  padding-left: 7px;
+}
+
+#check_Email_Fail_Message {
+  display: none;
+  color: red;
+}
+
+#check_Email_Success_Message {
+  display: none;
+  color: green;
+}
+
+#check_Email_Invalid_Message {
+  display: none;
+  color: red;
+}
+
+.margin0_Input {
+  margin: 0;
+}
+
+#check_password_Invalid_Message {
+  display: none;
+  color: red;
 }
