@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../CSS/index.css" />
-    <link rel="icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="../CSS/globalLayout.css" />
+    <link rel="stylesheet" href="../CSS/login.css" />
+    <link rel="icon" href="../favicon.ico" />
     <title>WishCruncher</title>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
@@ -26,7 +27,8 @@
           <span class="mypage_text_menu">마이페이지</span>
         </div>
         <div class="header_menu login_menu">
-          <span><a href="login.html">Login</a></span>
+          <span><a class="login_state" href="login.html">Login</a></span>
+          <span class="logout_state">Logout</span>
         </div>
       </nav>
     </header>
@@ -80,28 +82,28 @@
           .auth()
           .signInWithEmailAndPassword(email, password)
           .then((userCredential) => {
-            warning_Message.style.visibility = "hidden";
-            loginForm.reset();
-            window.location.replace("http://localhost:5000/index.html");
+            login_Warning_Message.style.visibility = "hidden";
+            window.location.replace("../index.html");
           })
           .catch((err) => {
-            warning_Message.style.visibility = "visible";
+            login_Warning_Message.style.visibility = "visible";
           });
       });
     </script>
 
     <script>
+      const db = firebase.firestore();
       const kakaoLogin = document.querySelector("#kakao_Login_Button");
+      const KAKAO_REST_API_KEY = "bd2e10a597f57c10609a98f50b97cd6c";
+      const KAKAO_REDIRECT_URI =
+        "https://wishcruncher-gigi.web.app/Pages/login.html";
       kakaoLogin.addEventListener("click", (e) => {
         e.preventDefault();
         Kakao.Auth.authorize({
-          redirectUri: "http://localhost:5000/Pages/login.html",
+          redirectUri: "https://wishcruncher-gigi.web.app/Pages/login.html",
         });
       });
-
       const code = window.location.search.split("=")[1];
-      const KAKAO_REST_API_KEY = "bd2e10a597f57c10609a98f50b97cd6c";
-      const KAKAO_REDIRECT_URI = "http://localhost:5000/Pages/login.html";
       if (code) {
         let url = `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&code=${code}`;
         fetch(url, {
@@ -132,7 +134,12 @@
                   .auth()
                   .signInWithCustomToken(firebase_Token)
                   .then((userCredential) => {
-                    console.log(userCredential.user);
+                    db.collection("users")
+                      .doc(userCredential.user.uid)
+                      .set({ nickname: userCredential.user.displayName })
+                      .then((res) => {
+                        window.location.replace("../index.html");
+                      });
                   });
               });
           });

@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../CSS/index.css" />
-    <link rel="icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="../CSS/globalLayout.css" />
+    <link rel="stylesheet" href="../CSS/signup.css" />
+    <link rel="icon" href="../favicon.ico" />
     <title>WishCruncher</title>
   </head>
   <body>
@@ -18,7 +19,8 @@
           <span class="mypage_text_menu">마이페이지</span>
         </div>
         <div class="header_menu login_menu">
-          <span><a href="login.html">Login</a></span>
+          <span><a class="login_state" href="login.html">Login</a></span>
+          <span class="logout_state">Logout</span>
         </div>
       </nav>
     </header>
@@ -78,10 +80,10 @@
             >
           </div>
           <button
-            id="signup_Submit_Button"
-            name="signup_Submit_Button"
             class="submit_Button"
-            disabled="false"
+            id="signup_Button"
+            name="signup_Submit_Button"
+            disabled="true"
           >
             확인
           </button>
@@ -104,6 +106,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
+
     <script>
       // 유효성 검사
       function Inspect(data, type) {
@@ -128,7 +131,8 @@
       const checkEmail = document.querySelector("#check_Email_Button");
       const signupEmailInput = document.querySelector("#signup_Email_Input");
       let validEmail = false;
-
+      let validNickname = false;
+      let equalPasswordBoolean = false;
       // 이메일 중복 버튼 이벤트
       checkEmail.addEventListener("click", (e) => {
         e.preventDefault();
@@ -160,13 +164,13 @@
 
       // 닉네임 확인
       const nicknameInput = document.querySelector("#nickname_input");
-      let validNickname = false;
       nicknameInput.addEventListener("keyup", () => {
         if (Inspect(nicknameInput.value, "nickname")) {
           validNickname = true;
         } else {
           validNickname = false;
         }
+        validButton(validEmail, validNickname, equalPasswordBoolean);
       });
 
       // 비밀번호 확인 이벤트
@@ -174,11 +178,10 @@
       const confirmPasswordInput = document.querySelector(
         "#confirm_Password_Input"
       );
-      let equalPasswordBoolean = false;
 
       // 비밀번호, 비밀번호확인 입력 동일한지 확인하는 함수
       function equalPassword(password, confirmPassword) {
-        if (password === confirmPassword) {
+        if (password.length >= 8 && password === confirmPassword) {
           check_password_Invalid_Message.style.display = "none";
           equalPasswordBoolean = true;
         } else {
@@ -187,10 +190,15 @@
         }
       }
 
+      const signupSubmitButton = document.querySelector("#signup_Button");
       // 버튼 활성화 조건 함수
       function validButton(validEmail, validNickname, validPassword) {
         if (validEmail && validNickname && validPassword) {
-          //TODO: 버튼 활성화
+          signupSubmitButton.disabled = false;
+          signupSubmitButton.style.background = "#ab86df";
+        } else {
+          signupSubmitButton.disabled = true;
+          signupSubmitButton.style.background = "#d2bdf0";
         }
       }
 
@@ -212,22 +220,30 @@
         }
         equalPassword(passwordInput.value, confirmPasswordInput.value);
         validButton(validEmail, validNickname, equalPasswordBoolean);
-        console.log(validEmail, "validEmail");
-        console.log(validNickname, "validNickname");
-        console.log(equalPasswordBoolean, "equalPasswordBoolean");
       });
 
       // 회원가입 버튼 이벤트
       const signupForm = document.querySelector("#signup_Form");
-      const signupSubmitButton = document.querySelector(
-        "#signup_Submit_Button"
-      );
-      if (validEmail && validNickname && equalPasswordBoolean) {
-        //TODO: 안되네;;;;;;;
-        signupForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-        });
-      }
+
+      const db = firebase.firestore();
+
+      signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(
+            signupEmailInput.value,
+            passwordInput.value
+          )
+          .then((userInfo) => {
+            db.collection("users")
+              .doc(userInfo.user.uid)
+              .set({ nickname: nicknameInput.value })
+              .then((res) => {
+                window.location.replace("./login.html");
+              });
+          });
+      });
     </script>
   </body>
 </html>
