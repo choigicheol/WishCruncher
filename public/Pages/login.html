@@ -20,11 +20,13 @@
     <header id="header_container">
       <nav id="header_area">
         <div class="header_menu">
-          <a href="../index.html"><img src="../Images/logo.png" /></a>
+          <a id="header_Logo" href="../index.html"
+            ><img src="../Images/logo.png"
+          /></a>
         </div>
         <div class="header_menu header_text_menu">
-          <span class="home_text_menu"> <a href="../index.html">홈</a></span>
-          <span class="mypage_text_menu">마이페이지</span>
+          <span class="home_text_menu"> <a href="../index.html">Home</a></span>
+          <span class="mypage_text_menu">MyPage</span>
         </div>
         <div class="header_menu login_menu">
           <span><a class="login_state" href="login.html">Login</a></span>
@@ -32,30 +34,34 @@
         </div>
       </nav>
     </header>
-    <main id="login_Page">
-      <div id="login_Page_Container">
-        <form id="login_Form">
-          <div id="login_Title">로그인</div>
-          <label class="input_Label" for="email_Input">이메일</label>
-          <input type="email" name="email_Input" required />
-          <label class="input_Label" for="password_Input">비밀번호</label>
-          <input
-            id="password_input"
-            type="password"
-            name="password_Input"
-            required
-          />
-          <div id="login_Warning_Message">로그인 정보를 확인해주세요</div>
-          <button class="submit_Button">로그인</button>
-        </form>
-        <button id="kakao_Login_Button">
-          <div id="kakao_Login_Button_Contents">
-            <img src="../Images/kakaoLogo.svg" />
-            <span>카카오 로그인</span>
+    <main>
+      <div id="login_Page">
+        <div id="login_Page_Container">
+          <form id="login_Form">
+            <div id="login_Title">로그인</div>
+            <label class="input_Label" for="email_Input">이메일</label>
+            <input type="email" name="email_Input" required />
+            <label class="input_Label" for="password_Input">비밀번호</label>
+            <input
+              id="password_input"
+              type="password"
+              name="password_Input"
+              required
+            />
+            <div id="login_Warning_Message">로그인 정보를 확인해주세요</div>
+            <button class="submit_Button">로그인</button>
+          </form>
+          <button id="kakao_Login_Button">
+            <div id="kakao_Login_Button_Contents">
+              <img src="../Images/kakaoLogo.svg" />
+              <span>카카오 로그인</span>
+            </div>
+          </button>
+          <div id="go_To_signUp">
+            <a href="signup.html"
+              >아직 이메일이 없으신가요? 회원가입 하러가기</a
+            >
           </div>
-        </button>
-        <div id="go_To_signUp">
-          <a href="signup.html">아직 이메일이 없으신가요? 회원가입 하러가기</a>
         </div>
       </div>
     </main>

@@ -52,10 +52,18 @@ header {
   border-bottom: 1px solid #ffffff;
 }
 
+#header_Logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 @media screen and (max-width: 470px) {
-  #header_Logo {
+  #header_Logo img {
     width: 35px;
-    cursor: pointer;
   }
 }
 
@@ -100,7 +108,7 @@ main {
 
 .header_text_menu {
   font-weight: 300;
-  font-size: 0.8rem;
+  font-size: 1rem;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -113,7 +121,7 @@ main {
 
 @media screen and (max-width: 470px) {
   .header_text_menu {
-    font-size: 0.5rem;
+    font-size: 0.625rem;
   }
 }
 
@@ -131,6 +139,20 @@ main {
   cursor: pointer;
 }
 
+#login_Form {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .login_state {
   display: block;
   text-align: center;
@@ -141,6 +163,11 @@ main {
   border: 1px solid #2d2d2d;
   border-radius: 4px;
   background: #2d2d2d;
+  color: #ffffff;
+}
+
+.login_state:hover {
+  color: #e6e6e6;
 }
 
 @media screen and (max-width: 470px) {
@@ -150,14 +177,6 @@ main {
     width: 60px;
     font-size: 0.6rem;
   }
-}
-
-.login_state a {
-  color: #ffffff;
-}
-
-.login_state a:hover {
-  color: #e6e6e6;
 }
 
 .logout_state {
@@ -173,6 +192,10 @@ main {
   color: #ffffff;
 }
 
+.logout_state:hover {
+  color: #e6e6e6;
+}
+
 @media screen and (max-width: 470px) {
   .logout_state {
     height: 20px;
@@ -180,10 +203,6 @@ main {
     width: 60px;
     font-size: 0.6rem;
   }
-}
-
-.logout_state:hover {
-  color: #e6e6e6;
 }
 
 .home_text_menu {
@@ -200,6 +219,7 @@ main {
 footer {
   width: 100%;
   height: 130px;
+  border-top: 1px solid #ffffff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -209,7 +229,18 @@ footer {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border-top: 1px solid #ffffff;
+}
+
+footer a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .github_Link {
@@ -234,6 +265,7 @@ footer {
 }
 
 a {
+  width: 100%;
   text-decoration: none;
   cursor: pointer;
 }
@@ -255,10 +287,18 @@ input {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border-radius: 4px;
-  margin: 6px 0 33px 0;
+  margin: 6px 0 43px 0;
   font-weight: 300;
   padding: 0 10px 0 10px;
   color: #2d2d2d;
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 590px) {
+  input {
+    height: 37px;
+    font-size: 0.8125rem;
+  }
 }
 
 .inputStyle {
@@ -275,11 +315,13 @@ input {
 }
 
 .input_Label {
+  width: 100%;
+  text-align: start;
   font-weight: 100;
 }
 
 .submit_Button {
-  width: 396px;
+  width: 100%;
   height: 47px;
   background: #ab86df;
   -webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
@@ -287,8 +329,8 @@ input {
   border: none;
   border-radius: 4px;
   color: #ffffff;
-  margin-bottom: 11px;
-  font-size: 16px;
+  margin-bottom: 21px;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -296,9 +338,17 @@ input {
   background: #8b6aba;
 }
 
+@media screen and (max-width: 590px) {
+  .submit_Button {
+    height: 37px;
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+  }
+}
+
 .check_Warning_Message {
   width: 100%;
-  height: 35px;
+  height: 45px;
   font-size: 14px;
   font-weight: 100;
   margin-top: 15px;

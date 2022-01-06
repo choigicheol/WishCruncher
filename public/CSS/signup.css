@@ -1,5 +1,17 @@
+#signup_Page {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 10px;
+}
+
 #signup_Page_Container {
-  width: 475px;
+  max-width: 475px;
+  width: 100%;
   height: 709px;
   background: #ffffff;
   -webkit-box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.1);
@@ -17,12 +29,31 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 40px;
+}
+
+@media screen and (max-width: 590px) {
+  #signup_Page_Container {
+    padding: 20px;
+    margin: 30px 0 30px 0;
+  }
+}
+
+#signup_Form {
+  width: 100%;
 }
 
 #signup_Title {
   font-size: 2rem;
   width: 100%;
-  margin: 58px 0 40px 0;
+  margin: 20px 0 40px 0;
+}
+
+@media screen and (max-width: 590px) {
+  #signup_Title {
+    font-size: 1.5rem;
+    margin: 20px 0 20px 0;
+  }
 }
 
 #email_Input_Area {
@@ -30,6 +61,7 @@
   display: -ms-flexbox;
   display: flex;
   width: 100%;
+  margin-top: 6px;
 }
 
 #email_Input_Area #check_Email_Button {
@@ -60,6 +92,15 @@
   background: #8b6aba;
 }
 
+@media screen and (max-width: 590px) {
+  #email_Input_Area #check_Email_Button {
+    height: 37px;
+    width: 80px;
+    font-size: 0.75rem;
+    font-weight: 100;
+  }
+}
+
 #check_Email_Fail_Message {
   display: none;
   color: red;
@@ -82,4 +123,17 @@
 
 #signup_Button {
   background: #d2bdf0;
+}
+
+@media screen and (max-width: 590px) {
+  #signup_Button {
+    height: 37px;
+    font-size: 0.875rem;
+  }
+}
+
+@media screen and (max-width: 590px) {
+  #go_To_signUp a {
+    font-size: 0.875rem;
+  }
 }

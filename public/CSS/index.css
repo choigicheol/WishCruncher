@@ -1,4 +1,4 @@
-#main_Page_Container {
+#main_Page {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -11,8 +11,8 @@
 }
 
 @media screen and (max-width: 884px) {
-  #main_Page_Container {
-    padding: 40px 0 40px 0;
+  #main_Page {
+    padding: 10px;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -57,9 +57,7 @@
 @media screen and (max-width: 470px) {
   .side_Bar {
     width: 100%;
-    padding: 10px;
-    margin: 0.625rem;
-    height: auto;
+    height: 28.125rem;
   }
 }
 
@@ -74,7 +72,7 @@
 
 @media screen and (max-width: 470px) {
   .sidebar_Title {
-    font-size: 1rem;
+    font-size: 1.25rem;
     height: 20px;
     line-height: 20px;
   }
@@ -129,8 +127,8 @@
 
 @media screen and (max-width: 470px) {
   .money_Button {
-    width: 8rem;
-    height: 1.8rem;
+    max-width: 8.125rem;
+    height: 2rem;
     font-size: 6px;
   }
 }
@@ -257,30 +255,29 @@
           flex-direction: column;
 }
 
-#add_Item_Contens {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+#add_Item_Contents {
   width: 100%;
+  display: none;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 20px 0 20px 0;
+  border-top: 1px dashed #c4c4c4;
 }
 
 @media screen and (max-width: 590px) {
-  #add_Item_Contens {
+  #add_Item_Contents {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
   }
 }
 
 #upload_Photo_Box {
-  width: 150px;
+  width: 200px;
   height: 130px;
   position: relative;
-  display: none;
 }
 
 #upload_Photo_Box #upload_Image_Box {
@@ -336,38 +333,29 @@
 
 #add_Item_Input_Area {
   width: 100%;
-  display: none;
+}
+
+#add_Item_Input_Area #add_Item_Input_Row_Middle {
+  margin: 20px 0 20px 0;
 }
 
 #add_Item_Input_Area .add_Item_Input_Row {
   width: 100%;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-bottom: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-@media screen and (max-width: 520px) {
-  #add_Item_Input_Area .add_Item_Input_Row {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-  }
-}
-
-#add_Item_Input_Area .add_Item_Input_Row div {
-  text-align: end;
-  width: 100px;
-  margin: 0 20px 0 20px;
+#add_Item_Input_Area .add_Item_Input_Row .add_Item_Input_Row_Category {
   font-weight: 300;
 }
 
 @media screen and (max-width: 590px) {
-  #add_Item_Input_Area .add_Item_Input_Row div {
+  #add_Item_Input_Area .add_Item_Input_Row .add_Item_Input_Row_Category {
     width: 80px;
     margin: 0 20px 0 0;
   }
@@ -432,10 +420,9 @@
 }
 
 #regi_Item_Button_Box {
+  border-top: 1px dashed #c4c4c4;
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -444,13 +431,12 @@
 #regi_Item {
   width: 80px;
   height: 30px;
-  display: none;
   background: #ab86df;
   border: none;
   border-radius: 5px;
   color: #ffffff;
   font-weight: 300;
-  margin: 15px 0 10px 0;
+  margin: 10px 0 10px 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   cursor: pointer;
@@ -512,7 +498,7 @@
   border-radius: 8px;
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 590px) {
   .photo_Box {
     width: 80px;
     height: 80px;
@@ -524,7 +510,7 @@
   }
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 470px) {
   .photo_Box {
     width: 50px;
     height: 50px;
@@ -567,7 +553,7 @@
   margin-right: 30px;
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 590px) {
   .item_Contents {
     font-size: 0.9rem;
     margin-left: 15px;
@@ -586,7 +572,7 @@
   }
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 470px) {
   .item_Contents {
     font-size: 0.6rem;
     margin-left: 10px;
@@ -631,7 +617,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 590px) {
   .edit_Button_Box {
     margin-left: 15px;
     width: 50px;
@@ -641,7 +627,7 @@
   }
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 470px) {
   .edit_Button_Box {
     margin-left: 10px;
     width: 40px;

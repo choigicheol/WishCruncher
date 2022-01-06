@@ -93,7 +93,11 @@ function showResult(numTotalMoney) {
   //
   const username_Box = document.createElement("div");
   username_Box.setAttribute("id", "username_Box");
-  username_Box.textContent = `${username} 님,`;
+  if (username) {
+    username_Box.textContent = `${username} 님,`;
+  } else {
+    username_Box.textContent = `비회원 님,`;
+  }
   //
   const total_Info = document.createElement("div");
   total_Info.setAttribute("id", "total_Info");

@@ -12,11 +12,13 @@
     <header id="header_container">
       <nav id="header_area">
         <div class="header_menu">
-          <a href="../index.html"><img src="../Images/logo.png" /></a>
+          <a id="header_Logo" href="../index.html"
+            ><img src="../Images/logo.png"
+          /></a>
         </div>
         <div class="header_menu header_text_menu">
-          <span class="home_text_menu"><a href="../index.html">홈</a></span>
-          <span class="mypage_text_menu">마이페이지</span>
+          <span class="home_text_menu"><a href="../index.html">Home</a></span>
+          <span class="mypage_text_menu">MyPage</span>
         </div>
         <div class="header_menu login_menu">
           <span><a class="login_state" href="login.html">Login</a></span>
@@ -24,72 +26,74 @@
         </div>
       </nav>
     </header>
-    <main id="signup_Page">
-      <div id="signup_Page_Container">
-        <form id="signup_Form">
-          <div id="signup_Title">회원가입 🎉</div>
-          <label class="input_Label" for="email_Input">이메일</label>
-          <div id="email_Input_Area">
-            <!-- 이메일 입력 -->
+    <main>
+      <div id="signup_Page">
+        <div id="signup_Page_Container">
+          <form id="signup_Form">
+            <div id="signup_Title">회원가입 🎉</div>
+            <label class="input_Label" for="email_Input">이메일</label>
+            <div id="email_Input_Area">
+              <!-- 이메일 입력 -->
+              <input
+                id="signup_Email_Input"
+                class="margin0_Input"
+                type="email"
+                name="email_Input"
+                required
+              />
+              <div id="check_Email_Button">중복검사</div>
+            </div>
+            <div class="check_Warning_Message">
+              <span id="check_Email_Fail_Message"
+                >중복되는 이메일이 존재합니다.</span
+              >
+              <span id="check_Email_Success_Message"
+                >사용 가능한 이메일입니다.</span
+              >
+              <span id="check_Email_Invalid_Message"
+                >유효하지 않은 이메일입니다.</span
+              >
+            </div>
+            <!-- 닉네임 입력 -->
+            <label class="input_Label" for="nickname_Input">닉네임</label>
+            <input id="nickname_input" name="nickname_Input" required />
+            <!-- 비밀번호 입력 -->
+            <label class="input_Label" for="password_Input">비밀번호</label>
             <input
-              id="signup_Email_Input"
-              class="margin0_Input"
-              type="email"
-              name="email_Input"
+              id="password_Input"
+              type="password"
+              name="password_Input"
+              placeholder="8~16자, 영문 대소문자, 특수문자를 포함해주세요."
               required
             />
-            <div id="check_Email_Button">중복검사</div>
+            <!-- 비밀번호 확인 입력 -->
+            <label class="input_Label" for="confirm_password_Input"
+              >비밀번호 확인</label
+            >
+            <input
+              id="confirm_Password_Input"
+              class="margin0_Input"
+              type="password"
+              name="confirm_password_Input"
+              required
+            />
+            <div class="check_Warning_Message">
+              <span id="check_password_Invalid_Message"
+                >비밀번호를 다시 확인해주세요.</span
+              >
+            </div>
+            <button
+              class="submit_Button"
+              id="signup_Button"
+              name="signup_Submit_Button"
+              disabled="true"
+            >
+              확인
+            </button>
+          </form>
+          <div id="go_To_signUp">
+            <a href="login.html">뒤로가기</a>
           </div>
-          <div class="check_Warning_Message">
-            <span id="check_Email_Fail_Message"
-              >중복되는 이메일이 존재합니다.</span
-            >
-            <span id="check_Email_Success_Message"
-              >사용 가능한 이메일입니다.</span
-            >
-            <span id="check_Email_Invalid_Message"
-              >유효하지 않은 이메일입니다.</span
-            >
-          </div>
-          <!-- 닉네임 입력 -->
-          <label class="input_Label" for="nickname_Input">닉네임</label>
-          <input id="nickname_input" name="nickname_Input" required />
-          <!-- 비밀번호 입력 -->
-          <label class="input_Label" for="password_Input">비밀번호</label>
-          <input
-            id="password_Input"
-            type="password"
-            name="password_Input"
-            placeholder="8~16자, 영문 대소문자, 특수문자를 포함해주세요."
-            required
-          />
-          <!-- 비밀번호 확인 입력 -->
-          <label class="input_Label" for="confirm_password_Input"
-            >비밀번호 확인</label
-          >
-          <input
-            id="confirm_Password_Input"
-            class="margin0_Input"
-            type="password"
-            name="confirm_password_Input"
-            required
-          />
-          <div class="check_Warning_Message">
-            <span id="check_password_Invalid_Message"
-              >비밀번호를 다시 확인해주세요.</span
-            >
-          </div>
-          <button
-            class="submit_Button"
-            id="signup_Button"
-            name="signup_Submit_Button"
-            disabled="true"
-          >
-            확인
-          </button>
-        </form>
-        <div id="go_To_signUp">
-          <a href="login.html">뒤로가기</a>
         </div>
       </div>
     </main>
