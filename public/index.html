@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../CSS/index.css" />
+    <link rel="stylesheet" href="./CSS/globalLayout.css" />
+    <link rel="stylesheet" href="./CSS/index.css" />
     <link rel="icon" href="./favicon.ico" />
     <title>WishCruncher</title>
   </head>
@@ -11,22 +12,113 @@
     <header id="header_container">
       <nav id="header_area">
         <div class="header_menu">
-          <a href="index.html"><img src="./Images/logo.png" /></a>
+          <a id="header_Logo" href="index.html"
+            ><img src="./Images/logo.png" alt="logo"
+          /></a>
         </div>
         <div class="header_menu header_text_menu">
-          <span class="home_text_menu"><a href="index.html">홈</a></span>
-          <span class="mypage_text_menu">마이페이지</span>
+          <span class="home_text_menu"><a href="index.html">Home</a></span>
+          <span class="mypage_text_menu">MyPage</span>
         </div>
         <div class="header_menu login_menu">
-          <span><a href="./Pages/login.html">Login</a></span>
+          <span
+            ><a class="login_state" href="./Pages/login.html">Login</a></span
+          >
+          <span class="logout_state">Logout</span>
         </div>
       </nav>
     </header>
-    <main class="main_Page"></main>
+    <main>
+      <div id="main_Page">
+        <div class="side_Bar">
+          <div class="sidebar_Title">월 여유금액</div>
+          <input id="money_Input" value="0" />
+          <div id="money_Button_Container">
+            <button name="won1000000" class="money_Button">+ 1,000,000</button>
+            <button name="won100000" class="money_Button">+ 100,000</button>
+            <button name="won50000" class="money_Button">+ 50,000</button>
+            <button name="won10000" class="money_Button">+ 10,000</button>
+          </div>
+          <div id="operation_Wish_Level_Box">
+            <div class="sidebar_Title">최소 위시 레벨</div>
+            <div id="Wish_Level_Box">
+              <button
+                name="wish_Level_Minus"
+                class="wish_Level_Operation_Button"
+              >
+                -
+              </button>
+              <span id="wish_Level">0</span>
+              <button
+                name="wish_Level_Plus"
+                class="wish_Level_Operation_Button"
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <button id="sidebar_Submit_Button">결과보기</button>
+        </div>
+        <!-- 위시리스트 구역 -->
+        <div class="wish_List_Container">
+          <!-- 위시리스트 제품등록 창 -->
+          <div id="add_Item_Box">
+            <div id="add_Item_Button_Box">
+              <div id="add_Item_Button">
+                <img id="plus_Icon" src="./Images/plus_Icon.png" />
+              </div>
+            </div>
+            <div id="add_Item_Contents">
+              <div id="upload_Photo_Box">
+                <div id="upload_Image_Box">
+                  <img
+                    id="upload_Plus_Image"
+                    src="./Images/photo_Plus_Button.svg"
+                    alt="+"
+                  />
+                  <img id="thumb_Image" src="" alt="+" />
+                </div>
+                <input id="upload_Photo_Input" type="file" />
+              </div>
+              <div id="add_Item_Input_Area">
+                <div class="add_Item_Input_Row">
+                  <span class="add_Item_Input_Row_Category">제품</span>
+                  <input class="add_Item_Input" />
+                </div>
+                <div id="add_Item_Input_Row_Middle" class="add_Item_Input_Row">
+                  <span class="add_Item_Input_Row_Category">가격</span>
+                  <input class="add_Item_Input" />
+                </div>
+                <div class="add_Item_Input_Row">
+                  <span class="add_Item_Input_Row_Category">위시 레벨</span>
+                  <div id="wish_Level_Button_Box">
+                    <button class="wish_Level_Button" name="level0">1</button>
+                    <button class="wish_Level_Button" name="level1">2</button>
+                    <button class="wish_Level_Button" name="level2">3</button>
+                    <button class="wish_Level_Button" name="level3">4</button>
+                    <button class="wish_Level_Button" name="level4">5</button>
+                    <button class="wish_Level_Button" name="level5">6</button>
+                    <button class="wish_Level_Button" name="level6">7</button>
+                    <button class="wish_Level_Button" name="level7">8</button>
+                    <button class="wish_Level_Button" name="level8">9</button>
+                    <button class="wish_Level_Button" name="level9">10</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="regi_Item_Button_Box">
+              <button id="regi_Item">등 록</button>
+            </div>
+          </div>
+          <!-- 위시 제품 리스트 구역 -->
+          <div id="user_Item_Area"></div>
+        </div>
+      </div>
+    </main>
     <footer>
       <a href="https://github.com/choigicheol" target="_blank">
         <div class="github_Link">
-          <img src="../Images/github_Icon.svg" />
+          <img src="./Images/github_Icon.svg" />
           <span>Choi Gi Cheol</span>
         </div>
       </a>
@@ -35,33 +127,115 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
-    <!-- 
-    <script defer src="/__/firebase/9.5.0/firebase-app-compat.js"></script>
-    <script defer src="/__/firebase/9.5.0/firebase-auth-compat.js"></script>
-    <script
-      defer
-      src="/__/firebase/9.5.0/firebase-firestore-compat.js"
-    ></script>
-    <script defer src="/__/firebase/9.5.0/firebase-storage-compat.js"></script>
-    <script
-      defer
-      src="/__/firebase/9.5.0/firebase-analytics-compat.js"
-    ></script>
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script> -->
+    <script src="./firebase.js"></script>
 
-    <!-- <script>
-      const db = firebase.firestore();
-      db.collection("wish")
-      .get()
-      .then((res) => {
-        res.forEach((wish) => {
-          const wishList = document.querySelector(".test");
-          const wishDiv = document.createElement("div");
-            wishList.append(wishDiv);
-            wishDiv.textContent = `${wish.data().상품}`;
+    <!-- 위시리스트 등록 -->
+    <script src="./JavaScript/addWishList.js"></script>
+    <!-- 유저 로그인 상태, 위시리스트 데이터베이스 확인 -->
+    <script src="JavaScript/userItems.js"></script>
+
+    <!-- 유저 로그아웃 -->
+    <script src="JavaScript/logout.js"></script>
+    <script>
+      // 위시 추가버튼 transform, color 조정
+      const addItemButton = document.querySelector("#add_Item_Button");
+      let isTransform = false;
+      var selectWishLevel = 0;
+      addItemButton.addEventListener("click", () => {
+        isTransform = !isTransform;
+        if (isTransform) {
+          const wishLevelButton =
+            document.querySelectorAll(".wish_Level_Button");
+          plus_Icon.style.transform = "rotate(45deg)";
+          add_Item_Button.style.background = "#FF7B7B";
+          add_Item_Contents.style.display = "flex";
+          regi_Item_Button_Box.style.display = "flex";
+
+          // wishLevel 선택창
+          wishLevelButton.forEach((wishLevel, idx) => {
+            wishLevel.addEventListener("click", (e) => {
+              wishLevelButton.forEach((wishLevel, idx) => {
+                wishLevel.style.background = "rgba(225, 225, 225, 0.4)";
+                wishLevel.style.border = "2px solid #dedede";
+              });
+              wishLevel.style.background = "#2f2f2f";
+              wishLevel.style.border = "2px solid #2d2d2d";
+              selectWishLevel = idx + 1;
+            });
+          });
+        } else {
+          plus_Icon.style.transform = "";
+          add_Item_Button.style.background = "#ab86df";
+          add_Item_Contents.style.display = "none";
+          regi_Item_Button_Box.style.display = "none";
+          wishLevelButton.forEach((wishLevel) => {
+            wishLevel.style.background = "rgba(225, 225, 225, 0.4)";
+            wishLevel.style.border = "2px solid #dedede";
+          });
+          item_Input[0].value = null;
+          item_Input[1].value = null;
+          upload_Plus_Image.style.display = "block";
+          thumb_Image.style.display = "none";
+          item_Image_File.value = null;
+        }
+      });
+    </script>
+
+    <script>
+      // 가격에 comma 넣어주기 위한 함수
+      function makePriceComma(price) {
+        const removeComma = price.split(",").join("");
+        let priceLen = removeComma.length - 1;
+        let result = "";
+        let count = 0;
+        if (price.length > 3) {
+          for (let i = priceLen; i >= 0; i--) {
+            result = removeComma[i] + result;
+            count++;
+            if (count % 3 === 0 && i) {
+              result = "," + result;
+            }
+          }
+        } else {
+          result = price;
+        }
+        return result;
+      }
+
+      item_Input[1].addEventListener("keyup", () => {
+        item_Input[1].value = makePriceComma(item_Input[1].value);
+      });
+
+      // 위시리스트 삭제
+      setTimeout(() => {
+        const deleteButton = document.querySelectorAll(".delete_Button");
+        const itemBox = document.querySelectorAll(".item_Box");
+        deleteButton.forEach((deleteBtn, idx) => {
+          deleteBtn.addEventListener("click", (e) => {
+            db.collection("users")
+              .doc(userUid)
+              .collection("wish")
+              .doc(`item${e.target.id}`)
+              .delete()
+              .then((res) => {
+                itemBox[idx].style.display = "none";
+              })
+              .then((res) => {
+                db.collection("users")
+                  .doc(userUid)
+                  .collection("wish")
+                  .get()
+                  .then((res) => {
+                    if (!res.size) {
+                      showEmptyItem();
+                    }
+                  });
+              });
           });
         });
-      </script> -->
-    <script src="./firebase.js"></script>
+      }, 3000);
+    </script>
+    <script src="./JavaScript/sidebar.js"></script>
+    <script src="./JavaScript/result.js"></script>
   </body>
 </html>

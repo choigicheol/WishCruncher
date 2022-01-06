@@ -327,6 +327,7 @@
 
 @media screen and (max-width: 590px) {
   #upload_Photo_Box {
+    width: 130px;
     margin-bottom: 15px;
   }
 }

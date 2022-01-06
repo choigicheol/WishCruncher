@@ -28,6 +28,14 @@ function uploadClientDatabaseItem(uploadUrl) {
     clientData.push(item_Input_Data);
     add_To_Item_List(item_Input_Data);
   }
+  item_Input[0].value = null;
+  item_Input[1].value = null;
+  wishLevelButton[selectWishLevel - 1].style.background =
+    "rgba(225, 225, 225, 0.4)";
+  wishLevelButton[selectWishLevel - 1].style.border = "1px solid #dedede";
+  upload_Plus_Image.style.display = "block";
+  thumb_Image.style.display = "none";
+  item_Image_File.value = null;
 }
 function uploadUserDatabaseItem(uploadUrl) {
   let item_Input_Data = {

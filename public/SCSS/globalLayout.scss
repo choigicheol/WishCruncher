@@ -1,0 +1,279 @@
+@font-face {
+  font-family: "SBAggro";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroL.woff")
+    format("woff");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SBAggro";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroM.woff")
+    format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SBAggro";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff")
+    format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@function remove-unit($value) {
+  @return ($value / ($value * 0 + 1));
+}
+$base-rem-size: 16;
+@function rem($px, $base: $base-rem-size) {
+  @return (remove-unit($px / $base)) * 1rem;
+}
+
+* {
+  font-family: "SBAggro";
+  color: #2d2d2d;
+  -webkit-text-size-adjust: none;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  max-width: 1260px;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #ffffff;
+}
+
+#header_Logo {
+  display: flex;
+  align-items: center;
+  img {
+    @media screen and (max-width: 470px) {
+      width: 35px;
+    }
+  }
+}
+
+main {
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  background: #f2f2f2;
+}
+
+#header_area {
+  width: 100%;
+  display: flex;
+  padding: 0 10px 0 10px;
+}
+
+.header_menu {
+  flex: 1;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  @media screen and (max-width: 470px) {
+    font-size: 0.8rem;
+  }
+}
+
+.header_text_menu {
+  font-weight: 300;
+  font-size: rem(16px);
+  justify-content: center;
+  max-width: 300px;
+  width: 100%;
+  justify-content: space-between;
+  @media screen and (max-width: 470px) {
+    font-size: rem(10px);
+  }
+}
+
+.login_menu {
+  display: flex;
+  font-weight: 300;
+  justify-content: right;
+  span {
+    cursor: pointer;
+  }
+}
+
+#login_Form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login_state {
+  display: block;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  width: 80px;
+  font-size: 0.8rem;
+  border: 1px solid #2d2d2d;
+  border-radius: 4px;
+  background: #2d2d2d;
+  color: #ffffff;
+  &:hover {
+    color: #e6e6e6;
+  }
+  @media screen and (max-width: 470px) {
+    height: 20px;
+    line-height: 20px;
+    width: 60px;
+    font-size: 0.6rem;
+  }
+}
+
+.logout_state {
+  display: none;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  width: 80px;
+  font-size: 0.8rem;
+  border: 1px solid #2d2d2d;
+  border-radius: 4px;
+  background: #2d2d2d;
+  color: #ffffff;
+  &:hover {
+    color: #e6e6e6;
+  }
+  @media screen and (max-width: 470px) {
+    height: 20px;
+    line-height: 20px;
+    width: 60px;
+    font-size: 0.6rem;
+  }
+}
+
+.home_text_menu {
+  width: 80px;
+  text-align: center;
+}
+
+.mypage_text_menu {
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+}
+
+footer {
+  width: 100%;
+  height: 130px;
+  border-top: 1px solid #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.github_Link {
+  height: 40px;
+  width: 170px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media screen and (max-width: 520px) {
+    width: 140px;
+    font-size: 0.8rem;
+  }
+}
+
+a {
+  width: 100%;
+  text-decoration: none;
+  cursor: pointer;
+  &:checked {
+    color: #8b6aba;
+  }
+  &:hover {
+    color: #ab86df;
+  }
+}
+
+input {
+  display: block;
+  width: 100%;
+  height: 47px;
+  background: #fbfbfb;
+  border: 2px solid #dedede;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin: 6px 0 43px 0;
+  font-weight: 300;
+  padding: 0 10px 0 10px;
+  color: #2d2d2d;
+  font-size: rem(16px);
+  @media screen and (max-width: 590px) {
+    height: 37px;
+    font-size: rem(13px);
+  }
+}
+
+.inputStyle {
+  display: block;
+  width: 100%;
+  height: 47px;
+  background: #fbfbfb;
+  border: 2px solid #f2f2f2;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin: 6px 0 33px 0;
+  font-weight: 300;
+}
+
+.input_Label {
+  width: 100%;
+  text-align: start;
+  font-weight: 100;
+}
+
+.submit_Button {
+  width: 100%;
+  height: 47px;
+  background: #ab86df;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+  margin-bottom: 21px;
+  font-size: rem(16px);
+  cursor: pointer;
+  &:active {
+    background: #8b6aba;
+  }
+  @media screen and (max-width: 590px) {
+    height: 37px;
+    font-size: rem(14px);
+    margin-bottom: 16px;
+  }
+}
+
+.check_Warning_Message {
+  width: 100%;
+  height: 45px;
+  font-size: 14px;
+  font-weight: 100;
+  margin-top: 15px;
+  padding-left: 7px;
+}
+
+.margin0_Input {
+  margin: 0;
+}
