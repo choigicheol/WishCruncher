@@ -1,10 +1,12 @@
 const arrRandomText = [
+  // 50년
   [
     "이번생에는 포기하시죠",
     "크게 버리는 사람만이 크게 얻을 수 있다",
     "안되겠쥬?",
     "킹받쥬?",
   ],
+  //
   ["test1", "test2", "test3"],
 ];
 
@@ -59,6 +61,12 @@ for (let i = 0; i < wishLevelOperationButton.length; i++) {
   });
 }
 
+// clear 버튼
+const clearButton = document.querySelector("#clear_Button");
+clearButton.addEventListener("click", () => {
+  totalMoney.value = 0;
+});
+
 // 소수점 comma 만들기
 function makeDecimalNumComma(num) {
   return makePriceComma(num.slice(0, num.length - 2)) + num.slice(-2);
@@ -77,7 +85,12 @@ function showResult(numTotalMoney) {
 
   const nowDate = new Date().getTime();
   const resultYear = (resultMonth / 12).toFixed(1);
-  const resultDay = (resultYear * 365).toFixed(0);
+
+  let resultDay = (resultYear * 365).toFixed(0);
+  console.log(resultYear === "0.0");
+  if (resultYear === "0.0") {
+    resultDay = (Number(resultMonth) * 31).toFixed(0);
+  }
   const resultHour = (resultDay * 24).toFixed(0);
   const resultMillisecond = resultHour * 3600 * 1000;
   const commaSumPrice = makePriceComma(String(sumPrice));
@@ -108,7 +121,6 @@ function showResult(numTotalMoney) {
   total_Finish_Date_Box.textContent = `⏰ 예상 완료일 : ${finishYear}년 ${finishMonth}월 ${finishDate}일`;
 
   total_Info.append(total_Wish_Money_Box, total_Finish_Date_Box);
-  //
 
   // 결과 글 컨테이너
   const result_Text_Info_Container = document.createElement("div");
@@ -192,6 +204,16 @@ function showResult(numTotalMoney) {
       ];
   }
 
+  // const share_Kakao = document.createElement("span");
+  // share_Kakao.setAttribute("id", "share_Kakao");
+  // const Kakao_Logo = document.createElement("img");
+  // Kakao_Logo.setAttribute(
+  //   "src",
+  //   "https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+  // );
+
+  // share_Kakao.append(Kakao_Logo);
+
   randomTextContainer.append(angryText, randomText);
 
   result_Text_Info_Container.append(
@@ -204,7 +226,8 @@ function showResult(numTotalMoney) {
 
   result_Container.append(username_Box, total_Info, result_Text_Info_Container);
   wish_List_Container.prepend(result_Container);
-  // });
+  const share_Kakao = document.querySelector("#share_Kakao");
+  share_Kakao.style.display = "inline-flex";
 }
 
 sidebarSubmitButton.addEventListener("click", (e) => {

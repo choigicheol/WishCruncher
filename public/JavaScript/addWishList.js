@@ -93,7 +93,6 @@ regi_Item.addEventListener("click", (e) => {
   var uploadUrl = `https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2FnoImage.png?alt=media&token=94dc86de-37ec-4971-8dbb-f15e5ce82a35`;
   e.preventDefault();
   if (userLogin) {
-    //TODO:
     if (item_Image_File.files[0]) {
       var storageRef = storage.ref();
       var imagePath = storageRef.child(
@@ -106,22 +105,17 @@ regi_Item.addEventListener("click", (e) => {
         (error) => {},
         () => {
           uploadImage.snapshot.ref.getDownloadURL().then((url) => {
-            console.log(url);
             uploadUserDatabaseItem(url);
           });
         }
       );
     } else {
-      //TODO:
       uploadUserDatabaseItem(uploadUrl);
     }
   } else {
     if (item_Image_File.files[0]) {
-      //TODO:
       uploadClientDatabaseItem(item_Image_File.files[0].preview);
     } else {
-      //TODO:
-      console.log(clientData);
       uploadClientDatabaseItem(uploadUrl);
     }
   }

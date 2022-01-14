@@ -145,7 +145,6 @@
           .auth()
           .signInWithEmailAndPassword(emailValue, "dummyPassword#9195")
           .catch((error) => {
-            console.log(error.code);
             if (error.code === "auth/user-not-found") {
               check_Email_Fail_Message.style.display = "none";
               check_Email_Success_Message.style.display = "block";

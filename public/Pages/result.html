@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../CSS/globalLayout.css" />
+    <link rel="stylesheet" href="../CSS/login.css" />
+    <link rel="icon" href="../favicon.ico" />
+    <title>WishCruncher</title>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+      // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+      Kakao.init("7573f9555b42ced32c395787d475bd06");
+
+      // SDK 초기화 여부를 판단합니다.
+      // console.log(Kakao.isInitialized());
+    </script>
+  </head>
+  <body>
+    <header id="header_container">
+      <nav id="header_area">
+        <div class="header_menu">
+          <a id="header_Logo" href="../index.html"
+            ><img src="../Images/logo.png"
+          /></a>
+        </div>
+        <div class="header_menu header_text_menu">
+          <span class="home_text_menu"> <a href="../index.html">Home</a></span>
+          <span class="mypage_text_menu">MyPage</span>
+        </div>
+        <div class="header_menu login_menu">
+          <span><a class="login_state" href="login.html">Login</a></span>
+          <span class="logout_state">Logout</span>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div id="result_Page">
+        <img id="result_Image" />
+      </div>
+    </main>
+    <footer>
+      <a href="https://github.com/choigicheol" target="_blank">
+        <div class="github_Link">
+          <img src="../Images/github_Icon.svg" />
+          <span>Choi Gi Cheol</span>
+        </div>
+      </a>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+    <script src="../firebase.js"></script>
+    <script>
+      const resultUrl = window.location.href;
+      const resultUrltest = new URL(resultUrl);
+      const urlParams = resultUrltest.searchParams;
+      const resultImageSrc = urlParams.get("wordid");
+    </script>
+  </body>
+</html>

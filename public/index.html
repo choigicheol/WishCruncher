@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="./CSS/index.css" />
     <link rel="icon" href="./favicon.ico" />
     <title>WishCruncher</title>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+      // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+      Kakao.init("7573f9555b42ced32c395787d475bd06");
+
+      // SDK 초기화 여부를 판단합니다.
+      // console.log(Kakao.isInitialized());
+    </script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   </head>
   <body>
     <header id="header_container">
@@ -34,10 +43,21 @@
           <div class="sidebar_Title">월 여유금액</div>
           <input id="money_Input" value="0" />
           <div id="money_Button_Container">
-            <button name="won1000000" class="money_Button">+ 1,000,000</button>
-            <button name="won100000" class="money_Button">+ 100,000</button>
-            <button name="won50000" class="money_Button">+ 50,000</button>
-            <button name="won10000" class="money_Button">+ 10,000</button>
+            <div class="button_Row">
+              <button name="won1000000" class="money_Button">
+                + 1,000,000
+              </button>
+              <button name="won100000" class="money_Button left_Money_Button">
+                + 100,000
+              </button>
+            </div>
+            <div class="button_Row">
+              <button name="won50000" class="money_Button">+ 50,000</button>
+              <button name="won10000" class="money_Button left_Money_Button">
+                + 10,000
+              </button>
+            </div>
+            <div id="clear_Button">Clear</div>
           </div>
           <div id="operation_Wish_Level_Box">
             <div class="sidebar_Title">최소 위시 레벨</div>
@@ -62,6 +82,14 @@
         <!-- 위시리스트 구역 -->
         <div class="wish_List_Container">
           <!-- 위시리스트 제품등록 창 -->
+          <div id="share_Kakao_Container">
+            <span id="share_Kakao">
+              <img
+                src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+                alt="카카오링크 보내기 버튼"
+              />공유하기
+            </span>
+          </div>
           <div id="add_Item_Box">
             <div id="add_Item_Button_Box">
               <div id="add_Item_Button">
@@ -110,10 +138,12 @@
               <button id="regi_Item">등 록</button>
             </div>
           </div>
+
           <!-- 위시 제품 리스트 구역 -->
           <div id="user_Item_Area"></div>
         </div>
       </div>
+      <div id="scroll_Top_Button">Top</div>
     </main>
     <footer>
       <a href="https://github.com/choigicheol" target="_blank">
@@ -128,7 +158,37 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="./firebase.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script>
+      // 위시리스트 삭제
+      setTimeout(() => {
+        var allDeleteButton = document.querySelectorAll(".delete_Button");
+        var allItemBox = document.querySelectorAll(".item_Box");
+        allDeleteButton.forEach((deleteBtn, idx) => {
+          deleteBtn.addEventListener("click", (e) => {
+            db.collection("users")
+              .doc(userUid)
+              .collection("wish")
+              .doc(`item${e.target.id}`)
+              .delete()
+              .then((res) => {
+                allItemBox[idx].style.display = "none";
+              })
+              .then((res) => {
+                db.collection("users")
+                  .doc(userUid)
+                  .collection("wish")
+                  .get()
+                  .then((res) => {
+                    if (!res.size) {
+                      showEmptyItem();
+                    }
+                  });
+              });
+          });
+        });
+      }, 3000);
+    </script>
     <!-- 위시리스트 등록 -->
     <script src="./JavaScript/addWishList.js"></script>
     <!-- 유저 로그인 상태, 위시리스트 데이터베이스 확인 -->
@@ -137,6 +197,10 @@
     <!-- 유저 로그아웃 -->
     <script src="JavaScript/logout.js"></script>
     <script>
+      const scrollTopButton = document.querySelector("#scroll_Top_Button");
+      scrollTopButton.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
       // 위시 추가버튼 transform, color 조정
       const addItemButton = document.querySelector("#add_Item_Button");
       let isTransform = false;
@@ -205,37 +269,80 @@
       item_Input[1].addEventListener("keyup", () => {
         item_Input[1].value = makePriceComma(item_Input[1].value);
       });
+    </script>
+    <script>
+      // 캡쳐기능
+      const shareKakao = document.querySelector("#share_Kakao");
 
-      // 위시리스트 삭제
-      setTimeout(() => {
-        const deleteButton = document.querySelectorAll(".delete_Button");
-        const itemBox = document.querySelectorAll(".item_Box");
-        deleteButton.forEach((deleteBtn, idx) => {
-          deleteBtn.addEventListener("click", (e) => {
-            db.collection("users")
-              .doc(userUid)
-              .collection("wish")
-              .doc(`item${e.target.id}`)
-              .delete()
-              .then((res) => {
-                itemBox[idx].style.display = "none";
-              })
-              .then((res) => {
-                db.collection("users")
-                  .doc(userUid)
-                  .collection("wish")
-                  .get()
-                  .then((res) => {
-                    if (!res.size) {
-                      showEmptyItem();
-                    }
-                  });
-              });
-          });
+      shareKakao.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        var wishListResult = document.getElementById("result_Container");
+        html2canvas(wishListResult).then((canvas) => {
+          var imgUrl = canvas.toDataURL("image/jpeg");
+          var realImgUrl = imgUrl.split(",")[1];
+
+          fetch(imgUrl)
+            .then((res) => res.blob())
+            .then((blob) => {
+              var resultFile = new File(
+                [blob],
+                `${Math.random() * 10000000000000000}`, // 파이어베이스에 저장할 이미지 이름
+                {
+                  type: "image/png",
+                }
+              );
+              return resultFile;
+            })
+            .then((res) => {
+              var storageRef = storage.ref();
+              var imagePath = storageRef.child("result/" + res.name);
+              var uploadImage = imagePath.put(res);
+              uploadImage.on(
+                "state_changed",
+                null,
+                (error) => {},
+                () => {
+                  uploadImage.snapshot.ref
+                    .getDownloadURL()
+                    .then((resultUrl) => {
+                      var resultUrlLink = `https://wishcruncher-gigi.web.app/result.html?url=${resultUrl}`;
+                      Kakao.Link.sendDefault({
+                        objectType: "feed",
+                        content: {
+                          title: `💸WishCruncher ${
+                            username || "비회원"
+                          }님 결과`,
+                          imageUrl:
+                            "https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2FnoImage.png?alt=media&token=94dc86de-37ec-4971-8dbb-f15e5ce82a35",
+                          link: {
+                            mobileWebUrl: resultUrlLink,
+                            webUrl: resultUrlLink,
+                          },
+                        },
+
+                        buttons: [
+                          {
+                            title: "웹으로 이동",
+                            link: {
+                              mobileWebUrl: resultUrlLink,
+                            },
+                          },
+                          {
+                            title: "앱으로 이동",
+                            link: {
+                              mobileWebUrl: resultUrlLink,
+                            },
+                          },
+                        ],
+                      });
+                    });
+                }
+              );
+            });
         });
-      }, 3000);
+      });
     </script>
     <script src="./JavaScript/sidebar.js"></script>
-    <script src="./JavaScript/result.js"></script>
   </body>
 </html>
