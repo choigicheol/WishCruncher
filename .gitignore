@@ -66,7 +66,7 @@ node_modules/
 .env
 
 .DS_Store
-
+firebase.js
 firebase.json
 .firebaserc
 firestore.indexes.json
