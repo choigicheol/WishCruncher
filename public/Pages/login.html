@@ -106,7 +106,7 @@
       kakaoLogin.addEventListener("click", (e) => {
         e.preventDefault();
         Kakao.Auth.authorize({
-          redirectUri: "https://wishcruncher-gigi.web.app/Pages/login.html",
+          redirectUri: KAKAO_REDIRECT_URI,
         });
       });
       const code = window.location.search.split("=")[1];
@@ -121,7 +121,8 @@
           .then((res) => res.json())
           .then((res) => {
             const access_Token = res.access_token;
-            const kakaoUserInfo_API_URL = "http://localhost:8000/verifyToken";
+            const kakaoUserInfo_API_URL =
+              "https://wishcruncher.shop/verifyToken";
             const data = {
               token: access_Token,
             };

@@ -97,6 +97,13 @@
   margin-right: 5px;
 }
 
+@media screen and (max-width: 590px) {
+  #kakao_Login_Button_Contents {
+    height: 34px;
+    font-size: 0.875rem;
+  }
+}
+
 #go_To_signUp {
   font-weight: 100;
   font-size: 14px;

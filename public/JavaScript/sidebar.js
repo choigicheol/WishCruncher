@@ -87,7 +87,6 @@ function showResult(numTotalMoney) {
   const resultYear = (resultMonth / 12).toFixed(1);
 
   let resultDay = (resultYear * 365).toFixed(0);
-  console.log(resultYear === "0.0");
   if (resultYear === "0.0") {
     resultDay = (Number(resultMonth) * 31).toFixed(0);
   }

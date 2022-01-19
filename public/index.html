@@ -158,7 +158,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="./firebase.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
       // 위시리스트 삭제
       setTimeout(() => {
@@ -306,32 +305,31 @@
                   uploadImage.snapshot.ref
                     .getDownloadURL()
                     .then((resultUrl) => {
-                      var resultUrlLink = `https://wishcruncher-gigi.web.app/result.html?url=${resultUrl}`;
                       Kakao.Link.sendDefault({
                         objectType: "feed",
                         content: {
-                          title: `💸WishCruncher ${
-                            username || "비회원"
-                          }님 결과`,
+                          title:
+                            "💸WishCruncher에서 자신의 위시리스트를 계획해보세요.",
                           imageUrl:
                             "https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2FnoImage.png?alt=media&token=94dc86de-37ec-4971-8dbb-f15e5ce82a35",
                           link: {
-                            mobileWebUrl: resultUrlLink,
-                            webUrl: resultUrlLink,
+                            mobileWebUrl:
+                              "https://wishcruncher-gigi.web.app/index.html",
                           },
                         },
 
                         buttons: [
                           {
-                            title: "웹으로 이동",
+                            title: "결과보기",
                             link: {
-                              mobileWebUrl: resultUrlLink,
+                              mobileWebUrl: resultUrl,
                             },
                           },
                           {
-                            title: "앱으로 이동",
+                            title: "웹으로 이동",
                             link: {
-                              mobileWebUrl: resultUrlLink,
+                              mobileWebUrl:
+                                "https://wishcruncher-gigi.web.app/index.html",
                             },
                           },
                         ],
