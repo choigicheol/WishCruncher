@@ -126,7 +126,6 @@ app.get("/", (req, res) =>
 
 // actual endpoint that creates a firebase token with Kakao access token
 app.post("/verifyToken", (req, res) => {
-  console.log("@@!#!@#@!$@!@@@@@@@");
   const token = req.body.token;
   if (!token)
     return res
@@ -143,7 +142,7 @@ app.post("/verifyToken", (req, res) => {
 });
 
 // Start the server
-const server = app.listen(process.env.PORT || "8000", () => {
+const server = app.listen(process.env.PORT || "80", () => {
   console.log(
     "KakaoLoginServer for Firebase listening on port %s",
     server.address().port
