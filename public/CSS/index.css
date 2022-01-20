@@ -124,6 +124,10 @@
   cursor: pointer;
 }
 
+#money_Button_Container #clear_Button:active {
+  background: #686868;
+}
+
 .money_Button {
   width: 100%;
   height: 31px;
@@ -231,6 +235,10 @@
   cursor: pointer;
 }
 
+#sidebar_Submit_Button:active {
+  background: #ccb6eb;
+}
+
 .wish_List_Container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -303,7 +311,6 @@
       -ms-flex-align: center;
           align-items: center;
   border: 2px solid #dedede;
-  background: rgba(225, 225, 225, 0.4);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border-radius: 7px;
@@ -376,10 +383,14 @@
   margin: 0;
   width: 100%;
   height: 30px;
-  background: rgba(225, 225, 225, 0.4);
   border-radius: 5px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  background: #ededed;
+}
+
+#add_Item_Input_Area .add_Item_Input_Row .add_Item_Input:focus {
+  background: #ffffff;
 }
 
 #wish_Level_Button_Box {
@@ -739,6 +750,10 @@
           justify-content: center;
 }
 
+#share_Kakao_Container:active {
+  opacity: 0.5;
+}
+
 #share_Kakao {
   height: 30px;
   display: none;
@@ -776,4 +791,24 @@
 
 #scroll_Top_Button:hover {
   opacity: 0.5;
+}
+
+#wish_level_range {
+  padding: 0;
+  margin: 0;
+}
+
+#wish_level_label {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 0.75rem;
+}
+
+#wish_level_label span {
+  margin-left: 6px;
 }

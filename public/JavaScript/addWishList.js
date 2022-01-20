@@ -3,7 +3,7 @@ var clientData = [];
 const item_Input = document.querySelectorAll(".add_Item_Input");
 var item_Image_File = document.querySelector("#upload_Photo_Input");
 const thumb_Image = document.querySelector("#thumb_Image");
-const wishLevelButton = document.querySelectorAll(".wish_Level_Button");
+
 item_Image_File.addEventListener("change", () => {
   item_Image_File.files[0].preview = URL.createObjectURL(
     item_Image_File.files[0]
@@ -17,22 +17,20 @@ function uploadClientDatabaseItem(uploadUrl) {
   let item_Input_Data = {
     제품: item_Input[0].value,
     가격: `${item_Input[1].value} 원`,
-    위시레벨: selectWishLevel,
+    위시레벨: selectWishLevel.value,
     imagePath: uploadUrl,
   };
   if (
     item_Input[0].value.length > 0 &&
     item_Input[1].value.length > 0 &&
-    selectWishLevel > 0
+    selectWishLevel.value > 0
   ) {
     clientData.push(item_Input_Data);
     add_To_Item_List(item_Input_Data);
   }
   item_Input[0].value = null;
   item_Input[1].value = null;
-  wishLevelButton[selectWishLevel - 1].style.background =
-    "rgba(225, 225, 225, 0.4)";
-  wishLevelButton[selectWishLevel - 1].style.border = "1px solid #dedede";
+  selectWishLevel.value = 0;
   upload_Plus_Image.style.display = "block";
   thumb_Image.style.display = "none";
   item_Image_File.value = null;
@@ -41,13 +39,13 @@ function uploadUserDatabaseItem(uploadUrl) {
   let item_Input_Data = {
     제품: item_Input[0].value,
     가격: `${item_Input[1].value} 원`,
-    위시레벨: selectWishLevel,
+    위시레벨: selectWishLevel.value,
     imagePath: uploadUrl,
   };
   if (
     item_Input[0].value.length > 0 &&
     item_Input[1].value.length > 0 &&
-    selectWishLevel > 0
+    selectWishLevel.value > 0
   ) {
     db.collection("users")
       .doc(userUid)
@@ -78,9 +76,7 @@ function uploadUserDatabaseItem(uploadUrl) {
       .then((res) => {
         item_Input[0].value = null;
         item_Input[1].value = null;
-        wishLevelButton[selectWishLevel - 1].style.background =
-          "rgba(225, 225, 225, 0.4)";
-        wishLevelButton[selectWishLevel - 1].style.border = "1px solid #dedede";
+        selectWishLevel.value = 0;
         upload_Plus_Image.style.display = "block";
         thumb_Image.style.display = "none";
         item_Image_File.value = null;

@@ -33,6 +33,9 @@ for (let i = 0; i < moneyButton.length; i++) {
 }
 
 totalMoney.addEventListener("keyup", () => {
+  if (!add_Item_Price_Check.test(totalMoney.value)) {
+    totalMoney.value = null;
+  }
   if (totalMoney.value[0] === "0") {
     totalMoney.value = totalMoney.value.slice(1);
   }
@@ -202,16 +205,6 @@ function showResult(numTotalMoney) {
         Math.round(Math.random() * (arrRandomText[1].length - 1))
       ];
   }
-
-  // const share_Kakao = document.createElement("span");
-  // share_Kakao.setAttribute("id", "share_Kakao");
-  // const Kakao_Logo = document.createElement("img");
-  // Kakao_Logo.setAttribute(
-  //   "src",
-  //   "https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
-  // );
-
-  // share_Kakao.append(Kakao_Logo);
 
   randomTextContainer.append(angryText, randomText);
 

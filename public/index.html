@@ -9,11 +9,8 @@
     <title>WishCruncher</title>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
-      // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+      // Kakao SDK 초기화
       Kakao.init("7573f9555b42ced32c395787d475bd06");
-
-      // SDK 초기화 여부를 판단합니다.
-      // console.log(Kakao.isInitialized());
     </script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   </head>
@@ -41,7 +38,7 @@
       <div id="main_Page">
         <div class="side_Bar">
           <div class="sidebar_Title">월 여유금액</div>
-          <input id="money_Input" value="0" />
+          <input id="money_Input" maxlength="24" />
           <div id="money_Button_Container">
             <div class="button_Row">
               <button name="won1000000" class="money_Button">
@@ -115,21 +112,41 @@
                 </div>
                 <div id="add_Item_Input_Row_Middle" class="add_Item_Input_Row">
                   <span class="add_Item_Input_Row_Category">가격</span>
-                  <input class="add_Item_Input" />
+                  <input class="add_Item_Input" maxlength="24" />
                 </div>
                 <div class="add_Item_Input_Row">
                   <span class="add_Item_Input_Row_Category">위시 레벨</span>
-                  <div id="wish_Level_Button_Box">
-                    <button class="wish_Level_Button" name="level0">1</button>
-                    <button class="wish_Level_Button" name="level1">2</button>
-                    <button class="wish_Level_Button" name="level2">3</button>
-                    <button class="wish_Level_Button" name="level3">4</button>
-                    <button class="wish_Level_Button" name="level4">5</button>
-                    <button class="wish_Level_Button" name="level5">6</button>
-                    <button class="wish_Level_Button" name="level6">7</button>
-                    <button class="wish_Level_Button" name="level7">8</button>
-                    <button class="wish_Level_Button" name="level8">9</button>
-                    <button class="wish_Level_Button" name="level9">10</button>
+                  <input
+                    id="wish_level_range"
+                    type="range"
+                    max="10"
+                    list="tickmarks"
+                  />
+                  <datalist id="tickmarks">
+                    <option value="0"></option>
+                    <option value="1"></option>
+                    <option value="2"></option>
+                    <option value="3"></option>
+                    <option value="4"></option>
+                    <option value="5"></option>
+                    <option value="6"></option>
+                    <option value="7"></option>
+                    <option value="8"></option>
+                    <option value="9"></option>
+                    <option value="10"></option>
+                  </datalist>
+                  <div id="wish_level_label">
+                    <span>0</span>
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                    <span>6</span>
+                    <span>7</span>
+                    <span>8</span>
+                    <span>9</span>
+                    <span>10</span>
                   </div>
                 </div>
               </div>
@@ -197,44 +214,26 @@
     <script src="JavaScript/logout.js"></script>
     <script>
       const scrollTopButton = document.querySelector("#scroll_Top_Button");
+      const selectWishLevel = document.querySelector("#wish_level_range");
       scrollTopButton.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
       // 위시 추가버튼 transform, color 조정
       const addItemButton = document.querySelector("#add_Item_Button");
       let isTransform = false;
-      var selectWishLevel = 0;
       addItemButton.addEventListener("click", () => {
         isTransform = !isTransform;
         if (isTransform) {
-          const wishLevelButton =
-            document.querySelectorAll(".wish_Level_Button");
           plus_Icon.style.transform = "rotate(45deg)";
           add_Item_Button.style.background = "#FF7B7B";
           add_Item_Contents.style.display = "flex";
           regi_Item_Button_Box.style.display = "flex";
-
-          // wishLevel 선택창
-          wishLevelButton.forEach((wishLevel, idx) => {
-            wishLevel.addEventListener("click", (e) => {
-              wishLevelButton.forEach((wishLevel, idx) => {
-                wishLevel.style.background = "rgba(225, 225, 225, 0.4)";
-                wishLevel.style.border = "2px solid #dedede";
-              });
-              wishLevel.style.background = "#2f2f2f";
-              wishLevel.style.border = "2px solid #2d2d2d";
-              selectWishLevel = idx + 1;
-            });
-          });
+          selectWishLevel.value = 0;
         } else {
           plus_Icon.style.transform = "";
           add_Item_Button.style.background = "#ab86df";
           add_Item_Contents.style.display = "none";
           regi_Item_Button_Box.style.display = "none";
-          wishLevelButton.forEach((wishLevel) => {
-            wishLevel.style.background = "rgba(225, 225, 225, 0.4)";
-            wishLevel.style.border = "2px solid #dedede";
-          });
           item_Input[0].value = null;
           item_Input[1].value = null;
           upload_Plus_Image.style.display = "block";
@@ -265,7 +264,15 @@
         return result;
       }
 
+      const add_Item_Price_Check =
+        /^([0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9])$/;
       item_Input[1].addEventListener("keyup", () => {
+        if (!add_Item_Price_Check.test(item_Input[1].value)) {
+          item_Input[1].value = null;
+        }
+        if (item_Input[1].value[0] === "0") {
+          item_Input[1].value = item_Input[1].value.slice(1);
+        }
         item_Input[1].value = makePriceComma(item_Input[1].value);
       });
     </script>
@@ -276,15 +283,15 @@
       shareKakao.addEventListener("click", (e) => {
         e.preventDefault();
 
-        var wishListResult = document.getElementById("result_Container");
+        let wishListResult = document.getElementById("result_Container");
         html2canvas(wishListResult).then((canvas) => {
-          var imgUrl = canvas.toDataURL("image/jpeg");
-          var realImgUrl = imgUrl.split(",")[1];
+          let imgUrl = canvas.toDataURL("image/jpeg");
+          let realImgUrl = imgUrl.split(",")[1];
 
           fetch(imgUrl)
             .then((res) => res.blob())
             .then((blob) => {
-              var resultFile = new File(
+              let resultFile = new File(
                 [blob],
                 `${Math.random() * 10000000000000000}`, // 파이어베이스에 저장할 이미지 이름
                 {
@@ -294,9 +301,9 @@
               return resultFile;
             })
             .then((res) => {
-              var storageRef = storage.ref();
-              var imagePath = storageRef.child("result/" + res.name);
-              var uploadImage = imagePath.put(res);
+              let storageRef = storage.ref();
+              let imagePath = storageRef.child("result/" + res.name);
+              let uploadImage = imagePath.put(res);
               uploadImage.on(
                 "state_changed",
                 null,
