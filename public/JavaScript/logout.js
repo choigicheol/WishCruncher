@@ -5,7 +5,7 @@ logoutState.addEventListener("click", (e) => {
     .auth()
     .signOut()
     .then((res) => {
-      window.location.reload();
+      window.location.replace("index.html");
     });
 });
 loginState.style.display = "block";

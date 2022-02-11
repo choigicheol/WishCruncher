@@ -120,7 +120,7 @@
   border-radius: 4px;
   color: #ffffff;
   font-weight: 100;
-  font-size: 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -787,6 +787,7 @@
   border-radius: 100%;
   color: #ffffff;
   cursor: pointer;
+  font-size: 14px;
 }
 
 #scroll_Top_Button:hover {

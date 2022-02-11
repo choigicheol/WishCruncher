@@ -1,13 +1,44 @@
 const arrRandomText = [
-  // 50년
+  //80년 이상
   [
-    "이번생에는 포기하시죠",
+    "이번생에는 포기합시다",
     "크게 버리는 사람만이 크게 얻을 수 있다",
-    "안되겠쥬?",
-    "킹받쥬?",
+    "안되겠죠?",
+    "로또 1등에 당첨된다고 가능할까요",
   ],
-  //
-  ["test1", "test2", "test3"],
+  //50~80년
+  [
+    "그때가서 사용할 수는 있는 것들인지 확인해보자고요",
+    "월 여유금액을 5배로 더 모으길 추천합니다",
+    "평생동안 원하는것들이 다 들어있다면 인정",
+    "뺄건 빼자고요",
+  ],
+  //20~50년
+  [
+    "야식먹을 돈도 아끼세요",
+    "원하는게 상당히 크군요",
+    "노년이 되어 이룰만큼 가치 있는 것들 인가요",
+  ],
+  //10~20년
+  [
+    "그 사이에 아이가 태어난다면?",
+    "여유금액에 무리만 없다면 장기 목표로서는 좋아요",
+  ],
+  //5~10년
+  ["결혼 자금은 어떻게 다 모으셨나요?", "솔로라면 이대로 가능해요"],
+  //1~5년
+  [
+    "조금만 고생하면 돼요",
+    "단기 목표를 잘 잡으셨네요",
+    "무리해서 월 여유금액을 올린건 아니죠?",
+  ],
+  //1년
+  [
+    "상당히 소박하시군요",
+    "설마 모으지도 못할 금액을 적으신건 아니겠죠",
+    "정말 이게 다에요?",
+    "노잼",
+  ],
 ];
 
 // 사이드바 금액 ++
@@ -108,8 +139,8 @@ function showResult(numTotalMoney) {
   //
   const username_Box = document.createElement("div");
   username_Box.setAttribute("id", "username_Box");
-  if (username) {
-    username_Box.textContent = `${username} 님,`;
+  if (db_userName) {
+    username_Box.textContent = `${db_userName} 님,`;
   } else {
     username_Box.textContent = `비회원 님,`;
   }
@@ -199,10 +230,35 @@ function showResult(numTotalMoney) {
       arrRandomText[0][
         Math.round(Math.random() * (arrRandomText[0].length - 1))
       ];
-  } else if (50 <= resultYear < 80) {
+  } else if (50 <= resultYear && resultYear < 80) {
     randomText.textContent =
       arrRandomText[1][
         Math.round(Math.random() * (arrRandomText[1].length - 1))
+      ];
+  } else if (30 <= resultYear && resultYear < 50) {
+    randomText.textContent =
+      arrRandomText[2][
+        Math.round(Math.random() * (arrRandomText[2].length - 1))
+      ];
+  } else if (10 <= resultYear && resultYear < 30) {
+    randomText.textContent =
+      arrRandomText[3][
+        Math.round(Math.random() * (arrRandomText[3].length - 1))
+      ];
+  } else if (5 <= resultYear && resultYear < 10) {
+    randomText.textContent =
+      arrRandomText[4][
+        Math.round(Math.random() * (arrRandomText[4].length - 1))
+      ];
+  } else if (1 <= resultYear && resultYear < 5) {
+    randomText.textContent =
+      arrRandomText[5][
+        Math.round(Math.random() * (arrRandomText[5].length - 1))
+      ];
+  } else if (0 <= resultYear && resultYear < 1) {
+    randomText.textContent =
+      arrRandomText[6][
+        Math.round(Math.random() * (arrRandomText[6].length - 1))
       ];
   }
 
@@ -226,7 +282,7 @@ sidebarSubmitButton.addEventListener("click", (e) => {
   e.preventDefault();
   const numTotalMoney = parseInt(totalMoney.value.split(",").join(""));
   if (numTotalMoney > 0) {
-    if (userLogin) {
+    if (isLogin) {
       db.collection("users")
         .doc(userUid)
         .collection("wish")

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../CSS/globalLayout.css" />
+    <link rel="stylesheet" href="../CSS/myPage.css" />
+    <link rel="icon" href="../favicon.ico" />
+    <title>WishCruncher</title>
+  </head>
+  <body>
+    <header id="header_container">
+      <nav id="header_area">
+        <div class="header_menu">
+          <a id="header_Logo" href="../index.html"
+            ><img src="../Images/logo.png"
+          /></a>
+        </div>
+        <div class="header_menu header_text_menu">
+          <span class="home_text_menu"><a href="../index.html">Home</a></span>
+          <span class="mypage_text_menu">MyPage</span>
+        </div>
+        <div class="header_menu login_menu">
+          <span><a class="login_state" href="login.html">Login</a></span>
+          <span class="logout_state">Logout</span>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div id="myPage">
+        <div id="user_Profile_Container">
+          <div id="user_Img"></div>
+          <div id="user_Info_Box">
+            <div id="user_Info"></div>
+            <div id="user_Progress"></div>
+            <div id="mypage_Category"></div>
+          </div>
+        </div>
+        <section></section>
+      </div>
+    </main>
+    <footer>
+      <a href="https://github.com/choigicheol" target="_blank">
+        <div class="github_Link">
+          <img src="../Images/github_Icon.svg" />
+          <span>Choi Gi Cheol</span>
+        </div>
+      </a>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+    <script src="../firebase.js"></script>
+
+    <script src="../JavaScript/login.js"></script>
+    <!-- 로그아웃 실행 -->
+    <script>
+      logoutState.addEventListener("click", (e) => {
+        e.preventDefault();
+        firebase
+          .auth()
+          .signOut()
+          .then((res) => {
+            window.location.replace("../index.html");
+          });
+      });
+      loginState.style.display = "block";
+      logoutState.style.display = "none";
+    </script>
+
+    <script>
+      let my_Db_UserName = null;
+      let my_Db_userEmail = null;
+      const userInfo = document.querySelector("#user_Info");
+      const userName = document.createElement("div");
+      const userEmail = document.createElement("div");
+      userName.setAttribute("id", "user_Name");
+      userEmail.setAttribute("id", "user_Email");
+
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          db.collection("users")
+            .doc(user.uid)
+            .get()
+            .then((res) => {
+              my_Db_UserName = res.data().nickname;
+              my_Db_userEmail = res.data().email;
+            })
+            .then((res) => {
+              userName.textContent = my_Db_UserName;
+              userEmail.textContent = my_Db_userEmail;
+            });
+        }
+      });
+
+      userInfo.append(userName, userEmail);
+    </script>
+
+    <script></script>
+  </body>
+</html>

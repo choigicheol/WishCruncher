@@ -241,7 +241,10 @@
           .then((userInfo) => {
             db.collection("users")
               .doc(userInfo.user.uid)
-              .set({ nickname: nicknameInput.value })
+              .set({
+                nickname: nicknameInput.value,
+                email: signupEmailInput.value,
+              })
               .then((res) => {
                 window.location.replace("./login.html");
               });

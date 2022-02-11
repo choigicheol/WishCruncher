@@ -1,10 +1,7 @@
-const loginState = document.querySelector(".login_state");
-const logoutState = document.querySelector(".logout_state");
-const db = firebase.firestore();
-var userItems = [];
-var userLogin = false;
-var userUid;
-var username;
+let userItems = [];
+let allDeleteButton = document.querySelectorAll(".delete_Button");
+let allItemBox = document.querySelectorAll(".item_Box");
+
 // 매개변수로 item 객체를 받아 item_list에 추가 하는 함수
 function add_To_Item_List(item) {
   const item_Box = document.createElement("div");
@@ -55,6 +52,40 @@ function add_To_Item_List(item) {
   }
 
   edit_Button_Box.append(item_Edit_Img, item_Delete_Img);
+  allDeleteButton = document.querySelectorAll(".delete_Button");
+  allItemBox = document.querySelectorAll(".item_Box");
+
+  // 위시리스트 삭제
+  allDeleteButton.forEach((deleteBtn, idx) => {
+    deleteBtn.addEventListener("click", (e) => {
+      db.collection("users")
+        .doc(userUid)
+        .collection("wish")
+        .doc(`item${e.target.id}`)
+        .delete()
+        .then((res) => {
+          const itemReset = document.querySelectorAll(".item_Box");
+          itemReset.forEach((item) => {
+            item.remove();
+          });
+        })
+        .then((res) => {
+          db.collection("users")
+            .doc(userUid)
+            .collection("wish")
+            .get()
+            .then((res) => {
+              if (!res.size) {
+                showEmptyItem();
+              } else {
+                res.forEach((doc) => {
+                  add_To_Item_List(doc.data());
+                });
+              }
+            });
+        });
+    });
+  });
 }
 
 // 데이터가 없을 때 나타낼 태그
@@ -68,16 +99,7 @@ function showEmptyItem() {
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    userLogin = true;
     userUid = user.uid;
-    db.collection("users")
-      .doc(user.uid)
-      .get()
-      .then((res) => {
-        username = res.data().nickname;
-      });
-    loginState.style.display = "none";
-    logoutState.style.display = "block";
     db.collection("users")
       .doc(user.uid)
       .collection("wish")
@@ -95,10 +117,7 @@ firebase.auth().onAuthStateChanged((user) => {
         }
       });
   } else {
-    userLogin = false;
     userUid = null;
-    loginState.style.display = "block";
-    logoutState.style.display = "none";
     if (!clientData.length) {
       showEmptyItem();
     } else {
