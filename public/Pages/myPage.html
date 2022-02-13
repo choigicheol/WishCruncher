@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../CSS/globalLayout.css" />
-    <link rel="stylesheet" href="../CSS/myPage.css" />
+    <link rel="stylesheet" href="../CSS/index.css" />
+    <link rel="stylesheet" href="../CSS/mypage.css" />
     <link rel="icon" href="../favicon.ico" />
     <title>WishCruncher</title>
   </head>
@@ -12,7 +13,7 @@
     <header id="header_container">
       <nav id="header_area">
         <div class="header_menu">
-          <a id="header_Logo" href="../index.html"
+          <a id="header_logo" href="../index.html"
             ><img src="../Images/logo.png"
           /></a>
         </div>
@@ -31,13 +32,23 @@
         <div id="user_Profile_Container">
           <div id="user_Img"></div>
           <div id="user_Info_Box">
-            <div id="user_Info"></div>
+            <div id="user_info_top">
+              <div id="user_Info"></div>
+            </div>
             <div id="user_Progress"></div>
-            <div id="mypage_Category"></div>
           </div>
         </div>
-        <section></section>
+        <div id="mypage_category_box">
+          <span class="category_menu menu_underline" id="unfinished_wish">
+          </span>
+          <span class="category_menu" id="finish_wish"> </span>
+          <span class="category_menu" id="delete_wish"> </span>
+        </div>
+        <section class="mypage_items" id="unfinished_items"></section>
+        <section class="mypage_items hide_items" id="finish_items"></section>
+        <section class="mypage_items hide_items" id="delete_items"></section>
       </div>
+      <div id="scroll_Top_Button">Top</div>
     </main>
     <footer>
       <a href="https://github.com/choigicheol" target="_blank">
@@ -53,6 +64,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
 
+    <script>
+      const db = firebase.firestore();
+    </script>
     <script src="../JavaScript/login.js"></script>
     <!-- 로그아웃 실행 -->
     <script>
@@ -68,15 +82,60 @@
       loginState.style.display = "block";
       logoutState.style.display = "none";
     </script>
-
+    <!-- 아이템 추가 -->
+    <script src="../JavaScript/userItems.js"></script>
     <script>
       let my_Db_UserName = null;
       let my_Db_userEmail = null;
+      let allWish = [];
       const userInfo = document.querySelector("#user_Info");
-      const userName = document.createElement("div");
-      const userEmail = document.createElement("div");
-      userName.setAttribute("id", "user_Name");
-      userEmail.setAttribute("id", "user_Email");
+      const progress = document.querySelector("#user_Progress");
+      const userImgBox = document.querySelector("#user_Img");
+      const unfinishedWish = document.querySelector("#unfinished_wish");
+      const finishWish = document.querySelector("#finish_wish");
+      const deleteWish = document.querySelector("#delete_wish");
+      const finishItems = document.querySelector("#finish_items");
+      const unfinishedItems = document.querySelector("#unfinished_items");
+      const deleteItems = document.querySelector("#delete_items");
+
+      unfinishedWish.addEventListener("click", (e) => {
+        e.preventDefault();
+        finishItems.classList.add("hide_items");
+        unfinishedItems.classList.remove("hide_items");
+        deleteItems.classList.add("hide_items");
+        finishWish.classList.remove("menu_underline");
+        unfinishedWish.classList.add("menu_underline");
+        deleteWish.classList.remove("menu_underline");
+        if (!unfinishedItems.childElementCount) {
+          showEmptyItem(unfinishedItems);
+        }
+      });
+
+      finishWish.addEventListener("click", (e) => {
+        e.preventDefault();
+        finishItems.classList.remove("hide_items");
+        unfinishedItems.classList.add("hide_items");
+        deleteItems.classList.add("hide_items");
+        finishWish.classList.add("menu_underline");
+        unfinishedWish.classList.remove("menu_underline");
+        deleteWish.classList.remove("menu_underline");
+        if (!finishItems.childElementCount) {
+          showEmptyItem(finishItems);
+        }
+      });
+
+      deleteWish.addEventListener("click", (e) => {
+        e.preventDefault();
+        finishItems.classList.add("hide_items");
+        unfinishedItems.classList.add("hide_items");
+        deleteItems.classList.remove("hide_items");
+        finishWish.classList.remove("menu_underline");
+        unfinishedWish.classList.remove("menu_underline");
+        deleteWish.classList.add("menu_underline");
+        if (!deleteItems.childElementCount) {
+          showEmptyItem(deleteItems);
+        }
+      });
 
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -84,19 +143,233 @@
             .doc(user.uid)
             .get()
             .then((res) => {
-              my_Db_UserName = res.data().nickname;
-              my_Db_userEmail = res.data().email;
+              const userData = res.data();
+              const userName = document.createElement("span");
+              const userEmail = document.createElement("span");
+              const userImg = document.createElement("img");
+
+              userName.textContent = userData.nickname;
+              userEmail.textContent = userData.email;
+              userName.setAttribute("id", "user_Name");
+              userEmail.setAttribute("id", "user_Email");
+              userImg.setAttribute("src", userData.profileImg);
+              userInfo.append(userName, userEmail);
+              userImgBox.append(userImg);
             })
             .then((res) => {
-              userName.textContent = my_Db_UserName;
-              userEmail.textContent = my_Db_userEmail;
+              db.collection("users")
+                .doc(userUid)
+                .collection("wish")
+                .get()
+                .then((res) => {
+                  let wish = {
+                    finishWish: 0,
+                    unfinishedWish: 0,
+                    deleteWish: 0,
+                  };
+                  res.forEach((data) => {
+                    const wishData = data.data();
+
+                    if (wishData.state === 0) {
+                      wish.unfinishedWish++;
+                      allWish.push(wishData);
+                      add_To_Item_List(wishData, unfinishedItems);
+                    } else if (wishData.state === 1) {
+                      wish.finishWish++;
+                      allWish.push(wishData);
+                      add_To_Item_List(wishData, finishItems);
+                    } else {
+                      wish.deleteWish++;
+                      add_To_Item_List(wishData, deleteItems);
+                    }
+                  });
+                  if (!unfinishedItems.childElementCount) {
+                    showEmptyItem(unfinishedItems);
+                  }
+                  return wish;
+                })
+                .then((res) => {
+                  const finishNum = document.createElement("span");
+                  const finishText = document.createElement("span");
+                  const unfinishedNum = document.createElement("span");
+                  const unfinishedText = document.createElement("span");
+                  const deleteNum = document.createElement("span");
+                  const deleteText = document.createElement("span");
+
+                  const editButton =
+                    document.querySelectorAll(".edit_Button_Box");
+                  editButton.forEach((item) => {
+                    item.remove();
+                  });
+
+                  const itemBox = document.querySelectorAll(".item_Box");
+
+                  itemBox.forEach((item) => {
+                    db.collection("users")
+                      .doc(userUid)
+                      .collection("wish")
+                      .get()
+                      .then((res) => {
+                        res.forEach((data) => {
+                          const itemData = data.data();
+                          if (
+                            itemData.state === 0 &&
+                            Number(item.id) === itemData.id
+                          ) {
+                            const unfinishedWishButtonBox =
+                              document.createElement("div");
+                            unfinishedWishButtonBox.classList.add(
+                              "finish_delete_box"
+                            );
+
+                            //finish 버튼생성 및 이벤트 등록
+                            const finishButton = document.createElement("img");
+                            finishButton.setAttribute(
+                              "src",
+                              "../Images/finishButton.png"
+                            );
+                            finishButton.classList.add("finish_button");
+                            finishButton.addEventListener("click", (e) => {
+                              e.preventDefault();
+                              db.collection("users")
+                                .doc(userUid)
+                                .collection("wish")
+                                .doc(`item${item.id}`)
+                                .update({ state: 1 })
+                                .then((res) => {
+                                  window.location.reload();
+                                });
+                            });
+                            //delete 버튼생성 및 이벤트 등록
+                            const deleteButton = document.createElement("img");
+                            deleteButton.setAttribute(
+                              "src",
+                              "../Images/deleteWishButton.png"
+                            );
+                            deleteButton.classList.add("delete_button");
+                            deleteButton.addEventListener("click", (e) => {
+                              e.preventDefault();
+                              db.collection("users")
+                                .doc(userUid)
+                                .collection("wish")
+                                .doc(`item${item.id}`)
+                                .update({ state: 2 })
+                                .then((res) => {
+                                  window.location.reload();
+                                });
+                            });
+                            unfinishedWishButtonBox.append(
+                              finishButton,
+                              deleteButton
+                            );
+                            item.append(unfinishedWishButtonBox);
+                          } else if (
+                            itemData.state === 1 &&
+                            Number(item.id) === itemData.id
+                          ) {
+                            item.style.opacity = "0.3";
+                            const finishButtonBox =
+                              document.createElement("div");
+                            finishButtonBox.classList.add("finish_box");
+
+                            //remove 버튼생성 및 이벤트 등록
+                            const removeButton = document.createElement("img");
+                            removeButton.setAttribute(
+                              "src",
+                              "../Images/deleteWishButton.png"
+                            );
+                            removeButton.classList.add("remove_button");
+                            removeButton.addEventListener("click", (e) => {
+                              e.preventDefault();
+                              db.collection("users")
+                                .doc(userUid)
+                                .collection("wish")
+                                .doc(`item${item.id}`)
+                                .delete()
+                                .then((res) => {
+                                  window.location.reload();
+                                });
+                            });
+
+                            finishButtonBox.append(removeButton);
+                            item.append(finishButtonBox);
+                          } else if (
+                            itemData.state === 2 &&
+                            Number(item.id) === itemData.id
+                          ) {
+                            const deleteButtonBox =
+                              document.createElement("div");
+                            deleteButtonBox.classList.add("delete_box");
+
+                            //rewind 버튼생성 및 이벤트 등록
+                            const rewindButton = document.createElement("img");
+                            rewindButton.setAttribute(
+                              "src",
+                              "../Images/rewindButton.png"
+                            );
+                            rewindButton.classList.add("rewind_button");
+                            rewindButton.addEventListener("click", (e) => {
+                              e.preventDefault();
+                              db.collection("users")
+                                .doc(userUid)
+                                .collection("wish")
+                                .doc(`item${item.id}`)
+                                .update({ state: 0 })
+                                .then((res) => {
+                                  window.location.reload();
+                                });
+                            });
+
+                            deleteButtonBox.append(rewindButton);
+                            item.append(deleteButtonBox);
+                          }
+                        });
+                      });
+                  });
+
+                  progress.style.backgroundColor = "#EEE1FF";
+
+                  finishNum.textContent = res.finishWish;
+                  finishText.textContent = "이뤄낸 위시";
+                  unfinishedNum.textContent = res.unfinishedWish;
+                  unfinishedText.textContent = "남은 위시";
+                  deleteNum.textContent = res.deleteWish;
+                  deleteText.textContent = "버린 위시";
+
+                  finishNum.classList.add("wishCount");
+                  unfinishedNum.classList.add("wishCount");
+                  deleteNum.classList.add("wishCount");
+                  unfinishedWish.append(unfinishedText, unfinishedNum);
+                  finishWish.append(finishText, finishNum);
+                  deleteWish.append(deleteText, deleteNum);
+
+                  let count = 0;
+                  allWish.forEach((res, idx) => {
+                    const wishBarGraphValue = document.createElement("span");
+                    wishBarGraphValue.setAttribute("id", `finish${idx}`);
+                    wishBarGraphValue.classList.add("wishBarValue");
+                    progress.append(wishBarGraphValue);
+                    // state
+                    // 0: 남은 위시 , 1: 이뤄낸 위시, 2: 버린위시
+                    if (res.state === 1) {
+                      count++;
+                    }
+                  });
+                  for (let i = 0; i < count; i++) {
+                    const finishWishBar = document.querySelector(`#finish${i}`);
+                    finishWishBar.style.backgroundColor = "#AB86DF";
+
+                    if (
+                      i === count - 1 &&
+                      res.finishWish + res.unfinishedWish !== count
+                    ) {
+                      finishWishBar.style.borderRadius = "0 5px 5px 0";
+                    }
+                  }
+                });
             });
         }
       });
-
-      userInfo.append(userName, userEmail);
     </script>
-
-    <script></script>
   </body>
 </html>
