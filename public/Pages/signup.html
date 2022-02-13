@@ -12,7 +12,7 @@
     <header id="header_container">
       <nav id="header_area">
         <div class="header_menu">
-          <a id="header_Logo" href="../index.html"
+          <a id="header_logo" href="../index.html"
             ><img src="../Images/logo.png"
           /></a>
         </div>
@@ -111,6 +111,10 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
 
+    <script>
+      const db = firebase.firestore();
+    </script>
+    <script src="../JavaScript/login.js"></script>
     <script>
       // 유효성 검사
       function Inspect(data, type) {
@@ -228,8 +232,6 @@
       // 회원가입 버튼 이벤트
       const signupForm = document.querySelector("#signup_Form");
 
-      const db = firebase.firestore();
-
       signupForm.addEventListener("submit", (e) => {
         e.preventDefault();
         firebase
@@ -242,6 +244,8 @@
             db.collection("users")
               .doc(userInfo.user.uid)
               .set({
+                profileImg:
+                  "https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2Fbasic_Profile.png?alt=media&token=bec9d886-55d2-485d-8740-70bed7eb5239",
                 nickname: nicknameInput.value,
                 email: signupEmailInput.value,
               })

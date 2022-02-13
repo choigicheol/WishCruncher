@@ -1,4 +1,4 @@
-#main_Page {
+#main_page {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -11,7 +11,7 @@
 }
 
 @media screen and (max-width: 884px) {
-  #main_Page {
+  #main_page {
     padding: 10px;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -23,7 +23,7 @@
   }
 }
 
-.side_Bar {
+.side_bar {
   min-width: 20rem;
   max-width: 23.75rem;
   width: 100%;
@@ -49,19 +49,19 @@
 }
 
 @media screen and (max-width: 884px) {
-  .side_Bar {
+  .side_bar {
     margin: 1.25rem 0 1.25rem 0;
   }
 }
 
 @media screen and (max-width: 470px) {
-  .side_Bar {
+  .side_bar {
     width: 100%;
     height: 28.125rem;
   }
 }
 
-.sidebar_Title {
+.sidebar_title {
   width: 100%;
   height: 30px;
   font-weight: 300;
@@ -71,7 +71,7 @@
 }
 
 @media screen and (max-width: 470px) {
-  .sidebar_Title {
+  .sidebar_title {
     font-size: 1.25rem;
     height: 20px;
     line-height: 20px;
@@ -147,7 +147,7 @@
   background: #686868;
 }
 
-#operation_Wish_Level_Box {
+#operation_wish_level_box {
   height: 72px;
   border-top: 1px solid #2d2d2d;
   border-bottom: 1px solid #2d2d2d;
@@ -165,7 +165,7 @@
           justify-content: space-between;
 }
 
-#Wish_Level_Box {
+#wish_level_box {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -177,7 +177,7 @@
           justify-content: flex-end;
 }
 
-.wish_Level_Operation_Button {
+.wish_level_operation_button {
   width: 1.75rem;
   height: 1.8125rem;
   line-height: 29px;
@@ -192,12 +192,12 @@
   cursor: pointer;
 }
 
-.wish_Level_Operation_Button:active {
+.wish_level_operation_button:active {
   background: #686868;
 }
 
 @media screen and (max-width: 470px) {
-  .wish_Level_Operation_Button {
+  .wish_level_operation_button {
     width: 1.5625rem;
     height: 1.625rem;
     line-height: 26px;
@@ -205,7 +205,7 @@
   }
 }
 
-#wish_Level {
+#wish_level {
   width: 1.875rem;
   height: 1.8125rem;
   font-size: 1.25rem;
@@ -214,14 +214,14 @@
 }
 
 @media screen and (max-width: 470px) {
-  #wish_Level {
+  #wish_level {
     width: 1.6875rem;
     height: 1.625rem;
     font-size: 1.125rem;
   }
 }
 
-#sidebar_Submit_Button {
+#sidebar_submit_button {
   width: 100%;
   height: 38px;
   background: #ab86df;
@@ -235,11 +235,11 @@
   cursor: pointer;
 }
 
-#sidebar_Submit_Button:active {
+#sidebar_submit_button:active {
   background: #ccb6eb;
 }
 
-.wish_List_Container {
+.wish_list_container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -254,7 +254,7 @@
   padding: 0 10px 0 10px;
 }
 
-#add_Item_Box {
+#add_item_box {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -273,7 +273,7 @@
           flex-direction: column;
 }
 
-#add_Item_Contents {
+#add_item_contents {
   width: 100%;
   display: none;
   -webkit-box-align: center;
@@ -284,7 +284,7 @@
 }
 
 @media screen and (max-width: 590px) {
-  #add_Item_Contents {
+  #add_item_contents {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -292,13 +292,13 @@
   }
 }
 
-#upload_Photo_Box {
+#upload_photo_box {
   width: 200px;
   height: 130px;
   position: relative;
 }
 
-#upload_Photo_Box #upload_Image_Box {
+#upload_photo_box #upload_image_box {
   width: 130px;
   height: 130px;
   display: -webkit-box;
@@ -318,14 +318,14 @@
   background: #ededed;
 }
 
-#upload_Photo_Box #upload_Image_Box #thumb_Image {
+#upload_photo_box #upload_image_box #thumb_image {
   display: none;
   width: 130px;
   height: 130px;
   border-radius: 8px;
 }
 
-#upload_Photo_Box input {
+#upload_photo_box input {
   width: 130px;
   height: 130px;
   position: absolute;
@@ -337,13 +337,13 @@
   cursor: pointer;
 }
 
-#upload_Photo_Box input:file-selector-button {
+#upload_photo_box input:file-selector-button {
   display: none;
   text-decoration: none;
 }
 
 @media screen and (max-width: 590px) {
-  #upload_Photo_Box {
+  #upload_photo_box {
     width: 130px;
     margin-bottom: 15px;
   }
@@ -393,33 +393,7 @@
   background: #ffffff;
 }
 
-#wish_Level_Button_Box {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-#wish_Level_Button_Box .wish_Level_Button {
-  max-width: 40px;
-  width: 100%;
-  height: 25px;
-  background: rgba(225, 225, 225, 0.4);
-  border-radius: 4px;
-  border: 2px solid #dedede;
-  color: #ffffff;
-  font-weight: 300;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-#add_Item_Button_Box {
+#add_item_button_box {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -429,7 +403,7 @@
           justify-content: flex-end;
 }
 
-#add_Item_Button {
+#add_item_button {
   vertical-align: middle;
   width: 31px;
   height: 31px;
@@ -464,7 +438,7 @@
   cursor: pointer;
 }
 
-#plus_Icon {
+#plus_icon {
   width: 30px;
   height: 30px;
   margin-bottom: 1px;
@@ -741,7 +715,7 @@
           align-items: center;
 }
 
-#share_Kakao_Container {
+#share_kakao_container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -750,11 +724,11 @@
           justify-content: center;
 }
 
-#share_Kakao_Container:active {
+#share_kakao_container:active {
   opacity: 0.5;
 }
 
-#share_Kakao {
+#share_kakao {
   height: 30px;
   display: none;
   -webkit-box-align: center;
@@ -767,7 +741,7 @@
   margin: 10px 0 15px 0;
 }
 
-#share_Kakao img {
+#share_kakao img {
   height: 25px;
   margin-right: 5px;
 }
@@ -776,7 +750,7 @@
   position: fixed;
   right: 0;
   bottom: 0;
-  margin: 0 20px 20px 0;
+  margin: 0 20px 5px 0;
   width: 40px;
   height: 40px;
   line-height: 40px;

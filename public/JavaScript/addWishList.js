@@ -2,15 +2,15 @@ const storage = firebase.storage();
 var clientData = [];
 const item_Input = document.querySelectorAll(".add_Item_Input");
 var item_Image_File = document.querySelector("#upload_Photo_Input");
-const thumb_Image = document.querySelector("#thumb_Image");
+const thumbImage = document.querySelector("#thumb_image");
 
 item_Image_File.addEventListener("change", () => {
   item_Image_File.files[0].preview = URL.createObjectURL(
     item_Image_File.files[0]
   );
-  thumb_Image.setAttribute("src", item_Image_File.files[0].preview);
-  upload_Plus_Image.style.display = "none";
-  thumb_Image.style.display = "block";
+  thumbImage.setAttribute("src", item_Image_File.files[0].preview);
+  upload_plus_image.style.display = "none";
+  thumbImage.style.display = "block";
 });
 
 function uploadClientDatabaseItem(uploadUrl) {
@@ -19,6 +19,7 @@ function uploadClientDatabaseItem(uploadUrl) {
     가격: `${item_Input[1].value} 원`,
     위시레벨: selectWishLevel.value,
     imagePath: uploadUrl,
+    state: 0,
   };
   if (
     item_Input[0].value.length > 0 &&
@@ -26,13 +27,13 @@ function uploadClientDatabaseItem(uploadUrl) {
     selectWishLevel.value > 0
   ) {
     clientData.push(item_Input_Data);
-    add_To_Item_List(item_Input_Data);
+    add_To_Item_List(item_Input_Data, user_Item_Area);
   }
   item_Input[0].value = null;
   item_Input[1].value = null;
   selectWishLevel.value = 0;
-  upload_Plus_Image.style.display = "block";
-  thumb_Image.style.display = "none";
+  upload_plus_image.style.display = "block";
+  thumbImage.style.display = "none";
   item_Image_File.value = null;
 }
 
@@ -42,6 +43,7 @@ function uploadUserDatabaseItem(uploadUrl) {
     가격: `${item_Input[1].value} 원`,
     위시레벨: selectWishLevel.value,
     imagePath: uploadUrl,
+    state: 0,
   };
   if (
     item_Input[0].value.length > 0 &&
@@ -72,14 +74,14 @@ function uploadUserDatabaseItem(uploadUrl) {
         }
       })
       .then((res) => {
-        add_To_Item_List(item_Input_Data);
+        add_To_Item_List(item_Input_Data, user_Item_Area);
       })
       .then((res) => {
         item_Input[0].value = null;
         item_Input[1].value = null;
         selectWishLevel.value = 0;
-        upload_Plus_Image.style.display = "block";
-        thumb_Image.style.display = "none";
+        upload_plus_image.style.display = "block";
+        thumbImage.style.display = "none";
         item_Image_File.value = null;
       });
   }

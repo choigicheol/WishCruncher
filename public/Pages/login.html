@@ -20,7 +20,7 @@
     <header id="header_container">
       <nav id="header_area">
         <div class="header_menu">
-          <a id="header_Logo" href="../index.html"
+          <a id="header_logo" href="../index.html"
             ><img src="../Images/logo.png"
           /></a>
         </div>
@@ -78,7 +78,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
+
     <script>
+      const db = firebase.firestore();
       const loginForm = document.querySelector("#login_Form");
       loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -96,7 +98,7 @@
           });
       });
     </script>
-
+    <script src="../JavaScript/login.js"></script>
     <script>
       const kakaoLogin = document.querySelector("#kakao_Login_Button");
       const KAKAO_REST_API_KEY = "bd2e10a597f57c10609a98f50b97cd6c";
@@ -106,6 +108,7 @@
         e.preventDefault();
         Kakao.Auth.authorize({
           redirectUri: KAKAO_REDIRECT_URI,
+          scope: "account_email",
         });
       });
       const code = window.location.search.split("=")[1];
@@ -120,8 +123,7 @@
           .then((res) => res.json())
           .then((res) => {
             const access_Token = res.access_token;
-            const kakaoUserInfo_API_URL =
-              "https://wishcruncher.shop/verifyToken";
+            const kakaoUserInfo_API_URL = "http://localhost/verifyToken";
             const data = {
               token: access_Token,
             };
@@ -142,9 +144,14 @@
                   .then((userCredential) => {
                     db.collection("users")
                       .doc(userCredential.user.uid)
-                      .set({ nickname: userCredential.user.displayName })
+                      .set({
+                        profileImg:
+                          "https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2Fbasic_Profile.png?alt=media&token=bec9d886-55d2-485d-8740-70bed7eb5239",
+                        nickname: userCredential.user.displayName,
+                        email: null,
+                      })
                       .then((res) => {
-                        window.location.replace("../index.html");
+                        // window.location.replace("../index.html");
                       });
                   });
               });

@@ -1,9 +1,8 @@
 const loginState = document.querySelector(".login_state");
 const logoutState = document.querySelector(".logout_state");
-const db = firebase.firestore();
+
 let db_userName = null;
 let db_userEmail = null;
-// let userUid = null;
 let isLogin = false;
 
 firebase.auth().onAuthStateChanged((user) => {

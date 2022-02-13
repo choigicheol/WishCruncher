@@ -1,9 +1,8 @@
-let userItems = [];
 let allDeleteButton = document.querySelectorAll(".delete_Button");
 let allItemBox = document.querySelectorAll(".item_Box");
 
 // 매개변수로 item 객체를 받아 item_list에 추가 하는 함수
-function add_To_Item_List(item) {
+function add_To_Item_List(item, node) {
   const item_Box = document.createElement("div");
   const photo_Box = document.createElement("div");
   const item_Img = document.createElement("img");
@@ -18,16 +17,22 @@ function add_To_Item_List(item) {
   edit_Button_Box.classList.add("edit_Button_Box");
   item_Img.setAttribute("src", item.imagePath);
   item_Img.setAttribute("alt", "item_Image");
-  item_Edit_Img.setAttribute("src", "./Images/edit_Icon.svg");
+  item_Edit_Img.setAttribute(
+    "src",
+    "https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2Fedit_Icon.svg?alt=media&token=f99ed243-b18c-4325-a8ac-b53502d01e32"
+  );
   item_Edit_Img.setAttribute("alt", "edit_Icon");
   item_Edit_Img.classList.add("edit_Button");
   item_Edit_Img.setAttribute("id", item.id);
-  item_Delete_Img.setAttribute("src", "./Images/delete_Icon.svg");
+  item_Delete_Img.setAttribute(
+    "src",
+    "https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2Fdelete_Icon.svg?alt=media&token=b33f7962-c6c2-49d3-ad34-a94d78042fd9"
+  );
   item_Delete_Img.setAttribute("alt", "delete_Icon");
   item_Delete_Img.classList.add("delete_Button");
   item_Delete_Img.setAttribute("id", item.id);
 
-  user_Item_Area.prepend(item_Box);
+  node.prepend(item_Box);
   item_Box.append(photo_Box, item_Contents, edit_Button_Box);
   photo_Box.append(item_Img);
 
@@ -58,69 +63,25 @@ function add_To_Item_List(item) {
   // 위시리스트 삭제
   allDeleteButton.forEach((deleteBtn, idx) => {
     deleteBtn.addEventListener("click", (e) => {
+      const itemReset = document.querySelectorAll(".item_Box");
+      itemReset.forEach((item) => {
+        if (item.id === e.target.id) {
+          item.remove();
+        }
+      });
       db.collection("users")
         .doc(userUid)
         .collection("wish")
         .doc(`item${e.target.id}`)
-        .delete()
-        .then((res) => {
-          const itemReset = document.querySelectorAll(".item_Box");
-          itemReset.forEach((item) => {
-            item.remove();
-          });
-        })
-        .then((res) => {
-          db.collection("users")
-            .doc(userUid)
-            .collection("wish")
-            .get()
-            .then((res) => {
-              if (!res.size) {
-                showEmptyItem();
-              } else {
-                res.forEach((doc) => {
-                  add_To_Item_List(doc.data());
-                });
-              }
-            });
-        });
+        .delete();
     });
   });
 }
 
 // 데이터가 없을 때 나타낼 태그
-function showEmptyItem() {
-  const user_Item_Area = document.querySelector("#user_Item_Area");
+function showEmptyItem(node) {
   const empty_Box = document.createElement("div");
   empty_Box.setAttribute("id", "empty_Box");
   empty_Box.textContent = "정보가 없습니다.";
-  user_Item_Area.append(empty_Box);
+  node.append(empty_Box);
 }
-
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    userUid = user.uid;
-    db.collection("users")
-      .doc(user.uid)
-      .collection("wish")
-      .get()
-      .then((res) => {
-        if (!res.size) {
-          showEmptyItem();
-        } else {
-          res.forEach((doc) => {
-            userItems.push(doc.data());
-          });
-          userItems.forEach((item) => {
-            add_To_Item_List(item);
-          });
-        }
-      });
-  } else {
-    userUid = null;
-    if (!clientData.length) {
-      showEmptyItem();
-    } else {
-    }
-  }
-});

@@ -52,7 +52,7 @@ header {
   border-bottom: 1px solid #ffffff;
 }
 
-#header_Logo {
+#header_logo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -62,7 +62,7 @@ header {
 }
 
 @media screen and (max-width: 470px) {
-  #header_Logo img {
+  #header_logo img {
     width: 35px;
   }
 }

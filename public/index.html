@@ -18,7 +18,7 @@
     <header id="header_container">
       <nav id="header_area">
         <div class="header_menu">
-          <a id="header_Logo" href="index.html"
+          <a id="header_logo" href="index.html"
             ><img src="./Images/logo.png" alt="logo"
           /></a>
         </div>
@@ -35,9 +35,9 @@
       </nav>
     </header>
     <main>
-      <div id="main_Page">
-        <div class="side_Bar">
-          <div class="sidebar_Title">월 여유금액</div>
+      <div id="main_page">
+        <div class="side_bar">
+          <div class="sidebar_title">월 여유금액</div>
           <input id="money_Input" maxlength="24" />
           <div id="money_Button_Container">
             <div class="button_Row">
@@ -56,52 +56,52 @@
             </div>
             <div id="clear_Button">Clear</div>
           </div>
-          <div id="operation_Wish_Level_Box">
-            <div class="sidebar_Title">최소 위시 레벨</div>
-            <div id="Wish_Level_Box">
+          <div id="operation_wish_level_box">
+            <div class="sidebar_title">최소 위시 레벨</div>
+            <div id="wish_level_box">
               <button
-                name="wish_Level_Minus"
-                class="wish_Level_Operation_Button"
+                name="wish_level_minus"
+                class="wish_level_operation_button"
               >
                 -
               </button>
-              <span id="wish_Level">0</span>
+              <span id="wish_level">0</span>
               <button
-                name="wish_Level_Plus"
-                class="wish_Level_Operation_Button"
+                name="wish_level_plus"
+                class="wish_level_operation_button"
               >
                 +
               </button>
             </div>
           </div>
-          <button id="sidebar_Submit_Button">결과보기</button>
+          <button id="sidebar_submit_button">결과보기</button>
         </div>
         <!-- 위시리스트 구역 -->
-        <div class="wish_List_Container">
+        <div class="wish_list_container">
           <!-- 위시리스트 제품등록 창 -->
-          <div id="share_Kakao_Container">
-            <span id="share_Kakao">
+          <div id="share_kakao_container">
+            <span id="share_kakao">
               <img
                 src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
                 alt="카카오링크 보내기 버튼"
               />공유하기
             </span>
           </div>
-          <div id="add_Item_Box">
-            <div id="add_Item_Button_Box">
-              <div id="add_Item_Button">
-                <img id="plus_Icon" src="./Images/plus_Icon.png" />
+          <div id="add_item_box">
+            <div id="add_item_button_box">
+              <div id="add_item_button">
+                <img id="plus_icon" src="./Images/plus_Icon.png" />
               </div>
             </div>
-            <div id="add_Item_Contents">
-              <div id="upload_Photo_Box">
-                <div id="upload_Image_Box">
+            <div id="add_item_contents">
+              <div id="upload_photo_box">
+                <div id="upload_image_box">
                   <img
-                    id="upload_Plus_Image"
+                    id="upload_plus_image"
                     src="./Images/photo_Plus_Button.svg"
                     alt="+"
                   />
-                  <img id="thumb_Image" src="" alt="+" />
+                  <img id="thumb_image" src="" alt="+" />
                 </div>
                 <input id="upload_Photo_Input" type="file" />
               </div>
@@ -177,7 +177,7 @@
     <script src="./firebase.js"></script>
     <script>
       let userUid = null;
-
+      const db = firebase.firestore();
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           userUid = user.uid;
@@ -193,30 +193,58 @@
       const mypageMenu = document.querySelector(".mypage_text_menu");
       mypageMenu.addEventListener("click", (e) => {
         if (isLogin) {
-          window.location.replace("./Pages/myPage.html");
+          window.location.replace("./Pages/mypage.html");
         }
       });
     </script>
-
+    <script>
+      // const user_Item_Area = document.querySelector("#user_Item_Area");
+    </script>
     <!-- 유저 로그인 상태, 위시리스트 데이터베이스 확인 -->
     <script src="JavaScript/userItems.js"></script>
+    <script>
+      const user_Item_Area = document.querySelector("#user_Item_Area");
+      let clientData = [];
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          userUid = user.uid;
+          db.collection("users")
+            .doc(user.uid)
+            .collection("wish")
+            .get()
+            .then((res) => {
+              if (!res.size) {
+                showEmptyItem(user_Item_Area);
+              } else {
+                res.forEach((doc) => {
+                  if (!doc.data().state) {
+                    add_To_Item_List(doc.data(), user_Item_Area);
+                  }
+                });
+              }
+            });
+        } else {
+          userUid = null;
+          showEmptyItem(user_Item_Area);
+        }
+      });
+    </script>
 
     <!-- 위시리스트 등록 -->
     <!-- <script src="./JavaScript/addWishList.js"></script> -->
     <script>
       const storage = firebase.storage();
-      var clientData = [];
       const item_Input = document.querySelectorAll(".add_Item_Input");
       var item_Image_File = document.querySelector("#upload_Photo_Input");
-      const thumb_Image = document.querySelector("#thumb_Image");
+      const thumbImage = document.querySelector("#thumb_image");
 
       item_Image_File.addEventListener("change", () => {
         item_Image_File.files[0].preview = URL.createObjectURL(
           item_Image_File.files[0]
         );
-        thumb_Image.setAttribute("src", item_Image_File.files[0].preview);
-        upload_Plus_Image.style.display = "none";
-        thumb_Image.style.display = "block";
+        thumbImage.setAttribute("src", item_Image_File.files[0].preview);
+        upload_plus_image.style.display = "none";
+        thumbImage.style.display = "block";
       });
 
       function uploadClientDatabaseItem(uploadUrl) {
@@ -225,6 +253,7 @@
           가격: `${item_Input[1].value} 원`,
           위시레벨: selectWishLevel.value,
           imagePath: uploadUrl,
+          state: 0,
         };
         if (
           item_Input[0].value.length > 0 &&
@@ -232,13 +261,16 @@
           selectWishLevel.value > 0
         ) {
           clientData.push(item_Input_Data);
-          add_To_Item_List(item_Input_Data);
+          const lastItemId = clientData.length;
+          item_Input_Data["id"] = lastItemId;
+          add_To_Item_List(item_Input_Data, user_Item_Area);
+          empty_Box.style.display = "none";
         }
         item_Input[0].value = null;
         item_Input[1].value = null;
         selectWishLevel.value = 0;
-        upload_Plus_Image.style.display = "block";
-        thumb_Image.style.display = "none";
+        upload_plus_image.style.display = "block";
+        thumbImage.style.display = "none";
         item_Image_File.value = null;
       }
 
@@ -248,6 +280,7 @@
           가격: `${item_Input[1].value} 원`,
           위시레벨: selectWishLevel.value,
           imagePath: uploadUrl,
+          state: 0,
         };
         if (
           item_Input[0].value.length > 0 &&
@@ -278,14 +311,14 @@
               }
             })
             .then((res) => {
-              add_To_Item_List(item_Input_Data);
+              add_To_Item_List(item_Input_Data, user_Item_Area);
             })
             .then((res) => {
               item_Input[0].value = null;
               item_Input[1].value = null;
               selectWishLevel.value = 0;
-              upload_Plus_Image.style.display = "block";
-              thumb_Image.style.display = "none";
+              upload_plus_image.style.display = "block";
+              thumbImage.style.display = "none";
               item_Image_File.value = null;
             });
         }
@@ -332,25 +365,25 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
       // 위시 추가버튼 transform, color 조정
-      const addItemButton = document.querySelector("#add_Item_Button");
+      const addItemButton = document.querySelector("#add_item_button");
       let isTransform = false;
       addItemButton.addEventListener("click", () => {
         isTransform = !isTransform;
         if (isTransform) {
-          plus_Icon.style.transform = "rotate(45deg)";
-          add_Item_Button.style.background = "#FF7B7B";
-          add_Item_Contents.style.display = "flex";
+          plus_icon.style.transform = "rotate(45deg)";
+          add_item_button.style.background = "#FF7B7B";
+          add_item_contents.style.display = "flex";
           regi_Item_Button_Box.style.display = "flex";
           selectWishLevel.value = 0;
         } else {
-          plus_Icon.style.transform = "";
-          add_Item_Button.style.background = "#ab86df";
-          add_Item_Contents.style.display = "none";
+          plus_icon.style.transform = "";
+          add_item_button.style.background = "#ab86df";
+          add_item_contents.style.display = "none";
           regi_Item_Button_Box.style.display = "none";
           item_Input[0].value = null;
           item_Input[1].value = null;
-          upload_Plus_Image.style.display = "block";
-          thumb_Image.style.display = "none";
+          upload_plus_image.style.display = "block";
+          thumbImage.style.display = "none";
           item_Image_File.value = null;
         }
       });
@@ -391,7 +424,7 @@
     </script>
     <script>
       // 캡쳐기능
-      const shareKakao = document.querySelector("#share_Kakao");
+      const shareKakao = document.querySelector("#share_kakao");
 
       shareKakao.addEventListener("click", (e) => {
         e.preventDefault();
@@ -429,7 +462,7 @@
                         objectType: "feed",
                         content: {
                           title:
-                            "💸WishCruncher에서 자신의 위시리스트를 계획해보세요.",
+                            "💸 WishCruncher에서 자신의 위시리스트를 계획해보세요.",
                           imageUrl:
                             "https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2FnoImage.png?alt=media&token=94dc86de-37ec-4971-8dbb-f15e5ce82a35",
                           link: {

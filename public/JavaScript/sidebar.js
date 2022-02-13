@@ -1,44 +1,54 @@
+// const arrRandomText = [
+//   //80년 이상
+//   [
+//     "이번생에는 포기합시다",
+//     "크게 버리는 사람만이 크게 얻을 수 있다",
+//     "안되겠죠?",
+//     "로또 1등에 당첨된다고 가능할까요",
+//   ],
+//   //50~80년
+//   [
+//     "그때가서 사용할 수는 있는 것들인지 확인해보자고요",
+//     "월 여유금액을 5배로 더 모으길 추천합니다",
+//     "평생동안 원하는것들이 다 들어있다면 인정",
+//     "뺄건 빼자고요",
+//   ],
+//   //20~50년
+//   [
+//     "야식먹을 돈도 아끼세요",
+//     "원하는게 상당히 크군요",
+//     "노년이 되어 이룰만큼 가치 있는 것들 인가요",
+//   ],
+//   //10~20년
+//   [
+//     "그 사이에 아이가 태어난다면?",
+//     "여유금액에 무리만 없다면 장기 목표로서는 좋아요",
+//   ],
+//   //5~10년
+//   ["결혼 자금은 어떻게 다 모으셨나요?", "솔로라면 이대로 가능해요"],
+//   //1~5년
+//   [
+//     "조금만 고생하면 돼요",
+//     "단기 목표를 잘 잡으셨네요",
+//     "무리해서 월 여유금액을 올린건 아니죠?",
+//   ],
+//   //1년
+//   [
+//     "상당히 소박하시군요",
+//     "설마 모으지도 못할 금액을 적으신건 아니겠죠",
+//     "정말 이게 다에요?",
+//     "노잼",
+//   ],
+// ];
+
 const arrRandomText = [
-  //80년 이상
-  [
-    "이번생에는 포기합시다",
-    "크게 버리는 사람만이 크게 얻을 수 있다",
-    "안되겠죠?",
-    "로또 1등에 당첨된다고 가능할까요",
-  ],
-  //50~80년
-  [
-    "그때가서 사용할 수는 있는 것들인지 확인해보자고요",
-    "월 여유금액을 5배로 더 모으길 추천합니다",
-    "평생동안 원하는것들이 다 들어있다면 인정",
-    "뺄건 빼자고요",
-  ],
-  //20~50년
-  [
-    "야식먹을 돈도 아끼세요",
-    "원하는게 상당히 크군요",
-    "노년이 되어 이룰만큼 가치 있는 것들 인가요",
-  ],
-  //10~20년
-  [
-    "그 사이에 아이가 태어난다면?",
-    "여유금액에 무리만 없다면 장기 목표로서는 좋아요",
-  ],
-  //5~10년
-  ["결혼 자금은 어떻게 다 모으셨나요?", "솔로라면 이대로 가능해요"],
-  //1~5년
-  [
-    "조금만 고생하면 돼요",
-    "단기 목표를 잘 잡으셨네요",
-    "무리해서 월 여유금액을 올린건 아니죠?",
-  ],
-  //1년
-  [
-    "상당히 소박하시군요",
-    "설마 모으지도 못할 금액을 적으신건 아니겠죠",
-    "정말 이게 다에요?",
-    "노잼",
-  ],
+  ["준비중"],
+  ["준비중"],
+  ["준비중"],
+  ["준비중"],
+  ["준비중"],
+  ["준비중"],
+  ["준비중"],
 ];
 
 // 사이드바 금액 ++
@@ -74,20 +84,20 @@ totalMoney.addEventListener("keyup", () => {
 });
 
 // 사이드바 위시 레벨 조정 버튼
-const sidebarWishLevel = document.querySelector("#wish_Level");
+const sidebarWishLevel = document.querySelector("#wish_level");
 const wishLevelOperationButton = document.querySelectorAll(
-  ".wish_Level_Operation_Button"
+  ".wish_level_operation_button"
 );
 for (let i = 0; i < wishLevelOperationButton.length; i++) {
   wishLevelOperationButton[i].addEventListener("click", (e) => {
     if (
-      e.target.name === "wish_Level_Plus" &&
+      e.target.name === "wish_level_plus" &&
       parseInt(sidebarWishLevel.innerHTML) < 10
     ) {
       sidebarWishLevel.innerHTML = parseInt(sidebarWishLevel.innerHTML) + 1;
     }
     if (
-      e.target.name === "wish_Level_Minus" &&
+      e.target.name === "wish_level_minus" &&
       parseInt(sidebarWishLevel.innerHTML) > 0
     ) {
       sidebarWishLevel.innerHTML = parseInt(sidebarWishLevel.innerHTML) - 1;
@@ -106,15 +116,15 @@ function makeDecimalNumComma(num) {
   return makePriceComma(num.slice(0, num.length - 2)) + num.slice(-2);
 }
 
-const sidebarSubmitButton = document.querySelector("#sidebar_Submit_Button");
-const wishLevel = document.querySelector("#wish_Level");
-var sumPrice = 0;
-var resultMonth;
-const wish_List_Container = document.querySelector(".wish_List_Container");
+const sidebarSubmitButton = document.querySelector("#sidebar_submit_button");
+const wishLevel = document.querySelector("#wish_level");
+let sumPrice = 0;
+let resultMonth;
+const wishListContainer = document.querySelector(".wish_list_container");
 
 // 계산 결과 보여주는 함수
 function showResult(numTotalMoney) {
-  wish_List_Container.removeChild(wish_List_Container.firstChild);
+  wishListContainer.removeChild(wishListContainer.firstChild);
   resultMonth = (sumPrice / numTotalMoney).toFixed(1);
 
   const nowDate = new Date().getTime();
@@ -273,9 +283,9 @@ function showResult(numTotalMoney) {
   );
 
   result_Container.append(username_Box, total_Info, result_Text_Info_Container);
-  wish_List_Container.prepend(result_Container);
-  const share_Kakao = document.querySelector("#share_Kakao");
-  share_Kakao.style.display = "inline-flex";
+  wishListContainer.prepend(result_Container);
+  const shareKakao = document.querySelector("#share_kakao");
+  shareKakao.style.display = "inline-flex";
 }
 
 sidebarSubmitButton.addEventListener("click", (e) => {
@@ -290,11 +300,16 @@ sidebarSubmitButton.addEventListener("click", (e) => {
         .then((res) => {
           sumPrice = 0;
           res.forEach((item) => {
-            const itemPriceData = item.data()["가격"];
-            const itemLevel = item.data()["위시레벨"];
-            const itemPrice = itemPriceData.slice(0, itemPriceData.length - 2);
-            if (parseInt(wishLevel.innerHTML) <= itemLevel) {
-              sumPrice += parseInt(itemPrice.split(",").join(""));
+            if (item.data().state === 0) {
+              const itemPriceData = item.data()["가격"];
+              const itemLevel = item.data()["위시레벨"];
+              const itemPrice = itemPriceData.slice(
+                0,
+                itemPriceData.length - 2
+              );
+              if (parseInt(wishLevel.innerHTML) <= itemLevel) {
+                sumPrice += parseInt(itemPrice.split(",").join(""));
+              }
             }
           });
         })
@@ -302,6 +317,7 @@ sidebarSubmitButton.addEventListener("click", (e) => {
           showResult(numTotalMoney);
         });
     } else {
+      sumPrice = 0;
       clientData.forEach((item) => {
         const itemPriceData = item["가격"];
         const itemLevel = item["위시레벨"];
