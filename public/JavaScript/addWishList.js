@@ -1,7 +1,7 @@
 const storage = firebase.storage();
-var clientData = [];
+let clientData = [];
 const item_Input = document.querySelectorAll(".add_Item_Input");
-var item_Image_File = document.querySelector("#upload_Photo_Input");
+let item_Image_File = document.querySelector("#upload_Photo_Input");
 const thumbImage = document.querySelector("#thumb_image");
 
 item_Image_File.addEventListener("change", () => {
@@ -27,6 +27,8 @@ function uploadClientDatabaseItem(uploadUrl) {
     selectWishLevel.value > 0
   ) {
     clientData.push(item_Input_Data);
+    const lastItemId = clientData.length;
+    item_Input_Data["id"] = lastItemId;
     add_To_Item_List(item_Input_Data, user_Item_Area);
   }
   item_Input[0].value = null;

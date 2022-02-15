@@ -260,9 +260,14 @@
           item_Input[1].value.length > 0 &&
           selectWishLevel.value > 0
         ) {
+          if (clientData.length) {
+            const lastItemId = clientData[clientData.length - 1].id;
+            item_Input_Data["id"] = lastItemId + 1;
+          } else if (!clientData.length) {
+            const lastItemId = 10;
+            item_Input_Data["id"] = lastItemId;
+          }
           clientData.push(item_Input_Data);
-          const lastItemId = clientData.length;
-          item_Input_Data["id"] = lastItemId;
           add_To_Item_List(item_Input_Data, user_Item_Area);
           empty_Box.style.display = "none";
         }

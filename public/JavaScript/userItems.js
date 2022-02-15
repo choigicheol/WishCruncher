@@ -23,14 +23,14 @@ function add_To_Item_List(item, node) {
   );
   item_Edit_Img.setAttribute("alt", "edit_Icon");
   item_Edit_Img.classList.add("edit_Button");
-  item_Edit_Img.setAttribute("id", item.id);
+  item_Edit_Img.setAttribute("id", `main_edit_${item.id}`);
   item_Delete_Img.setAttribute(
     "src",
     "https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2Fdelete_Icon.svg?alt=media&token=b33f7962-c6c2-49d3-ad34-a94d78042fd9"
   );
   item_Delete_Img.setAttribute("alt", "delete_Icon");
   item_Delete_Img.classList.add("delete_Button");
-  item_Delete_Img.setAttribute("id", item.id);
+  item_Delete_Img.setAttribute("id", `main_delete_${item.id}`);
 
   node.prepend(item_Box);
   item_Box.append(photo_Box, item_Contents, edit_Button_Box);
@@ -63,17 +63,27 @@ function add_To_Item_List(item, node) {
   // 위시리스트 삭제
   allDeleteButton.forEach((deleteBtn, idx) => {
     deleteBtn.addEventListener("click", (e) => {
+      const targetId = e.target.id;
+      const targetIdNum = targetId.split("_")[2];
       const itemReset = document.querySelectorAll(".item_Box");
       itemReset.forEach((item) => {
-        if (item.id === e.target.id) {
+        if (item.id === targetIdNum) {
           item.remove();
         }
       });
-      db.collection("users")
-        .doc(userUid)
-        .collection("wish")
-        .doc(`item${e.target.id}`)
-        .delete();
+      if (isLogin) {
+        db.collection("users")
+          .doc(userUid)
+          .collection("wish")
+          .doc(`item${targetIdNum}`)
+          .delete();
+      } else {
+        clientData.forEach((item, index) => {
+          if (item.id === Number(targetIdNum)) {
+            clientData.splice(index, 1);
+          }
+        });
+      }
     });
   });
 }
