@@ -322,7 +322,10 @@
                   };
                   res.forEach((data) => {
                     const wishData = data.data();
-                    arrAllWish.push(wishData);
+
+                    if (wishData.state !== 2) {
+                      arrAllWish.push(wishData);
+                    }
                     if (wishData.state === 0) {
                       wish.unfinishedWish++;
                       add_To_Item_List(wishData, unfinishedItems);
