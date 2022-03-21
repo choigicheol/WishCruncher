@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="./CSS/globalLayout.css" />
-    <link rel="stylesheet" href="./CSS/index.css" />
-    <link rel="icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="../CSS/globalLayout.css" />
+    <link rel="stylesheet" href="../CSS/index.css" />
+    <link rel="icon" href="../favicon.ico" />
     <title>WishCruncher</title>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
@@ -15,25 +15,7 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   </head>
   <body>
-    <header id="header_container">
-      <nav id="header_area">
-        <div class="header_menu">
-          <a id="header_logo" href="index.html"
-            ><img src="./Images/logo.png" alt="logo"
-          /></a>
-        </div>
-        <div class="header_menu header_text_menu">
-          <span class="home_text_menu"><a href="index.html">Home</a></span>
-          <span class="mypage_text_menu">MyPage</span>
-        </div>
-        <div class="header_menu login_menu">
-          <span
-            ><a class="login_state" href="./Pages/login.html">Login</a></span
-          >
-          <span class="logout_state">Logout</span>
-        </div>
-      </nav>
-    </header>
+    <header id="header_container"></header>
     <main>
       <div id="main_page">
         <div class="side_bar">
@@ -90,7 +72,7 @@
           <div id="add_item_box">
             <div id="add_item_button_box">
               <div id="add_item_button">
-                <img id="plus_icon" src="./Images/plus_Icon.png" />
+                <img id="plus_icon" src="../Images/plus_Icon.png" />
               </div>
             </div>
             <div id="add_item_contents">
@@ -98,24 +80,24 @@
                 <div id="upload_image_box">
                   <img
                     id="upload_plus_image"
-                    src="./Images/photo_Plus_Button.svg"
+                    src="../Images/photo_Plus_Button.svg"
                     alt="+"
                   />
                   <img id="thumb_image" src="" alt="+" />
                 </div>
-                <input id="upload_Photo_Input" type="file" />
+                <input id="upload_photo_input" type="file" />
               </div>
-              <div id="add_Item_Input_Area">
-                <div class="add_Item_Input_Row">
-                  <span class="add_Item_Input_Row_Category">제품</span>
-                  <input class="add_Item_Input" />
+              <div id="add_item_input_area">
+                <div class="add_item_input_row">
+                  <span class="add_item_input_row_category">제품</span>
+                  <input class="add_item_input" />
                 </div>
-                <div id="add_Item_Input_Row_Middle" class="add_Item_Input_Row">
-                  <span class="add_Item_Input_Row_Category">가격</span>
-                  <input class="add_Item_Input" maxlength="24" />
+                <div id="add_item_input_row_middle" class="add_item_input_row">
+                  <span class="add_item_input_row_category">가격</span>
+                  <input class="add_item_input" maxlength="24" />
                 </div>
-                <div class="add_Item_Input_Row">
-                  <span class="add_Item_Input_Row_Category">위시 레벨</span>
+                <div class="add_item_input_row">
+                  <span class="add_item_input_row_category">위시 레벨</span>
                   <input
                     id="wish_level_range"
                     type="range"
@@ -162,38 +144,31 @@
       </div>
       <div id="scroll_Top_Button">Top</div>
     </main>
-    <footer>
-      <a href="https://github.com/choigicheol" target="_blank">
-        <div class="github_Link">
-          <img src="./Images/github_Icon.svg" />
-          <span>Choi Gi Cheol</span>
-        </div>
-      </a>
-    </footer>
+    <footer id="footer"></footer>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
-    <script src="./firebase.js"></script>
+    <script src="../firebase.js"></script>
+    <script src="../JavaScript/makeHeader.js"></script>
+    <script src="../JavaScript/makeFooter.js"></script>
     <script>
-      let userUid = null;
-      const db = firebase.firestore();
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          userUid = user.uid;
-        }
-      });
+      // firebase.auth().onAuthStateChanged((user) => {
+      //   if (user) {
+      //     userUid = user.uid;
+      //   }
+      // });
     </script>
     <!-- 유저 로그인 -->
-    <script src="JavaScript/login.js"></script>
+    <script src="../JavaScript/login.js"></script>
     <!-- 유저 로그아웃 -->
-    <script src="JavaScript/logout.js"></script>
+    <script src="../JavaScript/logout.js"></script>
     <!-- 마이페이지 이동 -->
     <script>
       const mypageMenu = document.querySelector(".mypage_text_menu");
       mypageMenu.addEventListener("click", (e) => {
         if (isLogin) {
-          window.location.replace("./Pages/mypage.html");
+          window.location.replace("mypage.html");
         }
       });
     </script>
@@ -201,8 +176,11 @@
       // const user_Item_Area = document.querySelector("#user_Item_Area");
     </script>
     <!-- 유저 로그인 상태, 위시리스트 데이터베이스 확인 -->
-    <script src="JavaScript/userItems.js"></script>
+    <script src="../JavaScript/userItems.js"></script>
     <script>
+      let userUid = null;
+      const db = firebase.firestore();
+
       const user_Item_Area = document.querySelector("#user_Item_Area");
       let clientData = [];
       firebase.auth().onAuthStateChanged((user) => {
@@ -218,7 +196,7 @@
               } else {
                 res.forEach((doc) => {
                   if (!doc.data().state) {
-                    add_To_Item_List(doc.data(), user_Item_Area);
+                    showItemList(doc.data(), user_Item_Area);
                   }
                 });
               }
@@ -234,8 +212,8 @@
     <!-- <script src="./JavaScript/addWishList.js"></script> -->
     <script>
       const storage = firebase.storage();
-      const item_Input = document.querySelectorAll(".add_Item_Input");
-      var item_Image_File = document.querySelector("#upload_Photo_Input");
+      const item_Input = document.querySelectorAll(".add_item_input");
+      var item_Image_File = document.querySelector("#upload_photo_input");
       const thumbImage = document.querySelector("#thumb_image");
 
       item_Image_File.addEventListener("change", () => {
@@ -268,7 +246,7 @@
             item_Input_Data["id"] = lastItemId;
           }
           clientData.push(item_Input_Data);
-          add_To_Item_List(item_Input_Data, user_Item_Area);
+          showItemList(item_Input_Data, user_Item_Area);
           empty_Box.style.display = "none";
         }
         item_Input[0].value = null;
@@ -316,7 +294,7 @@
               }
             })
             .then((res) => {
-              add_To_Item_List(item_Input_Data, user_Item_Area);
+              showItemList(item_Input_Data, user_Item_Area);
             })
             .then((res) => {
               item_Input[0].value = null;
@@ -415,12 +393,17 @@
         return result;
       }
 
-      const add_Item_Price_Check =
-        /^([0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9])$/;
-      item_Input[1].addEventListener("keyup", () => {
-        if (!add_Item_Price_Check.test(item_Input[1].value)) {
-          item_Input[1].value = null;
+      const add_Item_Price_Check = /^([0-9])$/;
+      // const add_Item_Price_Check =
+      //   /^([0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9])$/;
+      item_Input[1].addEventListener("keyup", (e) => {
+        const removeComma = e.target.value.split(",").join("");
+        const lastValue = removeComma.slice(-1);
+
+        if (!add_Item_Price_Check.test(lastValue)) {
+          item_Input[1].value = item_Input[1].value.slice(0, -1);
         }
+
         if (item_Input[1].value[0] === "0") {
           item_Input[1].value = item_Input[1].value.slice(1);
         }
@@ -499,6 +482,6 @@
         });
       });
     </script>
-    <script src="./JavaScript/sidebar.js"></script>
+    <script src="../JavaScript/sidebar.js"></script>
   </body>
 </html>
