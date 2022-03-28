@@ -1,5 +1,5 @@
 const storage = firebase.storage();
-let clientData = [];
+
 const item_Input = document.querySelectorAll(".add_Item_Input");
 let item_Image_File = document.querySelector("#upload_Photo_Input");
 const thumbImage = document.querySelector("#thumb_image");
@@ -29,7 +29,7 @@ function uploadClientDatabaseItem(uploadUrl) {
     clientData.push(item_Input_Data);
     const lastItemId = clientData.length;
     item_Input_Data["id"] = lastItemId;
-    add_To_Item_List(item_Input_Data, user_Item_Area);
+    showItemList(item_Input_Data, user_item_area);
   }
   item_Input[0].value = null;
   item_Input[1].value = null;
@@ -76,7 +76,7 @@ function uploadUserDatabaseItem(uploadUrl) {
         }
       })
       .then((res) => {
-        add_To_Item_List(item_Input_Data, user_Item_Area);
+        showItemList(item_Input_Data, user_item_area);
       })
       .then((res) => {
         item_Input[0].value = null;
@@ -91,7 +91,7 @@ function uploadUserDatabaseItem(uploadUrl) {
 
 // 등록버튼 눌렀을 때 위시리스트 추가
 regi_Item.addEventListener("click", (e) => {
-  var uploadUrl = `https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2FnoImage.png?alt=media&token=94dc86de-37ec-4971-8dbb-f15e5ce82a35`;
+  // var uploadUrl = noImage;
   e.preventDefault();
   if (isLogin) {
     if (item_Image_File.files[0]) {
@@ -121,3 +121,6 @@ regi_Item.addEventListener("click", (e) => {
     }
   }
 });
+
+// showItemList(clientData[0], user_item_area);
+// showItemList(clientData[1], user_item_area);

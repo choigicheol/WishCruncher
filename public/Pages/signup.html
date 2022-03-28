@@ -9,29 +9,13 @@
     <title>WishCruncher</title>
   </head>
   <body>
-    <header id="header_container">
-      <nav id="header_area">
-        <div class="header_menu">
-          <a id="header_logo" href="../index.html"
-            ><img src="../Images/logo.png"
-          /></a>
-        </div>
-        <div class="header_menu header_text_menu">
-          <span class="home_text_menu"><a href="../index.html">Home</a></span>
-          <span class="mypage_text_menu">MyPage</span>
-        </div>
-        <div class="header_menu login_menu">
-          <span><a class="login_state" href="login.html">Login</a></span>
-          <span class="logout_state">Logout</span>
-        </div>
-      </nav>
-    </header>
+    <header id="header_container"></header>
     <main>
       <div id="signup_Page">
         <div id="signup_Page_Container">
           <form id="signup_Form">
             <div id="signup_Title">회원가입 🎉</div>
-            <label class="input_Label" for="email_Input">이메일</label>
+            <label class="input_label" for="email_Input">이메일</label>
             <div id="email_Input_Area">
               <!-- 이메일 입력 -->
               <input
@@ -55,10 +39,10 @@
               >
             </div>
             <!-- 닉네임 입력 -->
-            <label class="input_Label" for="nickname_Input">닉네임</label>
+            <label class="input_label" for="nickname_Input">닉네임</label>
             <input id="nickname_input" name="nickname_Input" required />
             <!-- 비밀번호 입력 -->
-            <label class="input_Label" for="password_Input">비밀번호</label>
+            <label class="input_label" for="password_Input">비밀번호</label>
             <input
               id="password_Input"
               type="password"
@@ -67,7 +51,7 @@
               required
             />
             <!-- 비밀번호 확인 입력 -->
-            <label class="input_Label" for="confirm_password_Input"
+            <label class="input_label" for="confirm_password_Input"
               >비밀번호 확인</label
             >
             <input
@@ -97,20 +81,14 @@
         </div>
       </div>
     </main>
-    <footer>
-      <a href="https://github.com/choigicheol" target="_blank">
-        <div class="github_Link">
-          <img src="../Images/github_Icon.svg" />
-          <span>Choi Gi Cheol</span>
-        </div>
-      </a>
-    </footer>
+    <footer id="footer"></footer>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
-
+    <script src="../JavaScript/makeHeader.js"></script>
+    <script src="../JavaScript/makeFooter.js"></script>
     <script>
       const db = firebase.firestore();
     </script>

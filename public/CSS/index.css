@@ -446,7 +446,7 @@
   transition: all 0.125s ease-in 0s;
 }
 
-#user_Item_Area {
+#user_item_area {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

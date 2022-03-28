@@ -17,23 +17,7 @@
     </script>
   </head>
   <body>
-    <header id="header_container">
-      <nav id="header_area">
-        <div class="header_menu">
-          <a id="header_logo" href="../index.html"
-            ><img src="../Images/logo.png"
-          /></a>
-        </div>
-        <div class="header_menu header_text_menu">
-          <span class="home_text_menu"> <a href="../index.html">Home</a></span>
-          <span class="mypage_text_menu">MyPage</span>
-        </div>
-        <div class="header_menu login_menu">
-          <span><a class="login_state" href="login.html">Login</a></span>
-          <span class="logout_state">Logout</span>
-        </div>
-      </nav>
-    </header>
+    <header id="header_container"></header>
     <main>
       <div id="result_Page">
         <img
@@ -41,19 +25,14 @@
         />
       </div>
     </main>
-    <footer>
-      <a href="https://github.com/choigicheol" target="_blank">
-        <div class="github_Link">
-          <img src="../Images/github_Icon.svg" />
-          <span>Choi Gi Cheol</span>
-        </div>
-      </a>
-    </footer>
+    <footer id="footer"></footer>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
+    <script src="../JavaScript/makeHeader.js"></script>
+    <script src="../JavaScript/makeFooter.js"></script>
     <script>
       const resultUrl = window.location.href;
       const resultUrltest = new URL(resultUrl);

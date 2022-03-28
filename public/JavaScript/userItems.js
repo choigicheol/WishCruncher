@@ -1,8 +1,8 @@
-let allDeleteButton = document.querySelectorAll(".delete_Button");
+let allDeleteButton = document.querySelectorAll(".delete_button");
 let allItemBox = document.querySelectorAll(".item_Box");
 
-// 매개변수로 item 객체를 받아 item_list에 추가 하는 함수
-function add_To_Item_List(item, node) {
+// 매개변수로 item 정보 및 node를 받아 node의 첫번째 자식으로 item 추가 하는 함수
+function showItemList(item, node) {
   const item_Box = document.createElement("div");
   const photo_Box = document.createElement("div");
   const item_Img = document.createElement("img");
@@ -29,7 +29,7 @@ function add_To_Item_List(item, node) {
     "https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2Fdelete_Icon.svg?alt=media&token=b33f7962-c6c2-49d3-ad34-a94d78042fd9"
   );
   item_Delete_Img.setAttribute("alt", "delete_Icon");
-  item_Delete_Img.classList.add("delete_Button");
+  item_Delete_Img.classList.add("delete_button");
   item_Delete_Img.setAttribute("id", `main_delete_${item.id}`);
 
   node.prepend(item_Box);
@@ -57,7 +57,7 @@ function add_To_Item_List(item, node) {
   }
 
   edit_Button_Box.append(item_Edit_Img, item_Delete_Img);
-  allDeleteButton = document.querySelectorAll(".delete_Button");
+  allDeleteButton = document.querySelectorAll(".delete_button");
   allItemBox = document.querySelectorAll(".item_Box");
 
   // 위시리스트 삭제
@@ -78,6 +78,9 @@ function add_To_Item_List(item, node) {
           .doc(`item${targetIdNum}`)
           .delete();
       } else {
+        if (!clientData.length) {
+          return showEmptyItem(user_item_area);
+        }
         clientData.forEach((item, index) => {
           if (item.id === Number(targetIdNum)) {
             clientData.splice(index, 1);
@@ -88,7 +91,7 @@ function add_To_Item_List(item, node) {
   });
 }
 
-// 데이터가 없을 때 나타낼 태그
+// 데이터가 없을 때 나타낼 안내창
 function showEmptyItem(node) {
   const empty_Box = document.createElement("div");
   empty_Box.setAttribute("id", "empty_Box");

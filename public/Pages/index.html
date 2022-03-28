@@ -139,7 +139,7 @@
           </div>
 
           <!-- 위시 제품 리스트 구역 -->
-          <div id="user_Item_Area"></div>
+          <div id="user_item_area"></div>
         </div>
       </div>
       <div id="scroll_Top_Button">Top</div>
@@ -173,16 +173,35 @@
       });
     </script>
     <script>
-      // const user_Item_Area = document.querySelector("#user_Item_Area");
+      // const user_item_area = document.querySelector("#user_item_area");
     </script>
     <!-- 유저 로그인 상태, 위시리스트 데이터베이스 확인 -->
     <script src="../JavaScript/userItems.js"></script>
     <script>
       let userUid = null;
       const db = firebase.firestore();
+      const noImage =
+        "https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2FnoImage.png?alt=media&token=94dc86de-37ec-4971-8dbb-f15e5ce82a35";
 
-      const user_Item_Area = document.querySelector("#user_Item_Area");
-      let clientData = [];
+      const user_item_area = document.querySelector("#user_item_area");
+      let clientData = [
+        {
+          id: 0,
+          제품: "맥북 16형 pro",
+          가격: "3,360,000 원",
+          위시레벨: "10",
+          imagePath: "../Images/mac.png",
+          state: 0,
+        },
+        {
+          id: 1,
+          제품: "갤럭시 폴드2",
+          가격: "1,965,890 원",
+          위시레벨: "3",
+          imagePath: "../Images/fold3.png",
+          state: 0,
+        },
+      ];
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           userUid = user.uid;
@@ -192,18 +211,23 @@
             .get()
             .then((res) => {
               if (!res.size) {
-                showEmptyItem(user_Item_Area);
+                showEmptyItem(user_item_area);
               } else {
                 res.forEach((doc) => {
                   if (!doc.data().state) {
-                    showItemList(doc.data(), user_Item_Area);
+                    showItemList(doc.data(), user_item_area);
                   }
                 });
               }
             });
         } else {
           userUid = null;
-          showEmptyItem(user_Item_Area);
+          clientData.forEach((data) => {
+            return showItemList(data, user_item_area);
+          });
+          // showItemList(clientData[0], user_item_area);
+          // showItemList(clientData[1], user_item_area);
+          // showEmptyItem(user_item_area);
         }
       });
     </script>
@@ -246,7 +270,7 @@
             item_Input_Data["id"] = lastItemId;
           }
           clientData.push(item_Input_Data);
-          showItemList(item_Input_Data, user_Item_Area);
+          showItemList(item_Input_Data, user_item_area);
           empty_Box.style.display = "none";
         }
         item_Input[0].value = null;
@@ -294,7 +318,7 @@
               }
             })
             .then((res) => {
-              showItemList(item_Input_Data, user_Item_Area);
+              showItemList(item_Input_Data, user_item_area);
             })
             .then((res) => {
               item_Input[0].value = null;
@@ -309,7 +333,6 @@
 
       // 등록버튼 눌렀을 때 위시리스트 추가
       regi_Item.addEventListener("click", (e) => {
-        var uploadUrl = `https://firebasestorage.googleapis.com/v0/b/wishcruncher.appspot.com/o/image%2FnoImage.png?alt=media&token=94dc86de-37ec-4971-8dbb-f15e5ce82a35`;
         e.preventDefault();
         if (isLogin) {
           if (item_Image_File.files[0]) {
@@ -329,13 +352,13 @@
               }
             );
           } else {
-            uploadUserDatabaseItem(uploadUrl);
+            uploadUserDatabaseItem(noImage);
           }
         } else {
           if (item_Image_File.files[0]) {
             uploadClientDatabaseItem(item_Image_File.files[0].preview);
           } else {
-            uploadClientDatabaseItem(uploadUrl);
+            uploadClientDatabaseItem(noImage);
           }
         }
       });
@@ -393,14 +416,17 @@
         return result;
       }
 
-      const add_Item_Price_Check = /^([0-9])$/;
-      // const add_Item_Price_Check =
+      function isNumber(e) {
+        if (e.keyCode < 48 || e.keyCode > 58) {
+          return false;
+        }
+        return true;
+      }
+      // const addItemPriceCheck = /^([0-9])$/;
+      // const addItemPriceCheck =
       //   /^([0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9])$/;
       item_Input[1].addEventListener("keyup", (e) => {
-        const removeComma = e.target.value.split(",").join("");
-        const lastValue = removeComma.slice(-1);
-
-        if (!add_Item_Price_Check.test(lastValue)) {
+        if (!isNumber(e)) {
           item_Input[1].value = item_Input[1].value.slice(0, -1);
         }
 

@@ -10,23 +10,7 @@
     <title>WishCruncher</title>
   </head>
   <body>
-    <header id="header_container">
-      <nav id="header_area">
-        <div class="header_menu">
-          <a id="header_logo" href="../index.html"
-            ><img src="../Images/logo.png"
-          /></a>
-        </div>
-        <div class="header_menu header_text_menu">
-          <span class="home_text_menu"><a href="../index.html">Home</a></span>
-          <span class="mypage_text_menu">MyPage</span>
-        </div>
-        <div class="header_menu login_menu">
-          <span><a class="login_state" href="login.html">Login</a></span>
-          <span class="logout_state">Logout</span>
-        </div>
-      </nav>
-    </header>
+    <header id="header_container"></header>
     <main>
       <div id="myPage">
         <div id="user_Profile_Container">
@@ -50,38 +34,23 @@
       </div>
       <div id="scroll_Top_Button">Top</div>
     </main>
-    <footer>
-      <a href="https://github.com/choigicheol" target="_blank">
-        <div class="github_Link">
-          <img src="../Images/github_Icon.svg" />
-          <span>Choi Gi Cheol</span>
-        </div>
-      </a>
-    </footer>
+    <footer id="footer"></footer>
+
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
+    <script src="../JavaScript/makeHeader.js"></script>
+    <script src="../JavaScript/makeFooter.js"></script>
 
     <script>
       const db = firebase.firestore();
     </script>
     <script src="../JavaScript/login.js"></script>
     <!-- 로그아웃 실행 -->
-    <script>
-      logoutState.addEventListener("click", (e) => {
-        e.preventDefault();
-        firebase
-          .auth()
-          .signOut()
-          .then((res) => {
-            window.location.replace("../index.html");
-          });
-      });
-      loginState.style.display = "block";
-      logoutState.style.display = "none";
-    </script>
+    <script src="../JavaScript/logout.js"></script>
+
     <!-- 아이템 추가 -->
     <script src="../JavaScript/userItems.js"></script>
     <script>
@@ -328,14 +297,14 @@
                     }
                     if (wishData.state === 0) {
                       wish.unfinishedWish++;
-                      add_To_Item_List(wishData, unfinishedItems);
+                      showItemList(wishData, unfinishedItems);
                     } else if (wishData.state === 1) {
                       wish.finishWish++;
                       arrFinishWish.push(wishData);
-                      add_To_Item_List(wishData, finishItems);
+                      showItemList(wishData, finishItems);
                     } else {
                       wish.deleteWish++;
-                      add_To_Item_List(wishData, deleteItems);
+                      showItemList(wishData, deleteItems);
                     }
                   });
                   if (!unfinishedItems.childElementCount) {

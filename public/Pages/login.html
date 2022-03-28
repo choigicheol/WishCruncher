@@ -16,32 +16,17 @@
       // console.log(Kakao.isInitialized());
     </script>
   </head>
-  <body>
-    <header id="header_container">
-      <nav id="header_area">
-        <div class="header_menu">
-          <a id="header_logo" href="../index.html"
-            ><img src="../Images/logo.png"
-          /></a>
-        </div>
-        <div class="header_menu header_text_menu">
-          <span class="home_text_menu"> <a href="../index.html">Home</a></span>
-          <span id="mypage_text_menu">MyPage</span>
-        </div>
-        <div class="header_menu login_menu">
-          <span><a class="login_state" href="login.html">Login</a></span>
-          <span class="logout_state">Logout</span>
-        </div>
-      </nav>
-    </header>
+  <body id="body">
+    <header id="header_container"></header>
+
     <main>
       <div id="login_Page">
         <div id="login_Page_Container">
           <form id="login_Form">
             <div id="login_Title">로그인</div>
-            <label class="input_Label" for="email_Input">이메일</label>
+            <label class="input_label" for="email_Input">이메일</label>
             <input type="email" name="email_Input" required />
-            <label class="input_Label" for="password_Input">비밀번호</label>
+            <label class="input_label" for="password_Input">비밀번호</label>
             <input
               id="password_input"
               type="password"
@@ -65,19 +50,16 @@
         </div>
       </div>
     </main>
-    <footer>
-      <a href="https://github.com/choigicheol" target="_blank">
-        <div class="github_Link">
-          <img src="../Images/github_Icon.svg" />
-          <span>Choi Gi Cheol</span>
-        </div>
-      </a>
-    </footer>
+
+    <footer id="footer"></footer>
+
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
+    <script src="../JavaScript/makeHeader.js"></script>
+    <script src="../JavaScript/makeFooter.js"></script>
 
     <script>
       const db = firebase.firestore();
@@ -91,7 +73,7 @@
           .signInWithEmailAndPassword(email, password)
           .then((userCredential) => {
             login_Warning_Message.style.visibility = "hidden";
-            window.location.replace("../index.html");
+            window.location.replace("index.html");
           })
           .catch((err) => {
             login_Warning_Message.style.visibility = "visible";
@@ -123,7 +105,8 @@
           .then((res) => res.json())
           .then((res) => {
             const access_Token = res.access_token;
-            const kakaoUserInfo_API_URL = "http://localhost/verifyToken";
+            const kakaoUserInfo_API_URL =
+              "https://wishcruncher.shop/verifyToken";
             const data = {
               token: access_Token,
             };
@@ -151,7 +134,7 @@
                         email: null,
                       })
                       .then((res) => {
-                        // window.location.replace("../index.html");
+                        window.location.replace("index.html");
                       });
                   });
               });
