@@ -236,7 +236,7 @@
     <!-- <script src="./JavaScript/addWishList.js"></script> -->
     <script>
       const storage = firebase.storage();
-      const item_Input = document.querySelectorAll(".add_item_input");
+      const item_input = document.querySelectorAll(".add_item_input");
       var item_Image_File = document.querySelector("#upload_photo_input");
       const thumbImage = document.querySelector("#thumb_image");
 
@@ -250,31 +250,31 @@
       });
 
       function uploadClientDatabaseItem(uploadUrl) {
-        let item_Input_Data = {
-          제품: item_Input[0].value,
-          가격: `${item_Input[1].value} 원`,
+        let item_input_data = {
+          제품: item_input[0].value,
+          가격: `${item_input[1].value} 원`,
           위시레벨: selectWishLevel.value,
           imagePath: uploadUrl,
           state: 0,
         };
         if (
-          item_Input[0].value.length > 0 &&
-          item_Input[1].value.length > 0 &&
+          item_input[0].value.length > 0 &&
+          item_input[1].value.length > 0 &&
           selectWishLevel.value > 0
         ) {
           if (clientData.length) {
             const lastItemId = clientData[clientData.length - 1].id;
-            item_Input_Data["id"] = lastItemId + 1;
+            item_input_data["id"] = lastItemId + 1;
           } else if (!clientData.length) {
             const lastItemId = 10;
-            item_Input_Data["id"] = lastItemId;
+            item_input_data["id"] = lastItemId;
           }
-          clientData.push(item_Input_Data);
-          showItemList(item_Input_Data, user_item_area);
+          clientData.push(item_input_data);
+          showItemList(item_input_data, user_item_area);
           empty_Box.style.display = "none";
         }
-        item_Input[0].value = null;
-        item_Input[1].value = null;
+        item_input[0].value = null;
+        item_input[1].value = null;
         selectWishLevel.value = 0;
         upload_plus_image.style.display = "block";
         thumbImage.style.display = "none";
@@ -282,16 +282,16 @@
       }
 
       function uploadUserDatabaseItem(uploadUrl) {
-        let item_Input_Data = {
-          제품: item_Input[0].value,
-          가격: `${item_Input[1].value} 원`,
+        let item_input_data = {
+          제품: item_input[0].value,
+          가격: `${item_input[1].value} 원`,
           위시레벨: selectWishLevel.value,
           imagePath: uploadUrl,
           state: 0,
         };
         if (
-          item_Input[0].value.length > 0 &&
-          item_Input[1].value.length > 0 &&
+          item_input[0].value.length > 0 &&
+          item_input[1].value.length > 0 &&
           selectWishLevel.value > 0
         ) {
           db.collection("users")
@@ -301,28 +301,28 @@
             .then((res) => {
               if (res.size > 0) {
                 const lastItemId = res.docs[res.size - 1].data().id;
-                item_Input_Data["id"] = lastItemId + 1;
+                item_input_data["id"] = lastItemId + 1;
                 db.collection("users")
                   .doc(userUid)
                   .collection("wish")
                   .doc(`item${lastItemId + 1}`)
-                  .set(item_Input_Data);
+                  .set(item_input_data);
               } else {
                 empty_Box.style.display = "none";
-                item_Input_Data["id"] = res.size + 10;
+                item_input_data["id"] = res.size + 10;
                 db.collection("users")
                   .doc(userUid)
                   .collection("wish")
                   .doc(`item${res.size + 10}`)
-                  .set(item_Input_Data);
+                  .set(item_input_data);
               }
             })
             .then((res) => {
-              showItemList(item_Input_Data, user_item_area);
+              showItemList(item_input_data, user_item_area);
             })
             .then((res) => {
-              item_Input[0].value = null;
-              item_Input[1].value = null;
+              item_input[0].value = null;
+              item_input[1].value = null;
               selectWishLevel.value = 0;
               upload_plus_image.style.display = "block";
               thumbImage.style.display = "none";
@@ -386,8 +386,8 @@
           add_item_button.style.background = "#ab86df";
           add_item_contents.style.display = "none";
           regi_Item_Button_Box.style.display = "none";
-          item_Input[0].value = null;
-          item_Input[1].value = null;
+          item_input[0].value = null;
+          item_input[1].value = null;
           upload_plus_image.style.display = "block";
           thumbImage.style.display = "none";
           item_Image_File.value = null;
@@ -416,24 +416,23 @@
         return result;
       }
 
-      function isNumber(e) {
-        if (e.keyCode < 48 || e.keyCode > 58) {
-          return false;
-        }
-        return true;
-      }
-      // const addItemPriceCheck = /^([0-9])$/;
-      // const addItemPriceCheck =
-      //   /^([0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9]*,*[0-9])$/;
-      item_Input[1].addEventListener("keyup", (e) => {
-        if (!isNumber(e)) {
-          item_Input[1].value = item_Input[1].value.slice(0, -1);
+      const numberRegExp = /[^0-9]/g;
+
+      const makePrice = (e) => {
+        const target = e.target;
+
+        if (numberRegExp.test(target.value)) {
+          target.value = target.value.replace(numberRegExp, "");
         }
 
-        if (item_Input[1].value[0] === "0") {
-          item_Input[1].value = item_Input[1].value.slice(1);
+        if (target.value[0] === "0") {
+          target.value = target.value.slice(1);
         }
-        item_Input[1].value = makePriceComma(item_Input[1].value);
+        target.value = makePriceComma(target.value);
+      };
+
+      item_input[1].addEventListener("keyup", (e) => {
+        makePrice(e);
       });
     </script>
     <script>

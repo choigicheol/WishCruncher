@@ -38,14 +38,7 @@ for (let i = 0; i < moneyButton.length; i++) {
 }
 
 totalMoney.addEventListener("keyup", (e) => {
-  if (totalMoney.value[0] === "0") {
-    totalMoney.value = totalMoney.value.slice(1);
-  }
-  if (!isNumber(e)) {
-    totalMoney.value = totalMoney.value.slice(0, -1);
-  } else if (isNumber(e)) {
-    totalMoney.value = makePriceComma(totalMoney.value);
-  }
+  makePrice(e);
 });
 
 // 사이드바 위시 레벨 조정 버튼 event 등록
