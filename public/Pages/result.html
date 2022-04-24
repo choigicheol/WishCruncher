@@ -31,8 +31,14 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
-    <script src="../JavaScript/makeHeader.js"></script>
-    <script src="../JavaScript/makeFooter.js"></script>
+
+    <script type="module">
+      import makeHeader from "../JavaScript/makeHeader.js";
+      import makeFooter from "../JavaScript/makeFooter.js";
+      makeHeader();
+      makeFooter();
+    </script>
+
     <script>
       const resultUrl = window.location.href;
       const resultUrltest = new URL(resultUrl);

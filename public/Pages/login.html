@@ -10,42 +10,38 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
       // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-      Kakao.init("7573f9555b42ced32c395787d475bd06");
-
-      // SDK 초기화 여부를 판단합니다.
-      // console.log(Kakao.isInitialized());
+      // Kakao.init("7573f9555b42ced32c395787d475bd06");
     </script>
   </head>
   <body id="body">
     <header id="header_container"></header>
 
     <main>
-      <div id="login_Page">
-        <div id="login_Page_Container">
-          <form id="login_Form">
-            <div id="login_Title">로그인</div>
-            <label class="input_label" for="email_Input">이메일</label>
-            <input type="email" name="email_Input" required />
-            <label class="input_label" for="password_Input">비밀번호</label>
-            <input
-              id="password_input"
-              type="password"
-              name="password_Input"
-              required
-            />
-            <div id="login_Warning_Message">로그인 정보를 확인해주세요</div>
-            <button class="submit_Button">로그인</button>
+      <div id="login_page">
+        <div id="login_page_container">
+          <form id="login_form">
+            <div id="login_title">로그인</div>
+            <label class="input_label" for="email_input">이메일</label>
+            <input type="email" name="email_input" required />
+            <label class="input_label" for="password_input">비밀번호</label>
+            <input id="password_input" type="password" name="password_input" required />
+            <div id="login_warning_message">로그인 정보를 확인해주세요</div>
+            <button class="submit_button">로그인</button>
           </form>
-          <button id="kakao_Login_Button">
+          <!-- <button id="kakao_Login_Button">
             <div id="kakao_Login_Button_Contents">
               <img src="../Images/kakaoLogo.svg" />
               <span>카카오 로그인</span>
             </div>
+          </button> -->
+          <button id="social_login_button">
+            <div id="social_login_button_contents">
+              <img src="../Images/kakaoLogo.svg" />
+              <span>Google로 시작하기</span>
+            </div>
           </button>
-          <div id="go_To_signUp">
-            <a href="signup.html"
-              >아직 이메일이 없으신가요? 회원가입 하러가기</a
-            >
+          <div id="go_to_signup">
+            <a href="signup.html">아직 이메일이 없으신가요? 회원가입 하러가기</a>
           </div>
         </div>
       </div>
@@ -59,33 +55,49 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
     <script src="../JavaScript/makeHeader.js"></script>
-    <script src="../JavaScript/makeFooter.js"></script>
+    <!-- <script type="module">
+      import makeHeader from "../JavaScript/makeHeader.js";
+      import makeFooter from "../JavaScript/makeFooter.js";
+      makeHeader();
+      makeFooter();
+    </script> -->
 
     <script>
       const db = firebase.firestore();
-      const loginForm = document.querySelector("#login_Form");
+      const loginForm = document.querySelector("#login_form");
       loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const email = loginForm["email_Input"].value;
-        const password = loginForm["password_Input"].value;
+        const email = loginForm["email_input"].value;
+        const password = loginForm["password_input"].value;
         firebase
           .auth()
           .signInWithEmailAndPassword(email, password)
           .then((userCredential) => {
-            login_Warning_Message.style.visibility = "hidden";
+            login_warning_message.style.visibility = "hidden";
             window.location.replace("index.html");
           })
           .catch((err) => {
-            login_Warning_Message.style.visibility = "visible";
+            login_warning_message.style.visibility = "visible";
           });
       });
     </script>
     <script src="../JavaScript/login.js"></script>
+
+    <!-- <script type="module" defer>
+      checkLogin();
+    </script> -->
+    <!-- <script type="module">
+      import checkLogin from "../JavaScript/login.js";
+      checkLogin();
+    </script> -->
     <script>
+      const googleLogin = document.querySelector("#social_login_button");
+    </script>
+    <!-- kakao 로그인 -->
+    <!-- <script>
       const kakaoLogin = document.querySelector("#kakao_Login_Button");
       const KAKAO_REST_API_KEY = "bd2e10a597f57c10609a98f50b97cd6c";
-      const KAKAO_REDIRECT_URI =
-        "https://wishcruncher-gigi.web.app/Pages/login.html";
+      const KAKAO_REDIRECT_URI = "https://wishcruncher-gigi.web.app/Pages/login.html";
       kakaoLogin.addEventListener("click", (e) => {
         e.preventDefault();
         Kakao.Auth.authorize({
@@ -105,8 +117,7 @@
           .then((res) => res.json())
           .then((res) => {
             const access_Token = res.access_token;
-            const kakaoUserInfo_API_URL =
-              "https://wishcruncher.shop/verifyToken";
+            const kakaoUserInfo_API_URL = "https://wishcruncher.shop/verifyToken";
             const data = {
               token: access_Token,
             };
@@ -140,6 +151,6 @@
               });
           });
       }
-    </script>
+    </script> -->
   </body>
 </html>

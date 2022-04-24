@@ -5,7 +5,9 @@ let db_userName = null;
 let db_userEmail = null;
 let isLogin = false;
 
+// const checkLogin = () => {
 firebase.auth().onAuthStateChanged((user) => {
+  console.log(user, "after user");
   if (user) {
     isLogin = true;
     userUid = user.uid;
@@ -24,3 +26,6 @@ firebase.auth().onAuthStateChanged((user) => {
     logoutState.style.display = "none";
   }
 });
+// };
+// checkLogin();
+// export default checkLogin;

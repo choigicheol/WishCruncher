@@ -6,14 +6,14 @@ $base-rem-size: 16;
   @return (remove-unit($px / $base)) * 1rem;
 }
 
-#login_Page {
+#login_page {
   width: 100%;
   display: flex;
   justify-content: center;
   padding: 10px;
 }
 
-#login_Page_Container {
+#login_page_container {
   max-width: 475px;
   width: 100%;
   height: 583px;
@@ -32,7 +32,7 @@ $base-rem-size: 16;
   }
 }
 
-#login_Title {
+#login_title {
   font-size: rem(32px);
   width: 100%;
   margin: 20px 0 40px 0;
@@ -42,7 +42,7 @@ $base-rem-size: 16;
   }
 }
 
-#kakao_Login_Button {
+#social_login_button {
   display: block;
   width: 100%;
   height: 47px;
@@ -64,7 +64,7 @@ $base-rem-size: 16;
   }
 }
 
-#kakao_Login_Button_Contents {
+#social_login_button_contents {
   width: 100%;
   height: 43px;
   display: flex;
@@ -73,9 +73,13 @@ $base-rem-size: 16;
   img {
     margin-right: 5px;
   }
+  @media screen and (max-width: 590px) {
+    height: 34px;
+    font-size: rem(14px);
+  }
 }
 
-#go_To_signUp {
+#go_to_signup {
   font-weight: 100;
   font-size: 14px;
   @media screen and (max-width: 590px) {
@@ -83,7 +87,7 @@ $base-rem-size: 16;
   }
 }
 
-#login_Warning_Message {
+#login_warning_message {
   color: rgb(255, 55, 55);
   visibility: hidden;
   width: 100%;

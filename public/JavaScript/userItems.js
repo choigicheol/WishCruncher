@@ -6,14 +6,14 @@ function showItemList(item, node) {
   const item_Box = document.createElement("div");
   const photo_Box = document.createElement("div");
   const item_Img = document.createElement("img");
-  const item_Contents = document.createElement("div");
+  const item_contents = document.createElement("div");
   const edit_Button_Box = document.createElement("div");
   const item_Edit_Img = document.createElement("img");
   const item_Delete_Img = document.createElement("img");
   item_Box.classList.add("item_Box");
   item_Box.setAttribute("id", item.id);
   photo_Box.classList.add("photo_Box");
-  item_Contents.classList.add("item_Contents");
+  item_contents.classList.add("item_contents");
   edit_Button_Box.classList.add("edit_Button_Box");
   item_Img.setAttribute("src", item.imagePath);
   item_Img.setAttribute("alt", "item_Image");
@@ -33,7 +33,7 @@ function showItemList(item, node) {
   item_Delete_Img.setAttribute("id", `main_delete_${item.id}`);
 
   node.prepend(item_Box);
-  item_Box.append(photo_Box, item_Contents, edit_Button_Box);
+  item_Box.append(photo_Box, item_contents, edit_Button_Box);
   photo_Box.append(item_Img);
 
   const newItem = {
@@ -43,15 +43,15 @@ function showItemList(item, node) {
   };
 
   for (let key in newItem) {
-    const item_Category_Box = document.createElement("div");
+    const item_category_box = document.createElement("div");
     const item_Category = document.createElement("span");
     const item_Category_content = document.createElement("span");
-    item_Category_Box.classList.add("item_Category_Box");
+    item_category_box.classList.add("item_category_box");
     item_Category.classList.add("item_Category");
     item_Category_content.classList.add("item_Category_content");
 
-    item_Contents.append(item_Category_Box);
-    item_Category_Box.append(item_Category, item_Category_content);
+    item_contents.append(item_category_box);
+    item_category_box.append(item_Category, item_Category_content);
     item_Category.textContent = key;
     item_Category_content.textContent = newItem[key];
   }
@@ -72,11 +72,7 @@ function showItemList(item, node) {
         }
       });
       if (isLogin) {
-        db.collection("users")
-          .doc(userUid)
-          .collection("wish")
-          .doc(`item${targetIdNum}`)
-          .delete();
+        db.collection("users").doc(userUid).collection("wish").doc(`item${targetIdNum}`).delete();
       } else {
         if (!clientData.length) {
           return showEmptyItem(user_item_area);
@@ -93,8 +89,8 @@ function showItemList(item, node) {
 
 // 데이터가 없을 때 나타낼 안내창
 function showEmptyItem(node) {
-  const empty_Box = document.createElement("div");
-  empty_Box.setAttribute("id", "empty_Box");
-  empty_Box.textContent = "정보가 없습니다.";
-  node.append(empty_Box);
+  const empty_box = document.createElement("div");
+  empty_box.setAttribute("id", "empty_box");
+  empty_box.textContent = "정보가 없습니다.";
+  node.append(empty_box);
 }

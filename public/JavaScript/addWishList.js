@@ -1,14 +1,14 @@
 // const storage = firebase.storage();
 
 // const item_Input = document.querySelectorAll(".add_Item_Input");
-// let item_Image_File = document.querySelector("#upload_Photo_Input");
+// let item_image_file = document.querySelector("#upload_Photo_Input");
 // const thumbImage = document.querySelector("#thumb_image");
 
-// item_Image_File.addEventListener("change", () => {
-//   item_Image_File.files[0].preview = URL.createObjectURL(
-//     item_Image_File.files[0]
+// item_image_file.addEventListener("change", () => {
+//   item_image_file.files[0].preview = URL.createObjectURL(
+//     item_image_file.files[0]
 //   );
-//   thumbImage.setAttribute("src", item_Image_File.files[0].preview);
+//   thumbImage.setAttribute("src", item_image_file.files[0].preview);
 //   upload_plus_image.style.display = "none";
 //   thumbImage.style.display = "block";
 // });
@@ -36,7 +36,7 @@
 //   selectWishLevel.value = 0;
 //   upload_plus_image.style.display = "block";
 //   thumbImage.style.display = "none";
-//   item_Image_File.value = null;
+//   item_image_file.value = null;
 // }
 
 // function uploadUserDatabaseItem(uploadUrl) {
@@ -66,7 +66,7 @@
 //             .doc(`item${lastItemId + 1}`)
 //             .set(item_Input_Data);
 //         } else {
-//           empty_Box.style.display = "none";
+//           empty_box.style.display = "none";
 //           item_Input_Data["id"] = res.size + 10;
 //           db.collection("users")
 //             .doc(userUid)
@@ -84,7 +84,7 @@
 //         selectWishLevel.value = 0;
 //         upload_plus_image.style.display = "block";
 //         thumbImage.style.display = "none";
-//         item_Image_File.value = null;
+//         item_image_file.value = null;
 //       });
 //   }
 // }
@@ -94,12 +94,12 @@
 //   // var uploadUrl = noImage;
 //   e.preventDefault();
 //   if (isLogin) {
-//     if (item_Image_File.files[0]) {
+//     if (item_image_file.files[0]) {
 //       var storageRef = storage.ref();
 //       var imagePath = storageRef.child(
-//         "image/" + userUid + item_Image_File.files[0].name
+//         "image/" + userUid + item_image_file.files[0].name
 //       );
-//       var uploadImage = imagePath.put(item_Image_File.files[0]);
+//       var uploadImage = imagePath.put(item_image_file.files[0]);
 //       uploadImage.on(
 //         "state_changed",
 //         null,
@@ -114,8 +114,8 @@
 //       uploadUserDatabaseItem(uploadUrl);
 //     }
 //   } else {
-//     if (item_Image_File.files[0]) {
-//       uploadClientDatabaseItem(item_Image_File.files[0].preview);
+//     if (item_image_file.files[0]) {
+//       uploadClientDatabaseItem(item_image_file.files[0].preview);
 //     } else {
 //       uploadClientDatabaseItem(uploadUrl);
 //     }

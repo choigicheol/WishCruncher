@@ -11,71 +11,48 @@
   <body>
     <header id="header_container"></header>
     <main>
-      <div id="signup_Page">
-        <div id="signup_Page_Container">
-          <form id="signup_Form">
-            <div id="signup_Title">회원가입 🎉</div>
-            <label class="input_label" for="email_Input">이메일</label>
-            <div id="email_Input_Area">
+      <div id="signup_page">
+        <div id="signup_page_container">
+          <form id="signup_form">
+            <div id="signup_title">회원가입 🎉</div>
+            <label class="input_label" for="email_input">이메일</label>
+            <div id="email_input_area">
               <!-- 이메일 입력 -->
-              <input
-                id="signup_Email_Input"
-                class="margin0_Input"
-                type="email"
-                name="email_Input"
-                required
-              />
-              <div id="check_Email_Button">중복검사</div>
+              <input id="signup_email_input" class="margin0_input" type="email" name="email_input" required />
+              <div id="check_email_button">중복검사</div>
             </div>
-            <div class="check_Warning_Message">
-              <span id="check_Email_Fail_Message"
-                >중복되는 이메일이 존재합니다.</span
-              >
-              <span id="check_Email_Success_Message"
-                >사용 가능한 이메일입니다.</span
-              >
-              <span id="check_Email_Invalid_Message"
-                >유효하지 않은 이메일입니다.</span
-              >
+            <div class="check_warning_message">
+              <span id="check_email_fail_message">중복되는 이메일이 존재합니다.</span>
+              <span id="check_email_success_message">사용 가능한 이메일입니다.</span>
+              <span id="check_email_invalid_message">유효하지 않은 이메일입니다.</span>
             </div>
             <!-- 닉네임 입력 -->
-            <label class="input_label" for="nickname_Input">닉네임</label>
-            <input id="nickname_input" name="nickname_Input" required />
+            <label class="input_label" for="nickname_input">닉네임</label>
+            <input id="nickname_input" name="nickname_input" required />
             <!-- 비밀번호 입력 -->
-            <label class="input_label" for="password_Input">비밀번호</label>
+            <label class="input_label" for="password_input">비밀번호</label>
             <input
-              id="password_Input"
+              id="password_input"
               type="password"
-              name="password_Input"
+              name="password_input"
               placeholder="8~16자, 영문 대소문자, 특수문자를 포함해주세요."
               required
             />
             <!-- 비밀번호 확인 입력 -->
-            <label class="input_label" for="confirm_password_Input"
-              >비밀번호 확인</label
-            >
+            <label class="input_label" for="confirm_password_input">비밀번호 확인</label>
             <input
-              id="confirm_Password_Input"
-              class="margin0_Input"
+              id="confirm_password_input"
+              class="margin0_input"
               type="password"
-              name="confirm_password_Input"
+              name="confirm_password_input"
               required
             />
-            <div class="check_Warning_Message">
-              <span id="check_password_Invalid_Message"
-                >비밀번호를 다시 확인해주세요.</span
-              >
+            <div class="check_warning_message">
+              <span id="check_password_invalid_message">비밀번호를 다시 확인해주세요.</span>
             </div>
-            <button
-              class="submit_Button"
-              id="signup_Button"
-              name="signup_Submit_Button"
-              disabled="true"
-            >
-              확인
-            </button>
+            <button class="submit_button" id="signup_button" name="signup_submit_button" disabled="true">확인</button>
           </form>
-          <div id="go_To_signUp">
+          <div id="go_to_back">
             <a href="login.html">뒤로가기</a>
           </div>
         </div>
@@ -87,8 +64,14 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
-    <script src="../JavaScript/makeHeader.js"></script>
-    <script src="../JavaScript/makeFooter.js"></script>
+
+    <script type="module">
+      import makeHeader from "../JavaScript/makeHeader.js";
+      import makeFooter from "../JavaScript/makeFooter.js";
+      makeHeader();
+      makeFooter();
+    </script>
+
     <script>
       const db = firebase.firestore();
     </script>
@@ -102,20 +85,18 @@
             const nickname = /^([a-zA-Z0-9가-힣]){2,10}$/;
             return nickname.test(data);
           case "email":
-            const email =
-              /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+            const email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
             return email.test(data);
           case "password":
-            const password =
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/;
+            const password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/;
             //최소 8자 및 최대 16자, 대문자 하나 이상, 소문자 하나 이상, 숫자 하나 이상, 특수 문자 하나 이상
             return password.test(data);
           default:
             return false;
         }
       }
-      const checkEmail = document.querySelector("#check_Email_Button");
-      const signupEmailInput = document.querySelector("#signup_Email_Input");
+      const checkEmail = document.querySelector("#check_email_button");
+      const signupEmailInput = document.querySelector("#signup_email_input");
       let validEmail = false;
       let validNickname = false;
       let equalPasswordBoolean = false;
@@ -128,19 +109,19 @@
           .signInWithEmailAndPassword(emailValue, "dummyPassword#9195")
           .catch((error) => {
             if (error.code === "auth/user-not-found") {
-              check_Email_Fail_Message.style.display = "none";
-              check_Email_Success_Message.style.display = "block";
-              check_Email_Invalid_Message.style.display = "none";
+              check_email_fail_message.style.display = "none";
+              check_email_success_message.style.display = "block";
+              check_email_invalid_message.style.display = "none";
               validEmail = true;
             } else if (error.code === "auth/invalid-email") {
-              check_Email_Fail_Message.style.display = "none";
-              check_Email_Success_Message.style.display = "none";
-              check_Email_Invalid_Message.style.display = "block";
+              check_email_fail_message.style.display = "none";
+              check_email_success_message.style.display = "none";
+              check_email_invalid_message.style.display = "block";
               validEmail = false;
             } else {
-              check_Email_Fail_Message.style.display = "block";
-              check_Email_Success_Message.style.display = "none";
-              check_Email_Invalid_Message.style.display = "none";
+              check_email_fail_message.style.display = "block";
+              check_email_success_message.style.display = "none";
+              check_email_invalid_message.style.display = "none";
               validEmail = false;
             }
             validButton(validEmail, validNickname, equalPasswordBoolean);
@@ -159,23 +140,21 @@
       });
 
       // 비밀번호 확인 이벤트
-      const passwordInput = document.querySelector("#password_Input");
-      const confirmPasswordInput = document.querySelector(
-        "#confirm_Password_Input"
-      );
+      const passwordInput = document.querySelector("#password_input");
+      const confirmPasswordInput = document.querySelector("#confirm_password_input");
 
       // 비밀번호, 비밀번호확인 입력 동일한지 확인하는 함수
       function equalPassword(password, confirmPassword) {
         if (password.length >= 8 && password === confirmPassword) {
-          check_password_Invalid_Message.style.display = "none";
+          check_password_invalid_message.style.display = "none";
           equalPasswordBoolean = true;
         } else {
-          check_password_Invalid_Message.style.display = "block";
+          check_password_invalid_message.style.display = "block";
           equalPasswordBoolean = false;
         }
       }
 
-      const signupSubmitButton = document.querySelector("#signup_Button");
+      const signupSubmitButton = document.querySelector("#signup_button");
       // 버튼 활성화 조건 함수
       function validButton(validEmail, validNickname, validPassword) {
         if (validEmail && validNickname && validPassword) {
@@ -189,9 +168,9 @@
 
       passwordInput.addEventListener("keyup", () => {
         if (Inspect(passwordInput.value, "password")) {
-          check_password_Invalid_Message.style.display = "none";
+          check_password_invalid_message.style.display = "none";
         } else {
-          check_password_Invalid_Message.style.display = "block";
+          check_password_invalid_message.style.display = "block";
         }
         equalPassword(passwordInput.value, confirmPasswordInput.value);
         validButton(validEmail, validNickname, equalPasswordBoolean);
@@ -199,9 +178,9 @@
 
       confirmPasswordInput.addEventListener("keyup", () => {
         if (Inspect(confirmPasswordInput.value, "password")) {
-          check_password_Invalid_Message.style.display = "none";
+          check_password_invalid_message.style.display = "none";
         } else {
-          check_password_Invalid_Message.style.display = "block";
+          check_password_invalid_message.style.display = "block";
         }
         equalPassword(passwordInput.value, confirmPasswordInput.value);
         validButton(validEmail, validNickname, equalPasswordBoolean);
@@ -214,10 +193,7 @@
         e.preventDefault();
         firebase
           .auth()
-          .createUserWithEmailAndPassword(
-            signupEmailInput.value,
-            passwordInput.value
-          )
+          .createUserWithEmailAndPassword(signupEmailInput.value, passwordInput.value)
           .then((userInfo) => {
             db.collection("users")
               .doc(userInfo.user.uid)

@@ -13,18 +13,17 @@
     <header id="header_container"></header>
     <main>
       <div id="myPage">
-        <div id="user_Profile_Container">
-          <div id="user_Img"></div>
-          <div id="user_Info_Box">
+        <div id="user_profile_container">
+          <div id="user_img"></div>
+          <div id="user_info_box">
             <div id="user_info_top">
-              <div id="user_Info"></div>
+              <div id="user_info"></div>
             </div>
-            <div id="user_Progress"></div>
+            <div id="user_progress"></div>
           </div>
         </div>
         <div id="mypage_category_box">
-          <span class="category_menu menu_underline" id="unfinished_wish">
-          </span>
+          <span class="category_menu menu_underline" id="unfinished_wish"> </span>
           <span class="category_menu" id="finish_wish"> </span>
           <span class="category_menu" id="delete_wish"> </span>
         </div>
@@ -32,7 +31,7 @@
         <section class="mypage_items hide_items" id="finish_items"></section>
         <section class="mypage_items hide_items" id="delete_items"></section>
       </div>
-      <div id="scroll_Top_Button">Top</div>
+      <div id="scroll_top_button">Top</div>
     </main>
     <footer id="footer"></footer>
 
@@ -41,8 +40,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
-    <script src="../JavaScript/makeHeader.js"></script>
-    <script src="../JavaScript/makeFooter.js"></script>
+
+    <script type="module">
+      import makeHeader from "../JavaScript/makeHeader.js";
+      import makeFooter from "../JavaScript/makeFooter.js";
+      makeHeader();
+      makeFooter();
+    </script>
 
     <script>
       const db = firebase.firestore();
@@ -58,9 +62,9 @@
       let my_Db_userEmail = null;
       let arrAllWish = [];
       let arrFinishWish = [];
-      const userInfo = document.querySelector("#user_Info");
-      const progress = document.querySelector("#user_Progress");
-      const userImgBox = document.querySelector("#user_Img");
+      const userInfo = document.querySelector("#user_info");
+      const progress = document.querySelector("#user_progress");
+      const userImgBox = document.querySelector("#user_img");
       const unfinishedWish = document.querySelector("#unfinished_wish");
       const finishWish = document.querySelector("#finish_wish");
       const deleteWish = document.querySelector("#delete_wish");
@@ -143,10 +147,7 @@
       function addUnfinishedBtnArea(item, finishNum, unfinishedNum, deleteNum) {
         const unfinishedWishButtonBox = document.createElement("div");
         unfinishedWishButtonBox.classList.add("finish_delete_box");
-        unfinishedWishButtonBox.setAttribute(
-          "id",
-          `unfinishedButton${item.id}`
-        );
+        unfinishedWishButtonBox.setAttribute("id", `unfinishedButton${item.id}`);
         //finish 버튼생성 및 이벤트 등록
         const finishButton = document.createElement("img");
         finishButton.setAttribute("src", "../Images/finishButton.png");
@@ -211,10 +212,7 @@
           const finishWishBar = document.querySelector(`#finish${i}`);
           finishWishBar.style.backgroundColor = "#AB86DF";
 
-          if (
-            i === arrFinishWish.length - 1 &&
-            arrAllWish.length !== arrFinishWish.length
-          ) {
+          if (i === arrFinishWish.length - 1 && arrAllWish.length !== arrFinishWish.length) {
             finishWishBar.style.borderRadius = "0 5px 5px 0";
           }
         }
@@ -320,8 +318,7 @@
                   const deleteNum = document.createElement("span");
                   const deleteText = document.createElement("span");
 
-                  const editButton =
-                    document.querySelectorAll(".edit_Button_Box");
+                  const editButton = document.querySelectorAll(".edit_Button_Box");
                   editButton.forEach((item) => {
                     item.remove();
                   });
@@ -336,31 +333,12 @@
                       .then((res) => {
                         res.forEach((data) => {
                           const itemData = data.data();
-                          if (
-                            itemData.state === 0 &&
-                            Number(item.id) === itemData.id
-                          ) {
-                            addUnfinishedBtnArea(
-                              item,
-                              finishNum,
-                              unfinishedNum,
-                              deleteNum
-                            );
-                          } else if (
-                            itemData.state === 1 &&
-                            Number(item.id) === itemData.id
-                          ) {
+                          if (itemData.state === 0 && Number(item.id) === itemData.id) {
+                            addUnfinishedBtnArea(item, finishNum, unfinishedNum, deleteNum);
+                          } else if (itemData.state === 1 && Number(item.id) === itemData.id) {
                             addFinishedItem(item, finishNum);
-                          } else if (
-                            itemData.state === 2 &&
-                            Number(item.id) === itemData.id
-                          ) {
-                            rewindUnfinishedItem(
-                              item,
-                              finishNum,
-                              unfinishedNum,
-                              deleteNum
-                            );
+                          } else if (itemData.state === 2 && Number(item.id) === itemData.id) {
+                            rewindUnfinishedItem(item, finishNum, unfinishedNum, deleteNum);
                           }
                         });
                       });

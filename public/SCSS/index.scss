@@ -6,7 +6,7 @@ $base-rem-size: 16;
   @return (remove-unit($px / $base)) * 1rem;
 }
 
-#main_Page {
+#main_page {
   display: flex;
   max-width: rem(1260px);
   width: 100%;
@@ -20,7 +20,7 @@ $base-rem-size: 16;
   }
 }
 
-.side_Bar {
+.side_bar {
   min-width: rem(320px);
   max-width: rem(380px);
   width: 100%;
@@ -43,7 +43,7 @@ $base-rem-size: 16;
   }
 }
 
-.sidebar_Title {
+.sidebar_title {
   width: 100%;
   height: 30px;
   font-weight: 300;
@@ -57,27 +57,46 @@ $base-rem-size: 16;
   }
 }
 
-#money_Input {
+#money_input {
   width: 100%;
   height: 37px;
   border-radius: 5px;
   margin: 9px 0 18px 0;
 }
 
-#money_Button_Container {
+#money_button_container {
   width: 100%;
-  height: 70px;
+  height: 120px;
   display: flex;
-  justify-content: space-between;
-  align-content: space-between;
-  flex-wrap: wrap;
-  @media screen and (max-width: 470px) {
-    flex-wrap: wrap;
+  flex-direction: column;
+  .button_row {
+    display: flex;
+    width: 100%;
+    .left_money_button {
+      margin-left: 10px;
+    }
+  }
+  #clear_button {
+    width: 100%;
+    height: 31px;
+    line-height: 31px;
+    text-align: center;
+    margin-top: 5px;
+    background: #2d2d2d;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    color: #ffffff;
+    font-weight: 100;
+    font-size: 1rem;
+    cursor: pointer;
+    &:active {
+      background: #686868;
+    }
   }
 }
 
-.money_Button {
-  width: 120px;
+.money_button {
+  width: 100%;
   height: 31px;
   background: #2d2d2d;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
@@ -86,18 +105,14 @@ $base-rem-size: 16;
   color: #ffffff;
   font-weight: 100;
   font-size: 0.6rem;
+  margin-top: 5px;
   cursor: pointer;
   &:active {
     background: #686868;
   }
-  @media screen and (max-width: 470px) {
-    max-width: rem(130px);
-    height: rem(32px);
-    font-size: 6px;
-  }
 }
 
-#operation_Wish_Level_Box {
+#operation_wish_level_box {
   height: 72px;
   border-top: 1px solid #2d2d2d;
   border-bottom: 1px solid #2d2d2d;
@@ -108,7 +123,7 @@ $base-rem-size: 16;
   justify-content: space-between;
 }
 
-#Wish_Level_Box {
+#wish_level_box {
   display: flex;
   width: 100%;
   height: 29px;
@@ -116,7 +131,7 @@ $base-rem-size: 16;
   justify-content: flex-end;
 }
 
-.wish_Level_Operation_Button {
+.wish_level_operation_button {
   width: rem(28px);
   height: rem(29px);
   line-height: 29px;
@@ -139,7 +154,7 @@ $base-rem-size: 16;
   }
 }
 
-#wish_Level {
+#wish_level {
   width: rem(30px);
   height: rem(29px);
   font-size: rem(20px);
@@ -152,7 +167,7 @@ $base-rem-size: 16;
   }
 }
 
-#sidebar_Submit_Button {
+#sidebar_submit_button {
   width: 100%;
   height: 38px;
   background: #ab86df;
@@ -163,9 +178,12 @@ $base-rem-size: 16;
   font-weight: 300;
   letter-spacing: 2px;
   cursor: pointer;
+  &:active {
+    background: #ccb6eb;
+  }
 }
 
-.wish_List_Container {
+.wish_list_container {
   display: flex;
   flex-direction: column;
   max-width: 960px;
@@ -174,7 +192,7 @@ $base-rem-size: 16;
   padding: 0 10px 0 10px;
 }
 
-#add_Item_Box {
+#add_item_box {
   width: 100%;
   display: flex;
   align-items: center;
@@ -187,7 +205,7 @@ $base-rem-size: 16;
   // }
 }
 
-#add_Item_Contents {
+#add_item_contents {
   width: 100%;
   display: none;
   align-items: center;
@@ -198,23 +216,22 @@ $base-rem-size: 16;
   }
 }
 
-#upload_Photo_Box {
+#upload_photo_box {
   width: 200px;
   height: 130px;
   position: relative;
-  #upload_Image_Box {
+  #upload_image_box {
     width: 130px;
     height: 130px;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 2px solid #dedede;
-    background: rgba(225, 225, 225, 0.4);
     box-sizing: border-box;
     border-radius: 7px;
     position: absolute;
     background: #ededed;
-    #thumb_Image {
+    #thumb_image {
       display: none;
       width: 130px;
       height: 130px;
@@ -233,6 +250,7 @@ $base-rem-size: 16;
       display: none;
       text-decoration: none;
     }
+
     cursor: pointer;
   }
   @media screen and (max-width: 590px) {
@@ -241,61 +259,45 @@ $base-rem-size: 16;
   }
 }
 
-#add_Item_Input_Area {
+#add_item_input_area {
   width: 100%;
-  #add_Item_Input_Row_Middle {
+  #add_item_input_row_middle {
     margin: 20px 0 20px 0;
   }
-  .add_Item_Input_Row {
+  .add_item_input_row {
     width: 100%;
     display: flex;
     flex-direction: column;
     @media screen and (max-width: 590px) {
     }
-    .add_Item_Input_Row_Category {
+    .add_item_input_row_category {
       font-weight: 300;
       @media screen and (max-width: 590px) {
         width: 80px;
         margin: 0 20px 0 0;
       }
     }
-    .add_Item_Input {
+    .add_item_input {
       margin: 0;
       width: 100%;
       height: 30px;
-      background: rgba(225, 225, 225, 0.4);
       border-radius: 5px;
       box-sizing: border-box;
+      background: #ededed;
+      &:focus {
+        background: #ffffff;
+      }
     }
   }
 }
 
-#wish_Level_Button_Box {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .wish_Level_Button {
-    max-width: 40px;
-    width: 100%;
-    height: 25px;
-    background: rgba(225, 225, 225, 0.4);
-    border-radius: 4px;
-    border: 2px solid #dedede;
-    color: #ffffff;
-    font-weight: 300;
-    font-size: 14px;
-    cursor: pointer;
-  }
-}
-
-#add_Item_Button_Box {
+#add_item_button_box {
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-#add_Item_Button {
+#add_item_button {
   vertical-align: middle;
   width: 31px;
   height: 31px;
@@ -307,7 +309,7 @@ $base-rem-size: 16;
   cursor: pointer;
 }
 
-#regi_Item_Button_Box {
+#regi_item_button_box {
   border-top: 1px dashed #c4c4c4;
   width: 100%;
   display: none;
@@ -327,14 +329,14 @@ $base-rem-size: 16;
   cursor: pointer;
 }
 
-#plus_Icon {
+#plus_icon {
   width: 30px;
   height: 30px;
   margin-bottom: 1px;
   transition: all 0.125s ease-in 0s;
 }
 
-#user_Item_Area {
+#user_item_area {
   display: flex;
   flex-direction: column;
 }
@@ -383,7 +385,7 @@ $base-rem-size: 16;
   }
 }
 
-.item_Contents {
+.item_contents {
   padding: 20px 0 20px 0;
   width: 100%;
   height: 100%;
@@ -392,7 +394,7 @@ $base-rem-size: 16;
   justify-content: space-around;
   font-weight: 300;
   margin-left: 20px;
-  .item_Category_Box {
+  .item_category_box {
     width: 100%;
     display: flex;
     .item_Category {
@@ -405,7 +407,7 @@ $base-rem-size: 16;
   @media screen and (max-width: 590px) {
     font-size: 0.9rem;
     margin-left: 15px;
-    .item_Category_Box {
+    .item_category_box {
       width: 100%;
       display: flex;
       .item_Category {
@@ -419,7 +421,7 @@ $base-rem-size: 16;
   @media screen and (max-width: 470px) {
     font-size: 0.6rem;
     margin-left: 10px;
-    .item_Category_Box {
+    .item_category_box {
       width: 100%;
       display: flex;
       .item_Category {
@@ -464,7 +466,7 @@ $base-rem-size: 16;
   }
 }
 
-#empty_Box {
+#empty_box {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -495,7 +497,7 @@ $base-rem-size: 16;
 #result_Text_Info_Container {
   display: flex;
   flex-direction: column;
-  min-height: 200px;
+  min-height: 240px;
   justify-content: space-between;
   margin: 0 15px 0 15px;
   padding-bottom: 15px;
@@ -514,9 +516,68 @@ $base-rem-size: 16;
 }
 
 #randomTextContainer {
-  margin-top: 15px;
+  margin-top: 35px;
   display: flex;
   font-weight: 300;
   flex-direction: column;
   align-items: center;
+}
+
+#share_kakao_container {
+  display: flex;
+  justify-content: center;
+  &:active {
+    opacity: 0.5;
+  }
+}
+
+#share_kakao {
+  height: 30px;
+  display: none;
+  align-items: center;
+  text-align: center;
+  img {
+    height: 25px;
+    margin-right: 5px;
+  }
+  font-weight: 300;
+  font-size: 12px;
+  cursor: pointer;
+  margin: 10px 0 15px 0;
+}
+
+#scroll_top_button {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin: 0 20px 5px 0;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  z-index: 1;
+  background: #2d2d2d;
+  opacity: 0.3;
+  border-radius: 100%;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+#wish_level_range {
+  padding: 0;
+  margin: 0;
+}
+
+#wish_level_label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: rem(12px);
+  span {
+    margin-left: 6px;
+  }
 }

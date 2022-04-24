@@ -1,4 +1,4 @@
-function makeFooter() {
+const makeFooter = () => {
   const footer = document.querySelector("#footer");
   footer.innerHTML = `
       <a href="https://github.com/choigicheol" target="_blank">
@@ -7,6 +7,5 @@ function makeFooter() {
           <span>Choi Gi Cheol</span>
         </div>
       </a>`;
-}
-
+};
 makeFooter();

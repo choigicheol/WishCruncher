@@ -1,4 +1,4 @@
-function makeHeader() {
+const makeHeader = () => {
   const header = document.querySelector("#header_container");
   header.innerHTML = `
       <nav id="header_area">
@@ -16,6 +16,5 @@ function makeHeader() {
           <span class="logout_state">Logout</span>
         </div>
       </nav>`;
-}
-
+};
 makeHeader();

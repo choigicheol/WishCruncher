@@ -1,23 +1,14 @@
 const arrRandomText = [
   //50년 이상
-  [
-    "이번생에는 포기하는거로...",
-    "크게 버리는 사람만이 크게 얻을 수 있다!!",
-    "안되겠죠?",
-  ],
+  ["이번생에는 포기하는거로...", "크게 버리는 사람만이 크게 얻을 수 있다!!", "안되겠죠?"],
 
   //1년
-  [
-    "상당히 소박하시네요",
-    "혹시 월 여유금액에 0 하나 더 들어간건 아닌지?",
-    "이정도는 암산도 되지않나요?",
-    "노잼",
-  ],
+  ["상당히 소박하시네요", "혹시 월 여유금액에 0 하나 더 들어간건 아닌지?", "이정도는 암산도 되지않나요?", "노잼"],
 ];
 
 // 사이드바 금액 ++
-const totalMoney = document.querySelector("#money_Input");
-const moneyButton = document.querySelectorAll(".money_Button");
+const totalMoney = document.querySelector("#money_input");
+const moneyButton = document.querySelectorAll(".money_button");
 for (let i = 0; i < moneyButton.length; i++) {
   moneyButton[i].addEventListener("click", (e) => {
     if (!totalMoney.value) {
@@ -43,28 +34,20 @@ totalMoney.addEventListener("keyup", (e) => {
 
 // 사이드바 위시 레벨 조정 버튼 event 등록
 const sidebarWishLevel = document.querySelector("#wish_level");
-const wishLevelOperationButton = document.querySelectorAll(
-  ".wish_level_operation_button"
-);
+const wishLevelOperationButton = document.querySelectorAll(".wish_level_operation_button");
 for (let i = 0; i < wishLevelOperationButton.length; i++) {
   wishLevelOperationButton[i].addEventListener("click", (e) => {
-    if (
-      e.target.name === "wish_level_plus" &&
-      parseInt(sidebarWishLevel.innerHTML) < 10
-    ) {
+    if (e.target.name === "wish_level_plus" && parseInt(sidebarWishLevel.innerHTML) < 10) {
       sidebarWishLevel.innerHTML = parseInt(sidebarWishLevel.innerHTML) + 1;
     }
-    if (
-      e.target.name === "wish_level_minus" &&
-      parseInt(sidebarWishLevel.innerHTML) > 0
-    ) {
+    if (e.target.name === "wish_level_minus" && parseInt(sidebarWishLevel.innerHTML) > 0) {
       sidebarWishLevel.innerHTML = parseInt(sidebarWishLevel.innerHTML) - 1;
     }
   });
 }
 
 // clear 버튼
-const clearButton = document.querySelector("#clear_Button");
+const clearButton = document.querySelector("#clear_button");
 clearButton.addEventListener("click", () => {
   totalMoney.value = 0;
 });
@@ -179,11 +162,7 @@ function showResult(numTotalMoney) {
   const result_Hour = document.createElement("span");
   result_Hour.classList.add("result_Bold_Text");
   result_Hour.textContent = `${makePriceComma(resultHour)} 시간`;
-  result_Hour_Info_Box.append(
-    result_Hour_Info_Text_Head,
-    result_Hour,
-    result_Hour_Info_Text_Tail
-  );
+  result_Hour_Info_Box.append(result_Hour_Info_Text_Head, result_Hour, result_Hour_Info_Text_Tail);
 
   const randomTextContainer = document.createElement("div");
   randomTextContainer.setAttribute("id", "randomTextContainer");
@@ -196,19 +175,13 @@ function showResult(numTotalMoney) {
     //TODO:
     angryText.textContent = "- 한줄평 -";
 
-    randomText.textContent =
-      arrRandomText[0][
-        Math.round(Math.random() * (arrRandomText[0].length - 1))
-      ];
+    randomText.textContent = arrRandomText[0][Math.round(Math.random() * (arrRandomText[0].length - 1))];
     randomTextContainer.append(angryText, randomText);
   } else if (0 <= resultYear && resultYear <= 1) {
     const angryText = document.createElement("div");
     // TODO:
     angryText.textContent = "- 한줄평 -";
-    randomText.textContent =
-      arrRandomText[1][
-        Math.round(Math.random() * (arrRandomText[1].length - 1))
-      ];
+    randomText.textContent = arrRandomText[1][Math.round(Math.random() * (arrRandomText[1].length - 1))];
     randomTextContainer.append(angryText, randomText);
   }
 
@@ -241,10 +214,7 @@ sidebarSubmitButton.addEventListener("click", (e) => {
             if (item.data().state === 0) {
               const itemPriceData = item.data()["가격"];
               const itemLevel = item.data()["위시레벨"];
-              const itemPrice = itemPriceData.slice(
-                0,
-                itemPriceData.length - 2
-              );
+              const itemPrice = itemPriceData.slice(0, itemPriceData.length - 2);
               if (parseInt(wishLevel.innerHTML) <= itemLevel) {
                 sumPrice += parseInt(itemPrice.split(",").join(""));
               }
