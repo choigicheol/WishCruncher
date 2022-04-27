@@ -10,7 +10,7 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
       // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-      // Kakao.init("7573f9555b42ced32c395787d475bd06");
+      Kakao.init("7573f9555b42ced32c395787d475bd06");
     </script>
   </head>
   <body id="body">
@@ -28,18 +28,18 @@
             <div id="login_warning_message">로그인 정보를 확인해주세요</div>
             <button class="submit_button">로그인</button>
           </form>
-          <!-- <button id="kakao_Login_Button">
-            <div id="kakao_Login_Button_Contents">
+          <button id="social_login_button">
+            <div id="social_login_button_contents">
               <img src="../Images/kakaoLogo.svg" />
               <span>카카오 로그인</span>
             </div>
-          </button> -->
-          <button id="social_login_button">
+          </button>
+          <!-- <button id="social_login_button">
             <div id="social_login_button_contents">
               <img src="../Images/kakaoLogo.svg" />
               <span>Google로 시작하기</span>
             </div>
-          </button>
+          </button> -->
           <div id="go_to_signup">
             <a href="signup.html">아직 이메일이 없으신가요? 회원가입 하러가기</a>
           </div>
@@ -55,12 +55,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
     <script src="../JavaScript/makeHeader.js"></script>
-    <!-- <script type="module">
-      import makeHeader from "../JavaScript/makeHeader.js";
-      import makeFooter from "../JavaScript/makeFooter.js";
-      makeHeader();
-      makeFooter();
-    </script> -->
 
     <script>
       const db = firebase.firestore();
@@ -94,8 +88,8 @@
       const googleLogin = document.querySelector("#social_login_button");
     </script>
     <!-- kakao 로그인 -->
-    <!-- <script>
-      const kakaoLogin = document.querySelector("#kakao_Login_Button");
+    <script>
+      const kakaoLogin = document.querySelector("#social_login_button");
       const KAKAO_REST_API_KEY = "bd2e10a597f57c10609a98f50b97cd6c";
       const KAKAO_REDIRECT_URI = "https://wishcruncher-gigi.web.app/Pages/login.html";
       kakaoLogin.addEventListener("click", (e) => {
@@ -151,6 +145,6 @@
               });
           });
       }
-    </script> -->
+    </script>
   </body>
 </html>

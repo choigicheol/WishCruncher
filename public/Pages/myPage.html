@@ -23,9 +23,9 @@
           </div>
         </div>
         <div id="mypage_category_box">
-          <span class="category_menu menu_underline" id="unfinished_wish"> </span>
-          <span class="category_menu" id="finish_wish"> </span>
-          <span class="category_menu" id="delete_wish"> </span>
+          <span class="category_menu menu_underline" id="unfinished_wish"></span>
+          <span class="category_menu" id="finish_wish"></span>
+          <span class="category_menu" id="delete_wish"></span>
         </div>
         <section class="mypage_items" id="unfinished_items"></section>
         <section class="mypage_items hide_items" id="finish_items"></section>
@@ -40,13 +40,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
-
-    <script type="module">
-      import makeHeader from "../JavaScript/makeHeader.js";
-      import makeFooter from "../JavaScript/makeFooter.js";
-      makeHeader();
-      makeFooter();
-    </script>
+    <script src="../JavaScript/makeHeader.js"></script>
 
     <script>
       const db = firebase.firestore();
@@ -68,194 +62,38 @@
       const unfinishedWish = document.querySelector("#unfinished_wish");
       const finishWish = document.querySelector("#finish_wish");
       const deleteWish = document.querySelector("#delete_wish");
-      const finishItems = document.querySelector("#finish_items");
-      const unfinishedItems = document.querySelector("#unfinished_items");
-      const deleteItems = document.querySelector("#delete_items");
 
-      function addFinishedItem(item, finishNum) {
-        item.style.opacity = "0.3";
-        const finishButtonBox = document.createElement("div");
-        finishButtonBox.classList.add("finish_box");
-
-        //remove 버튼생성 및 이벤트 등록
-        const removeButton = document.createElement("img");
-        removeButton.setAttribute("src", "../Images/deleteWishButton.png");
-        removeButton.classList.add("remove_button");
-        removeButton.addEventListener("click", (e) => {
-          e.preventDefault();
-          db.collection("users")
-            .doc(userUid)
-            .collection("wish")
-            .doc(`item${item.id}`)
-            .delete()
-            .then((res) => {
-              finishNum.textContent--;
-              item.remove();
-              arrAllWish.pop();
-              arrFinishWish.pop();
-              makeProgressGraph();
-            });
-        });
-
-        finishButtonBox.append(removeButton);
-        item.append(finishButtonBox);
-      }
-
-      function deleteButtonArea(item, type) {
-        let deleteButton;
-        if (type === "unfinishedButton") {
-          deleteButton = document.querySelector(`#unfinishedButton${item.id}`);
-        } else {
-          deleteButton = document.querySelector(`#deleteButton${item.id}`);
-        }
-        deleteButton.remove();
-      }
-
-      //
-      function rewindUnfinishedItem(item, finishNum, unfinishedNum, deleteNum) {
-        const deleteButtonBox = document.createElement("div");
-        deleteButtonBox.classList.add("delete_box");
-        deleteButtonBox.setAttribute("id", `deleteButton${item.id}`);
-
-        //rewind 버튼생성 및 이벤트 등록
-        const rewindButton = document.createElement("img");
-        rewindButton.setAttribute("src", "../Images/rewindButton.png");
-        rewindButton.classList.add("rewind_button");
-        rewindButton.addEventListener("click", (e) => {
-          e.preventDefault();
-          db.collection("users")
-            .doc(userUid)
-            .collection("wish")
-            .doc(`item${item.id}`)
-            .update({ state: 0 })
-            .then((res) => {
-              deleteNum.textContent--;
-              unfinishedNum.textContent++;
-              deleteButtonArea(item);
-              unfinishedItems.insertBefore(item, unfinishedItems.firstChild);
-              addUnfinishedBtnArea(item, finishNum, unfinishedNum, deleteNum);
-              arrAllWish.push("rewindWish");
-              makeProgressGraph();
-            });
-        });
-
-        deleteButtonBox.append(rewindButton);
-        item.append(deleteButtonBox);
-      }
-
-      //
-      function addUnfinishedBtnArea(item, finishNum, unfinishedNum, deleteNum) {
-        const unfinishedWishButtonBox = document.createElement("div");
-        unfinishedWishButtonBox.classList.add("finish_delete_box");
-        unfinishedWishButtonBox.setAttribute("id", `unfinishedButton${item.id}`);
-        //finish 버튼생성 및 이벤트 등록
-        const finishButton = document.createElement("img");
-        finishButton.setAttribute("src", "../Images/finishButton.png");
-        finishButton.classList.add("finish_button");
-        finishButton.addEventListener("click", (e) => {
-          e.preventDefault();
-          db.collection("users")
-            .doc(userUid)
-            .collection("wish")
-            .doc(`item${item.id}`)
-            .update({ state: 1 })
-            .then((res) => {
-              finishNum.textContent++;
-              unfinishedNum.textContent--;
-              finishItems.insertBefore(item, finishItems.firstChild);
-              deleteButtonArea(item, "unfinishedButton");
-              addFinishedItem(item, finishNum);
-              arrFinishWish.push("finish");
-              makeProgressGraph();
-            });
-        });
-        //delete 버튼생성 및 이벤트 등록
-        const deleteButton = document.createElement("img");
-        deleteButton.setAttribute("src", "../Images/deleteWishButton.png");
-        deleteButton.classList.add("delete_button");
-        deleteButton.addEventListener("click", (e) => {
-          e.preventDefault();
-          db.collection("users")
-            .doc(userUid)
-            .collection("wish")
-            .doc(`item${item.id}`)
-            .update({ state: 2 })
-            .then((res) => {
-              deleteNum.textContent++;
-              unfinishedNum.textContent--;
-              deleteItems.insertBefore(item, deleteItems.firstChild);
-              deleteButtonArea(item, "unfinishedButton");
-              rewindUnfinishedItem(item, finishNum, unfinishedNum, deleteNum);
-              arrAllWish.pop();
-              makeProgressGraph();
-            });
-        });
-        unfinishedWishButtonBox.append(finishButton, deleteButton);
-        item.append(unfinishedWishButtonBox);
-      }
-      //
       function makeProgressGraph() {
-        const allWishBarValue = document.querySelectorAll(".wishBarValue");
-        allWishBarValue.forEach((el) => {
-          el.remove();
-        });
-        arrAllWish.forEach((res, idx) => {
+        progress.querySelectorAll(".wishBarValue").forEach((bar) => bar.remove());
+        const unfinishedItemsCount = unfinishedItems.querySelectorAll(".item_box").length;
+        const finishItemsCount = finishItems.querySelectorAll(".item_box").length;
+        for (let i = 0; i < finishItemsCount + unfinishedItemsCount; i++) {
           const wishBarGraphValue = document.createElement("span");
-          wishBarGraphValue.setAttribute("id", `finish${idx}`);
+          wishBarGraphValue.setAttribute("id", `finish${i}`);
           wishBarGraphValue.classList.add("wishBarValue");
           progress.append(wishBarGraphValue);
-          // state
-          // 0: 남은 위시 , 1: 이뤄낸 위시, 2: 버린위시
-        });
+        }
+      }
 
-        for (let i = 0; i < arrFinishWish.length; i++) {
+      const wishCount = () => {
+        const unfinishedItemsCount = unfinishedItems.querySelectorAll(".item_box").length;
+        const finishItemsCount = finishItems.querySelectorAll(".item_box").length;
+        const deleteItemsCount = deleteItems.querySelectorAll(".item_box").length;
+        unfinishedWish.innerHTML = `<span>남은 위시</span><span class="wishCount">${unfinishedItemsCount}</span>`;
+        finishWish.innerHTML = `<span>이뤄낸 위시</span><span class="wishCount">${finishItemsCount}</span>`;
+        deleteWish.innerHTML = `<span>버린 위시</span><span class="wishCount">${deleteItemsCount}</span>`;
+
+        for (let i = 0; i < finishItemsCount; i++) {
           const finishWishBar = document.querySelector(`#finish${i}`);
           finishWishBar.style.backgroundColor = "#AB86DF";
 
-          if (i === arrFinishWish.length - 1 && arrAllWish.length !== arrFinishWish.length) {
+          if (i === finishItemsCount - 1 && finishItemsCount + unfinishedItemsCount !== finishItemsCount) {
             finishWishBar.style.borderRadius = "0 5px 5px 0";
+          } else {
+            finishWishBar.style.borderRadius = "0";
           }
         }
-      }
-
-      unfinishedWish.addEventListener("click", (e) => {
-        e.preventDefault();
-        finishItems.classList.add("hide_items");
-        unfinishedItems.classList.remove("hide_items");
-        deleteItems.classList.add("hide_items");
-        finishWish.classList.remove("menu_underline");
-        unfinishedWish.classList.add("menu_underline");
-        deleteWish.classList.remove("menu_underline");
-        if (!unfinishedItems.childElementCount) {
-          showEmptyItem(unfinishedItems);
-        }
-      });
-
-      finishWish.addEventListener("click", (e) => {
-        e.preventDefault();
-        finishItems.classList.remove("hide_items");
-        unfinishedItems.classList.add("hide_items");
-        deleteItems.classList.add("hide_items");
-        finishWish.classList.add("menu_underline");
-        unfinishedWish.classList.remove("menu_underline");
-        deleteWish.classList.remove("menu_underline");
-        if (!finishItems.childElementCount) {
-          showEmptyItem(finishItems);
-        }
-      });
-
-      deleteWish.addEventListener("click", (e) => {
-        e.preventDefault();
-        finishItems.classList.add("hide_items");
-        unfinishedItems.classList.add("hide_items");
-        deleteItems.classList.remove("hide_items");
-        finishWish.classList.remove("menu_underline");
-        unfinishedWish.classList.remove("menu_underline");
-        deleteWish.classList.add("menu_underline");
-        if (!deleteItems.childElementCount) {
-          showEmptyItem(deleteItems);
-        }
-      });
+      };
 
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -264,17 +102,14 @@
             .get()
             .then((res) => {
               const userData = res.data();
-              const userName = document.createElement("span");
-              const userEmail = document.createElement("span");
-              const userImg = document.createElement("img");
+              userInfo.innerHTML = `
+              <span id="user_name">${userData.nickname}</span>
+              <span id="user_email">${userData.email}</span>
+              `;
 
-              userName.textContent = userData.nickname;
-              userEmail.textContent = userData.email;
-              userName.setAttribute("id", "user_Name");
-              userEmail.setAttribute("id", "user_Email");
-              userImg.setAttribute("src", userData.profileImg);
-              userInfo.append(userName, userEmail);
-              userImgBox.append(userImg);
+              userImgBox.innerHTML = `
+              <img src=${userData.profileImg} alt="userImg"></img>
+              `;
             })
             .then((res) => {
               db.collection("users")
@@ -282,88 +117,165 @@
                 .collection("wish")
                 .get()
                 .then((res) => {
-                  let wish = {
-                    finishWish: 0,
-                    unfinishedWish: 0,
-                    deleteWish: 0,
-                  };
                   res.forEach((data) => {
                     const wishData = data.data();
 
-                    if (wishData.state !== 2) {
-                      arrAllWish.push(wishData);
-                    }
                     if (wishData.state === 0) {
-                      wish.unfinishedWish++;
-                      showItemList(wishData, unfinishedItems);
+                      showItemList(wishData, unfinishedItems, "finish_delete_box");
                     } else if (wishData.state === 1) {
-                      wish.finishWish++;
-                      arrFinishWish.push(wishData);
-                      showItemList(wishData, finishItems);
+                      showItemList(wishData, finishItems, "finish_box");
                     } else {
-                      wish.deleteWish++;
-                      showItemList(wishData, deleteItems);
+                      showItemList(wishData, deleteItems, "delete_box");
                     }
                   });
-                  if (!unfinishedItems.childElementCount) {
-                    showEmptyItem(unfinishedItems);
-                  }
-                  return wish;
                 })
                 .then((res) => {
-                  const finishNum = document.createElement("span");
-                  const finishText = document.createElement("span");
-                  const unfinishedNum = document.createElement("span");
-                  const unfinishedText = document.createElement("span");
-                  const deleteNum = document.createElement("span");
-                  const deleteText = document.createElement("span");
-
-                  const editButton = document.querySelectorAll(".edit_Button_Box");
-                  editButton.forEach((item) => {
-                    item.remove();
-                  });
-
-                  const itemBox = document.querySelectorAll(".item_Box");
-
-                  itemBox.forEach((item) => {
-                    db.collection("users")
-                      .doc(userUid)
-                      .collection("wish")
-                      .get()
-                      .then((res) => {
-                        res.forEach((data) => {
-                          const itemData = data.data();
-                          if (itemData.state === 0 && Number(item.id) === itemData.id) {
-                            addUnfinishedBtnArea(item, finishNum, unfinishedNum, deleteNum);
-                          } else if (itemData.state === 1 && Number(item.id) === itemData.id) {
-                            addFinishedItem(item, finishNum);
-                          } else if (itemData.state === 2 && Number(item.id) === itemData.id) {
-                            rewindUnfinishedItem(item, finishNum, unfinishedNum, deleteNum);
-                          }
-                        });
-                      });
-                  });
-
-                  progress.style.backgroundColor = "#EEE1FF";
-
-                  finishNum.textContent = res.finishWish;
-                  finishText.textContent = "이뤄낸 위시";
-                  unfinishedNum.textContent = res.unfinishedWish;
-                  unfinishedText.textContent = "남은 위시";
-                  deleteNum.textContent = res.deleteWish;
-                  deleteText.textContent = "버린 위시";
-
-                  finishNum.classList.add("wishCount");
-                  unfinishedNum.classList.add("wishCount");
-                  deleteNum.classList.add("wishCount");
-                  unfinishedWish.append(unfinishedText, unfinishedNum);
-                  finishWish.append(finishText, finishNum);
-                  deleteWish.append(deleteText, deleteNum);
-
                   makeProgressGraph();
+                  progress.style.backgroundColor = "#EEE1FF";
+                  wishCount();
                 });
             });
         }
+      });
+    </script>
+    <script>
+      // 남은위시, 이뤄낸 위시 , 버린위시 카테고리 핸들
+      const hideItems = (add, add2, remove, className) => {
+        add.classList.add(className);
+        add2.classList.add(className);
+        remove.classList.remove(className);
+      };
+
+      const hideUnderLine = (add, remove1, remove2, className) => {
+        remove1.classList.remove(className);
+        remove2.classList.remove(className);
+        add.classList.add(className);
+      };
+
+      let finishEmpty;
+      let unfinishedEmpty;
+
+      const checkEmptyBox = () => {
+        finishEmpty = finishItems.querySelector("#empty_box");
+        unfinishedEmpty = unfinishedItems.querySelector("#empty_box");
+      };
+
+      unfinishedWish.addEventListener("click", (e) => {
+        e.preventDefault();
+        const allUnfinishedItems = unfinishedItems.querySelectorAll(".item_box");
+        // 버튼에 이벤트 등록버튼
+        allUnfinishedItems.forEach((item) => {
+          const button = item.querySelector("#button");
+          button.firstChild.addEventListener("click", (e) => {
+            // 버튼 교체
+            button.innerHTML = removeIcon;
+            item.style.opacity = 0.3;
+            // 카테고리 이동
+            finishItems.appendChild(item);
+
+            // 데이터 수정
+            db.collection("users").doc(userUid).collection("wish").doc(`item${item.id}`).update({ state: 1 });
+            makeProgressGraph();
+            wishCount();
+          });
+          button.lastChild.addEventListener("click", (e) => {
+            const button = item.querySelector("#button");
+            // 버튼 교체
+            button.innerHTML = rewindIcon;
+            // 카테고리 이동
+            button.classList.remove("finish_delete_box");
+            button.classList.add("delete_box");
+            deleteItems.appendChild(item);
+
+            makeProgressGraph();
+            wishCount();
+            // 데이터 수정
+            db.collection("users").doc(userUid).collection("wish").doc(`item${item.id}`).update({ state: 2 });
+          });
+        });
+
+        hideItems(finishItems, deleteItems, unfinishedItems, "hide_items");
+        hideUnderLine(unfinishedWish, finishWish, deleteWish, "menu_underline");
+
+        if (!unfinishedItems.childElementCount) {
+          showEmptyItem(unfinishedItems);
+        }
+
+        checkEmptyBox();
+        if (finishEmpty) {
+          finishEmpty.remove();
+        }
+
+        wishCount();
+      });
+
+      finishWish.addEventListener("click", (e) => {
+        const allFinishItems = finishItems.querySelectorAll(".item_box");
+        // 버튼에 이벤트 등록버튼
+        allFinishItems.forEach((item) => {
+          const button = item.querySelector("#button");
+          button.firstChild.addEventListener("click", (e) => {
+            db.collection("users").doc(userUid).collection("wish").doc(`item${item.id}`).delete();
+            item.remove();
+            makeProgressGraph();
+            wishCount();
+          });
+        });
+
+        if (!unfinishedItems.childElementCount) {
+          showEmptyItem(unfinishedItems);
+        }
+        e.preventDefault();
+        hideItems(deleteItems, unfinishedItems, finishItems, "hide_items");
+        hideUnderLine(finishWish, deleteWish, unfinishedWish, "menu_underline");
+
+        if (!finishItems.childElementCount) {
+          showEmptyItem(finishItems);
+        }
+
+        checkEmptyBox();
+        if (unfinishedEmpty) {
+          unfinishedEmpty.remove();
+        }
+
+        wishCount();
+      });
+
+      deleteWish.addEventListener("click", (e) => {
+        e.preventDefault();
+        const allDeleteItems = deleteItems.querySelectorAll(".item_box");
+        // 버튼에 이벤트 등록버튼
+        allDeleteItems.forEach((item) => {
+          const button = item.querySelector("#button");
+          button.firstChild.addEventListener("click", (e) => {
+            // 버튼 교체
+            button.innerHTML = finishDeleteIcon;
+            button.classList.add("finish_delete_box");
+            button.classList.remove("delete_box");
+            // 카테고리 이동
+            unfinishedItems.appendChild(item);
+            // 데이터 수정
+            db.collection("users").doc(userUid).collection("wish").doc(`item${item.id}`).update({ state: 0 });
+            wishCount();
+          });
+        });
+
+        hideItems(unfinishedItems, finishItems, deleteItems, "hide_items");
+        hideUnderLine(deleteWish, unfinishedWish, finishWish, "menu_underline");
+
+        if (!deleteItems.childElementCount) {
+          showEmptyItem(deleteItems);
+        }
+
+        checkEmptyBox();
+        if (finishEmpty) {
+          finishEmpty.remove();
+        }
+        if (unfinishedEmpty) {
+          unfinishedEmpty.remove();
+        }
+
+        wishCount();
       });
     </script>
   </body>

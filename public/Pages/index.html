@@ -10,7 +10,7 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
       // Kakao SDK 초기화
-      // Kakao.init("7573f9555b42ced32c395787d475bd06");
+      Kakao.init("7573f9555b42ced32c395787d475bd06");
     </script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   </head>
@@ -127,30 +127,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
     <script src="../JavaScript/makeHeader.js"></script>
-    <!-- <script type="module">
-      import makeHeader from "../JavaScript/makeHeader.js";
-      import makeFooter from "../JavaScript/makeFooter.js";
-      makeHeader();
-      makeFooter();
-    </script> -->
     <!-- 유저 로그인 -->
     <script src="../JavaScript/login.js"></script>
     <script type="module" src="../JavaScript/store.js"></script>
-
-    <!-- <script type="module" defer>
-      checkLogin();
-    </script> -->
-    <script>
-      // firebase
-      //   .auth()
-      //   .signOut()
-      //   .then((res) => {
-      //     window.location.replace("index.html");
-      //   });
-      // loginState.style.display = "block";
-      // logoutState.style.display = "none";
-    </script>
-    <!-- <script src="../JavaScript/login.js"></script> -->
     <!-- 유저 로그아웃 -->
     <script src="../JavaScript/logout.js"></script>
     <!-- 마이페이지 이동 -->
@@ -159,12 +138,12 @@
       mypageMenu.addEventListener("click", (e) => {
         if (isLogin) {
           window.location.replace("mypage.html");
+        } else {
+          window.location.replace("login.html");
         }
       });
     </script>
-    <script>
-      // const user_item_area = document.querySelector("#user_item_area");
-    </script>
+
     <!-- 유저 로그인 상태, 위시리스트 데이터베이스 확인 -->
     <script src="../JavaScript/userItems.js"></script>
     <script>
@@ -202,24 +181,22 @@
             .collection("wish")
             .get()
             .then((res) => {
-              if (!res.size) {
+              res.forEach((doc) => {
+                if (!doc.data().state) {
+                  showItemList(doc.data(), user_item_area, "edit_button_box");
+                }
+              });
+            })
+            .then(() => {
+              if (!user_item_area.childElementCount) {
                 showEmptyItem(user_item_area);
-              } else {
-                res.forEach((doc) => {
-                  if (!doc.data().state) {
-                    showItemList(doc.data(), user_item_area);
-                  }
-                });
               }
             });
         } else {
           userUid = null;
           clientData.forEach((data) => {
-            return showItemList(data, user_item_area);
+            showItemList(data, user_item_area, "edit_button_box");
           });
-          // showItemList(clientData[0], user_item_area);
-          // showItemList(clientData[1], user_item_area);
-          // showEmptyItem(user_item_area);
         }
       });
     </script>
@@ -256,8 +233,7 @@
             item_input_data["id"] = lastItemId;
           }
           clientData.push(item_input_data);
-          showItemList(item_input_data, user_item_area);
-          empty_box.style.display = "none";
+          showItemList(item_input_data, user_item_area, "edit_button_box");
         }
         item_input[0].value = null;
         item_input[1].value = null;
@@ -265,6 +241,7 @@
         upload_plus_image.style.display = "block";
         thumbImage.style.display = "none";
         item_image_file.value = null;
+        user_item_area.querySelector("#empty_box").remove();
       }
 
       function uploadUserDatabaseItem(uploadUrl) {
@@ -290,7 +267,6 @@
                   .doc(`item${lastItemId + 1}`)
                   .set(item_input_data);
               } else {
-                empty_box.style.display = "none";
                 item_input_data["id"] = res.size + 10;
                 db.collection("users")
                   .doc(userUid)
@@ -300,7 +276,7 @@
               }
             })
             .then((res) => {
-              showItemList(item_input_data, user_item_area);
+              showItemList(item_input_data, user_item_area, "edit_button_box");
             })
             .then((res) => {
               item_input[0].value = null;
@@ -309,6 +285,10 @@
               upload_plus_image.style.display = "block";
               thumbImage.style.display = "none";
               item_image_file.value = null;
+              const emptyBox = user_item_area.querySelector("#empty_box");
+              if (emptyBox) {
+                emptyBox.remove();
+              }
             });
         }
       }
@@ -431,7 +411,7 @@
             .then((blob) => {
               let resultFile = new File(
                 [blob],
-                `${Math.random() * 10000000000000000}`, // 파이어베이스에 저장할 이미지 이름
+                `${blob}+${Math.random() * 10000000000000000}`, // 파이어베이스에 저장할 이미지 이름
                 {
                   type: "image/png",
                 }

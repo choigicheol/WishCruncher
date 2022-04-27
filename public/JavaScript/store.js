@@ -1,6 +1,6 @@
 import { observable, observe } from "./observer.js";
 
-const state = observable({ name: "choi", age: 33 });
+const state = observable({ money: 0 });
 
 const userInfo = observable({
   id: null,
@@ -24,14 +24,17 @@ const testApp = document.querySelector("#testApp");
 
 const render = () => {
   testApp.innerHTML = `
-  <p>테스트용으로 ${state.age}입니다</p>
   `;
 };
 
 document.querySelectorAll(".money_button").forEach((button) => {
   button.addEventListener("click", (e) => {
-    state.age = Number(e.target.name.slice(3));
+    state.money = Number(e.target.name.slice(3));
   });
+});
+
+document.querySelector("#clear_button").addEventListener("click", (e) => {
+  state.money = 0;
 });
 
 observe(render);
