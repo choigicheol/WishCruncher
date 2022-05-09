@@ -1,7 +1,3 @@
-// import { itemBtnHandle } from "./itemBtnHandle";
-// 매개변수로 item 정보 및 node를 받아 node의 첫번째 자식으로 item 추가 하는 함수
-// 데이터가 없을 때 나타낼 안내창
-
 const editDeleteIcon = `<img
         src="../Images/edit_Icon.svg"
         alt="edit_icon"
@@ -42,27 +38,34 @@ const deleteItems = document.querySelector("#delete_items");
 
 // 위시리스트 카테고리별 다른 버튼을 제공
 const itemBtnHandle = (btnType, node) => {
-  const buttonBox = node.querySelector("#button");
-  while (buttonBox.firstChild) {
-    buttonBox.removeChild(buttonBox.lastChild);
-  }
+  node.lastChild.remove();
+  const buttonBox = document.createElement("div");
+  buttonBox.setAttribute("id", "button");
   buttonBox.classList.add(btnType);
-
+  // 메인페이지 기본타입 버튼
   if (btnType === "edit_button_box") {
     buttonBox.innerHTML = editDeleteIcon;
-
-    buttonBox.firstChild.addEventListener("click", (e) => {});
+    buttonBox.firstChild.addEventListener("click", (e) => {
+      // const categoryBox = node.querySelectorAll(".item_category_box");
+      // const itemContents = node.querySelectorAll(".item_category_content");
+      // itemContents.forEach((contents, idx) => {
+      //   // const test = node.querySelector(".item_contents");
+      //   const editInput = document.createElement("input");
+      //   editInput.classList.add("test");
+      //   editInput.value = contents.textContent;
+      //   categoryBox[idx].replaceChild(editInput, itemContents[idx]);
+      // });
+    });
     buttonBox.lastChild.addEventListener("click", (e) => {
-      const targetId = buttonBox.parentElement.id;
       const itemReset = document.querySelectorAll(".item_box");
       itemReset.forEach((item) => {
-        if (item.id === targetId) {
+        if (item.id === node.id) {
           item.remove();
         }
       });
 
       if (isLogin) {
-        db.collection("users").doc(userUid).collection("wish").doc(`item${targetId}`).delete();
+        db.collection("users").doc(userUid).collection("wish").doc(`item${node.id}`).delete();
       }
 
       if (!user_item_area.childElementCount) {
@@ -70,17 +73,22 @@ const itemBtnHandle = (btnType, node) => {
       }
     });
 
-    // mypage 남은위시
+    // mypage 남은위시 버튼
   } else if (btnType === "finish_delete_box") {
     buttonBox.innerHTML = finishDeleteIcon;
+
     // 남은위시 => 이뤄낸 위시
     buttonBox.firstChild.addEventListener("click", (e) => {
       e.preventDefault();
       // 버튼 교체
       buttonBox.innerHTML = removeIcon;
-      buttonBox.parentElement.style.opacity = 0.3;
+      node.style.opacity = 0.3;
       // 카테고리 이동
       finishItems.appendChild(buttonBox.parentElement);
+      checkEmptyBox();
+      if (finishEmpty) {
+        finishEmpty.remove();
+      }
       wishCount();
       // 데이터 수정
       db.collection("users").doc(userUid).collection("wish").doc(`item${node.id}`).update({ state: 1 });
@@ -93,12 +101,17 @@ const itemBtnHandle = (btnType, node) => {
       // 카테고리 이동
       deleteItems.appendChild(buttonBox.parentElement);
       makeProgressGraph();
+      checkEmptyBox();
+
+      if (deleteEmpty) {
+        deleteEmpty.remove();
+      }
       wishCount();
       // 데이터 수정
       db.collection("users").doc(userUid).collection("wish").doc(`item${node.id}`).update({ state: 2 });
     });
 
-    // mypage 이뤄낸 위시
+    // mypage 이뤄낸 위시 버튼
   } else if (btnType === "finish_box") {
     buttonBox.innerHTML = removeIcon;
 
@@ -107,7 +120,8 @@ const itemBtnHandle = (btnType, node) => {
       db.collection("users").doc(userUid).collection("wish").doc(`item${node.id}`).delete();
       buttonBox.parentElement.remove();
     });
-    // mypage 버린 위시
+
+    // mypage 버린 위시 버튼
   } else {
     buttonBox.innerHTML = rewindIcon;
 
@@ -156,16 +170,16 @@ function showItemList(item, node, btnType) {
         </div>
         <div class="item_contents">
           <div class="item_category_box">
-            <span class="item_Category">제품</span>
-            <span class="item_Category_content">${newItem.name}</span>
+            <span class="item_category">제품</span>
+            <span class="item_category_content">${newItem.name}</span>
           </div>
           <div class="item_category_box">
-            <span class="item_Category">가격</span>
-            <span class="item_Category_content">${newItem.price}</span>
+            <span class="item_category">가격</span>
+            <span class="item_category_content">${newItem.price}</span>
           </div>
           <div class="item_category_box">
-            <span class="item_Category">위시레벨</span>
-            <span class="item_Category_content">${newItem.level}</span>
+            <span class="item_category">위시레벨</span>
+            <span class="item_category_content">${newItem.level}</span>
           </div>
         </div>
         <div id="button"></div>`;

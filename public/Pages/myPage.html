@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../CSS/globalLayout.css" />
     <link rel="stylesheet" href="../CSS/index.css" />
-    <link rel="stylesheet" href="../CSS/mypage.css" />
+    <link rel="stylesheet" href="../CSS/myPage.css" />
     <link rel="icon" href="../favicon.ico" />
     <title>WishCruncher</title>
   </head>
@@ -40,25 +40,25 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
     <script src="../firebase.js"></script>
-    <script src="../JavaScript/makeHeader.js"></script>
-
     <script>
       const db = firebase.firestore();
     </script>
+    <script src="../JavaScript/makeHeader.js"></script>
+    <script src="../JavaScript/makeFooter.js"></script>
+    <script src="../JavaScript/helper.js"></script>
     <script src="../JavaScript/login.js"></script>
     <!-- 로그아웃 실행 -->
     <script src="../JavaScript/logout.js"></script>
 
     <!-- 아이템 추가 -->
     <script src="../JavaScript/userItems.js"></script>
+
     <script>
-      let my_Db_UserName = null;
-      let my_Db_userEmail = null;
-      let arrAllWish = [];
-      let arrFinishWish = [];
+      // 마이페이지 상단 info 설정 (userInfo, progressBar Graph)
       const userInfo = document.querySelector("#user_info");
-      const progress = document.querySelector("#user_progress");
       const userImgBox = document.querySelector("#user_img");
+      const progress = document.querySelector("#user_progress");
+
       const unfinishedWish = document.querySelector("#unfinished_wish");
       const finishWish = document.querySelector("#finish_wish");
       const deleteWish = document.querySelector("#delete_wish");
@@ -93,50 +93,58 @@
             finishWishBar.style.borderRadius = "0";
           }
         }
+        if (!unfinishedItems.childElementCount) {
+          showEmptyItem(unfinishedItems);
+        }
+        if (!finishItems.childElementCount) {
+          showEmptyItem(finishItems);
+        }
+        if (!deleteItems.childElementCount) {
+          showEmptyItem(deleteItems);
+        }
       };
-
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          db.collection("users")
-            .doc(user.uid)
-            .get()
-            .then((res) => {
-              const userData = res.data();
-              userInfo.innerHTML = `
+    </script>
+    <script>
+      setTimeout(() => {
+        db.collection("users")
+          .doc(userUid)
+          .get()
+          .then((res) => {
+            const userData = res.data();
+            userInfo.innerHTML = `
               <span id="user_name">${userData.nickname}</span>
               <span id="user_email">${userData.email}</span>
               `;
 
-              userImgBox.innerHTML = `
+            userImgBox.innerHTML = `
               <img src=${userData.profileImg} alt="userImg"></img>
               `;
-            })
-            .then((res) => {
-              db.collection("users")
-                .doc(userUid)
-                .collection("wish")
-                .get()
-                .then((res) => {
-                  res.forEach((data) => {
-                    const wishData = data.data();
+          })
+          .then((res) => {
+            db.collection("users")
+              .doc(userUid)
+              .collection("wish")
+              .get()
+              .then((res) => {
+                res.forEach((data) => {
+                  const wishData = data.data();
 
-                    if (wishData.state === 0) {
-                      showItemList(wishData, unfinishedItems, "finish_delete_box");
-                    } else if (wishData.state === 1) {
-                      showItemList(wishData, finishItems, "finish_box");
-                    } else {
-                      showItemList(wishData, deleteItems, "delete_box");
-                    }
-                  });
-                })
-                .then((res) => {
-                  makeProgressGraph();
-                  progress.style.backgroundColor = "#EEE1FF";
-                  wishCount();
+                  if (wishData.state === 0) {
+                    showItemList(wishData, unfinishedItems, "finish_delete_box");
+                  } else if (wishData.state === 1) {
+                    showItemList(wishData, finishItems, "finish_box");
+                  } else {
+                    showItemList(wishData, deleteItems, "delete_box");
+                  }
                 });
-            });
-        }
-      });
+              })
+              .then((res) => {
+                makeProgressGraph();
+                progress.style.backgroundColor = "#EEE1FF";
+                wishCount();
+              });
+          });
+      }, 1000);
     </script>
     <script>
       // 남은위시, 이뤄낸 위시 , 버린위시 카테고리 핸들
@@ -154,12 +162,15 @@
 
       let finishEmpty;
       let unfinishedEmpty;
+      let deleteEmpty;
 
       const checkEmptyBox = () => {
         finishEmpty = finishItems.querySelector("#empty_box");
         unfinishedEmpty = unfinishedItems.querySelector("#empty_box");
+        deleteEmpty = deleteItems.querySelector("#empty_box");
       };
 
+      // 남은위시 창 으로 이동할때
       unfinishedWish.addEventListener("click", (e) => {
         e.preventDefault();
         const allUnfinishedItems = unfinishedItems.querySelectorAll(".item_box");
@@ -175,6 +186,11 @@
 
             // 데이터 수정
             db.collection("users").doc(userUid).collection("wish").doc(`item${item.id}`).update({ state: 1 });
+
+            if (finishEmpty) {
+              finishEmpty.remove();
+            }
+
             makeProgressGraph();
             wishCount();
           });
@@ -187,6 +203,10 @@
             button.classList.add("delete_box");
             deleteItems.appendChild(item);
 
+            if (deleteEmpty) {
+              deleteEmpty.remove();
+            }
+
             makeProgressGraph();
             wishCount();
             // 데이터 수정
@@ -197,15 +217,7 @@
         hideItems(finishItems, deleteItems, unfinishedItems, "hide_items");
         hideUnderLine(unfinishedWish, finishWish, deleteWish, "menu_underline");
 
-        if (!unfinishedItems.childElementCount) {
-          showEmptyItem(unfinishedItems);
-        }
-
         checkEmptyBox();
-        if (finishEmpty) {
-          finishEmpty.remove();
-        }
-
         wishCount();
       });
 
@@ -225,19 +237,11 @@
         if (!unfinishedItems.childElementCount) {
           showEmptyItem(unfinishedItems);
         }
-        e.preventDefault();
+
         hideItems(deleteItems, unfinishedItems, finishItems, "hide_items");
         hideUnderLine(finishWish, deleteWish, unfinishedWish, "menu_underline");
 
-        if (!finishItems.childElementCount) {
-          showEmptyItem(finishItems);
-        }
-
         checkEmptyBox();
-        if (unfinishedEmpty) {
-          unfinishedEmpty.remove();
-        }
-
         wishCount();
       });
 
@@ -256,6 +260,10 @@
             unfinishedItems.appendChild(item);
             // 데이터 수정
             db.collection("users").doc(userUid).collection("wish").doc(`item${item.id}`).update({ state: 0 });
+            if (unfinishedEmpty) {
+              unfinishedEmpty.remove();
+            }
+            makeProgressGraph();
             wishCount();
           });
         });
@@ -263,18 +271,7 @@
         hideItems(unfinishedItems, finishItems, deleteItems, "hide_items");
         hideUnderLine(deleteWish, unfinishedWish, finishWish, "menu_underline");
 
-        if (!deleteItems.childElementCount) {
-          showEmptyItem(deleteItems);
-        }
-
         checkEmptyBox();
-        if (finishEmpty) {
-          finishEmpty.remove();
-        }
-        if (unfinishedEmpty) {
-          unfinishedEmpty.remove();
-        }
-
         wishCount();
       });
     </script>

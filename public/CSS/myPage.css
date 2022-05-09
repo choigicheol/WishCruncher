@@ -14,7 +14,7 @@
           align-items: center;
 }
 
-#user_Profile_Container {
+#user_profile_container {
   max-width: 960px;
   width: 100%;
   display: -webkit-box;
@@ -22,7 +22,7 @@
   display: flex;
 }
 
-#user_Img {
+#user_img {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -37,26 +37,26 @@
 }
 
 @media screen and (max-width: 590px) {
-  #user_Img {
+  #user_img {
     max-width: 110px;
     width: 100%;
   }
-  #user_Img img {
+  #user_img img {
     width: 100%;
   }
 }
 
 @media screen and (max-width: 470px) {
-  #user_Img {
+  #user_img {
     max-width: 60px;
     width: 100%;
   }
-  #user_Img img {
+  #user_img img {
     width: 100%;
   }
 }
 
-#user_Info_Box {
+#user_info_box {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -69,7 +69,7 @@
   width: 100%;
 }
 
-#user_Name {
+#user_name {
   font-size: 1.875rem;
   width: 100%;
   font-weight: 300;
@@ -77,35 +77,35 @@
 }
 
 @media screen and (max-width: 590px) {
-  #user_Name {
+  #user_name {
     font-size: 1.375rem;
   }
 }
 
 @media screen and (max-width: 470px) {
-  #user_Name {
+  #user_name {
     font-size: 0.875rem;
   }
 }
 
-#user_Email {
+#user_email {
   width: 100%;
   font-weight: 100;
 }
 
 @media screen and (max-width: 590px) {
-  #user_Email {
+  #user_email {
     font-size: 0.75rem;
   }
 }
 
 @media screen and (max-width: 470px) {
-  #user_Email {
+  #user_email {
     font-size: 0.625rem;
   }
 }
 
-#user_Info {
+#user_info {
   width: 100%;
 }
 
@@ -148,7 +148,7 @@
   margin-left: 10px;
 }
 
-#user_Progress {
+#user_progress {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -157,13 +157,13 @@
 }
 
 @media screen and (max-width: 590px) {
-  #user_Progress {
+  #user_progress {
     height: 0.875rem;
   }
 }
 
 @media screen and (max-width: 470px) {
-  #user_Progress {
+  #user_progress {
     height: 0.625rem;
   }
 }

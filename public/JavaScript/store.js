@@ -1,8 +1,9 @@
 import { observable, observe } from "./observer.js";
 
-const state = observable({ money: 0 });
+export const state = observable({ money: 0 });
 
-const userInfo = observable({
+export const userInfo = observable({
+  isLogin: false,
   id: null,
   email: "null",
   nickname: "비회원",
@@ -35,6 +36,22 @@ document.querySelectorAll(".money_button").forEach((button) => {
 
 document.querySelector("#clear_button").addEventListener("click", (e) => {
   state.money = 0;
+});
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    userInfo.isLogin = true;
+    userInfo.userUid = user.uid;
+    db.collection("users")
+      .doc(user.uid)
+      .get()
+      .then((res) => {
+        const userData = res.data();
+        userInfo.email = userData.email;
+        userInfo.nickname = userData.nickname;
+        userInfo.profileImg = userData.profileImg;
+      });
+  }
 });
 
 observe(render);

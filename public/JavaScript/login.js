@@ -1,20 +1,20 @@
-const loginState = document.querySelector(".login_state");
-const logoutState = document.querySelector(".logout_state");
+const loginState = qs(".login_state");
+const logoutState = qs(".logout_state");
 
-let db_userName = null;
+let db_userName = "비회원";
 let db_userEmail = null;
 let isLogin = false;
+let userUid = null;
 
-// const checkLogin = () => {
 firebase.auth().onAuthStateChanged((user) => {
-  console.log(user, "after user");
   if (user) {
     isLogin = true;
     userUid = user.uid;
-    loginState.style.display = "none";
-    logoutState.style.display = "block";
+    hide(loginState);
+    show(logoutState, "block");
+
     db.collection("users")
-      .doc(user.uid)
+      .doc(userUid)
       .get()
       .then((res) => {
         db_userName = res.data().nickname;
@@ -22,10 +22,7 @@ firebase.auth().onAuthStateChanged((user) => {
       });
   } else {
     isLogin = false;
-    loginState.style.display = "block";
-    logoutState.style.display = "none";
+    show(loginState, "block");
+    hide(logoutState);
   }
 });
-// };
-// checkLogin();
-// export default checkLogin;
